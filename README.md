@@ -94,8 +94,7 @@ After reporting the initial case information, the user can always update this in
 - Driven by SAP developers but fully open-source and open for public contributions.
 - This project will have zero commercial intent. The software will be fully open-source. Collected data will be accessible by public institutions and research facilities. Data will be deleted on request or if the project has fulfilled its goal.
 - We plan to roll out the app city-by-city, depending on which city is facing the most significant issues. Our first focus will be cities within Germany and other European countries.
-- Pragmatic and agile decisions with focus on building something useful.
-- This project will run in stealth mode (no marketing or spotlight) with full focus on developing and rolling out scalable and stable software in the fastest possible way.
+- Pragmatic and agile decisions with focus on building something useful. Full focus on developing and rolling out scalable and stable software in the fastest possible way.
 - We will slow down or stop this project in case COVID-19 can be contained or we get indications that the situation will not require this kind of software.
 
 ---
