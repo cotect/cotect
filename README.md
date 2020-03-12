@@ -80,6 +80,7 @@ After reporting the initial case information, the user can always update this in
 ### Open Questions
 
 - Store phone numbers in database or only hashes/unique-ids?
+- Which open-source license to use: MIT or GPL?
 
 ## Challenges
 
