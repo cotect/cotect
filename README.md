@@ -7,6 +7,14 @@
     <strong>Crowd-sourced COVID-19 reporting and surveillance system.</strong>
 </p>
 
+<p align="center">
+  <a href="#problem-statement">Problem Statement</a> •
+  <a href="#solution">Solution</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#challenges">Challenges</a> •
+  <a href="#organization--execution">Organization</a>
+</p>
+
 ## Problem Statement
 
 - **Hard to get tested:** Germany has a theoretical capacity of 12k tests a day, but logistical challenges and limits on medical personal will make it unlikely to have anyone with flu-like symptoms tested in a timely manner. Based on the current scientific state, fast a reliable detection capability is one of the best ways to slow down the virus infections.
@@ -90,3 +98,6 @@ After reporting the initial case information, the user can always update this in
 - This project will run in stealth mode (no marketing or spotlight) with full focus on developing and rolling out scalable and stable software in the fastest possible way.
 - We will slow down or stop this project in case COVID-19 can be contained or we get indications that the situation will not require this kind of software.
 
+---
+
+Licensed **MIT**. Created and maintained with ❤️ by developers from SAP in Berlin.
