@@ -71,7 +71,7 @@ After reporting the initial case information, the user can always update this in
 ### Further Improvements
 
 - Integrate regular push notifications to remind users to update their case data.
-- Integrate push notifications
+- Integrate push notifications for health risk alerts in your area.
 - Integrate publicly available data or internal data from public institutions to enrich our dataset.
 - Provide integration options to public institutions to enable efficient data collection with hotlines.
 - Evaluate optional Bluetooth or GPS tracking for automated contact tracing.
