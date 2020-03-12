@@ -4,7 +4,7 @@
 </h1>
 
 <p align="center">
-    <strong>Crowd-sourced COVID-19 reporting and surveillance system.</strong>
+    <strong>🛡Crowd-sourced COVID-19 reporting and surveillance system.</strong>
 </p>
 
 <p align="center">
