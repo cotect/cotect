@@ -22,7 +22,7 @@ Cotect allows anyone to anonymously report their flu-symptoms with relevant meta
 
 The initial goal at the start of the project will be to help with containment and slow-down of infections. At a later stage of the project, we will put the main focus on helping to protect the high-risk groups (elderly, people with pre-existing conditions). 
 
-<img style="width: 100%" src="./docs/images/flatten-the-curve.jpg"/>
+<img style="width: 100%" src="./docs/images/flatten-the-curve.png"/>
 
 ### Architecture
 
