@@ -15,6 +15,8 @@
   <a href="#organization--execution">Organization</a>
 </p>
 
+<img style="width: 100%" src="./docs/images/cotect-mockups.png"/>
+
 ## Problem Statement
 
 - **Hard to get tested:** Germany has a theoretical capacity of 12k tests a day, but logistical challenges and limits on medical personal will make it unlikely to have anyone with flu-like symptoms tested in a timely manner. Based on the current scientific state, fast a reliable detection capability is one of the best ways to slow down the virus infections.
@@ -25,8 +27,6 @@
 ## Solution
 
 Cotect allows anyone to anonymously report their flu-symptoms with relevant meta-information such as visited places or events. By analyzing statistical correlations in the collected data, users that have will get personal risk assessments (e.g., likelihood of Covid-19 infection) based on their reports. Users, especially in the high-risk group, will also be able to get real-time information on the risk of visiting selected places (e.g., city, workplace, school). The full anonymized dataset will be made accessible to research facilities and public institutions for discovering unknown infection chains and assist with data-informed decisions on closing places or canceling events.
-
-<img style="width: 100%" src="./docs/images/cotect-mockups.png"/>
 
 The initial goal at the start of the project will be to help with containment and slow-down of infections. At a later stage of the project, we will put the main focus on helping to protect the high-risk groups (elderly, people with pre-existing conditions). 
 
