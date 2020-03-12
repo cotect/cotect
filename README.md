@@ -55,9 +55,9 @@ All metadata are strictly optional. The user can decide which level of informati
 
 - Current location (city-level)
 - Basic demographic metadata: age & gender
-- Selection of symptoms from a collection of flu/corona-symptoms (fever, cough, headache, ...)
-    - enrich with additional metadata based on selected symptoms (e.g. fever → body temperature)
-- Places visited during the last 14 days (cities, workplaces, cafes, church, clubs, schools,  ...) + date of visit.
+- Selection of symptoms from a collection of flu/corona-symptoms (e.g., fever, cough, headache)
+    - enrich with additional metadata based on selected symptoms (e.g., fever → body temperature)
+- Places visited during the last 14 days (e.g., cities, workplaces, cafes, church, clubs, schools) + date of visit.
 - *Events visited during the last 14 days (probably not necessary since any event is mostly bound to a specific location/place).*
 - Test result for coronavirus, in case a test was performed.
 - People you had at-least 15 minutes contact during the last 14 days + timestamp of last contact. Select based on phone contacts → match via phone number.
@@ -91,7 +91,7 @@ After reporting the initial case information, the user can always update this in
 
 ## Organization & Execution
 
-- Driven by SAP developers but fully open-source and open for public contributions. **
+- Driven by SAP developers but fully open-source and open for public contributions.
 - This project will have zero commercial intent. The software will be fully open-source. Collected data will be accessible by public institutions and research facilities. Data will be deleted on request or if the project has fulfilled its goal.
 - We plan to roll out the app city-by-city, depending on which city is facing the most significant issues. Our first focus will be cities within Germany and other European countries.
 - Pragmatic and agile decisions with focus on building something useful.
