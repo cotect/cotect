@@ -45,11 +45,7 @@ The initial selection of technologies includes:
 
 The main aspects of this selection of technologies are the speed of development, simplicity, and scalability. We are still in evaluation of which cloud platform we want to use (GCP, AWS, Azure). However, since Firebase is part of GCP, this might be the best choice for now.
 
-### Authentication
-
-We will use only a phone number based authentication (similar to WhatsApp) to enable a certain level of anonymity while still keeping misuse and spam low (further explained in the challenges section).
-
-### Case Report - Information
+### Case Report
 
 All metadata are strictly optional. The user can decide which level of information he is willing to provide.
 
@@ -58,11 +54,36 @@ All metadata are strictly optional. The user can decide which level of informati
 - Selection of symptoms from a collection of flu/corona-symptoms (e.g., fever, cough, headache)
     - enrich with additional metadata based on selected symptoms (e.g., fever → body temperature)
 - Places visited during the last 14 days (e.g., cities, workplaces, cafes, church, clubs, schools) + date of visit.
-- *Events visited during the last 14 days (probably not necessary since any event is mostly bound to a specific location/place).*
 - Test result for coronavirus, in case a test was performed.
 - People you had at-least 15 minutes contact during the last 14 days + timestamp of last contact. Select based on phone contacts → match via phone number.
 
 After reporting the initial case information, the user can always update this information as well. A case report update will enable the user to provide changes in symptoms or additional visited places / contacted persons.
+
+### Data Model
+
+The collected case data will be stored within a graph strcture based on the follwing data model:
+
+<img style="width: 100%" src="./docs/images/cotect-data-model.png"/>
+
+### Authentication
+
+We will use only a phone number based authentication (similar to WhatsApp) to enable a certain level of anonymity while still keeping misuse and spam low. Therefore, we decided to use the [phone authentication](https://invertase.io/oss/react-native-firebase/v6/auth/phone-auth) feature of Firebase. After the user has verified the phone number, the app will use the [Firebase ID Token](https://firebase.google.com/docs/reference/js/firebase.User#getidtoken) as authentication method for all requests to the user endpoints by using the [verify-id-token](https://firebase.google.com/docs/auth/admin/verify-id-tokens) method. The user ID which is used within the database (case graph) will be based on the hash of the [normalized](https://pypi.org/project/phonenumbers/) phone number (which can be retrieved from the token) that is combined and hashed with a secret:
+
+```
+user_id = hash(hash(normalize_number(user.phone_numer)), secret)
+```
+
+### Data Anonymization
+
+All data within the case graph will be anonymized to the most reasonable degree. Unfortunately, it can not be completly ruled out that a user can be theoretically identified based on the provided place visits and demographic data. However, the user endpoints, which are secured via the phone-based authentication, will only provide very limited access to this data. Furthermore, we will not store the users phone numbers (or any other directly identifiable information) within our database.
+
+### Anonymous Contact Tracing
+
+For the case report, the user is able to select any number of contacts from the phones contact list (via the phone number). However, no identifiable information of those selected contacts will be exposed to the backend. Instead, the client will [normalize](https://www.npmjs.com/package/libphonenumber-js) the contact's phone number and send it as a hashed format to the backend. Within the backend, the user id of the contact can be constructed by hashing it with the secret:
+
+```
+contact_id = hash(hashed_contact_number, secret)
+```
 
 ### Assessment Report
 
@@ -76,6 +97,8 @@ After reporting the initial case information, the user can always update this in
 - Provide integration options to public institutions to enable efficient data collection with hotlines.
 - Evaluate optional Bluetooth or GPS tracking for automated contact tracing.
 - Incorporate newest Study results on COVID-19 (e.g.,  symptoms,  ways of infection, risk-factors)
+- Add events visited during the last 14 days to the case data (probably not necessary since any event is mostly bound to a specific location/place)
+- add start-date and end-date to realtion attributes
 
 ### Open Questions
 
