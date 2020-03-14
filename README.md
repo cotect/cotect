@@ -98,7 +98,9 @@ contact_id = hash(hashed_contact_number, secret)
 - Evaluate optional Bluetooth or GPS tracking for automated contact tracing.
 - Incorporate newest Study results on COVID-19 (e.g.,  symptoms,  ways of infection, risk-factors)
 - Add events visited during the last 14 days to the case data (probably not necessary since any event is mostly bound to a specific location/place)
-- add start-date and end-date to realtion attributes
+- add start-date and end-date to realtion attributes and option to provide specific times.
+- Evaluate to use GPS or IP to get user location.
+- Add easy way to share report to contacts via whatsapp.
 
 ### Open Questions
 
