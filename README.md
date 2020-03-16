@@ -1,10 +1,11 @@
 <h1 align="center">
-     cotect
+    <a href="https://github.com/cotect/cotect" title="Cotect Home">
+    <img width=50% alt="" src="./docs/images/cotect-banner.png"> </a>
     <br>
 </h1>
 
 <p align="center">
-    <strong>🛡Crowd-sourced COVID-19 reporting and assessment system.</strong>
+    <strong>Crowd-sourced COVID-19 reporting and assessment system.</strong>
 </p>
 
 <p align="center">
