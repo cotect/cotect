@@ -12,10 +12,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3DE4DAD41476765101945408 /* libPods-Cotect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D43FF9D506E70904424FA7E9 /* libPods-Cotect.a */; };
+		F75E9CA1241F7E2B00F484CC /* GooglePlaces-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F75E9CA0241F7E2B00F484CC /* GooglePlaces-Info.plist */; };
 		F79D52CF241DB39700CAEE0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F79D52CE241DB39700CAEE0B /* GoogleService-Info.plist */; };
 		F7F3E5E1241DAF6B00DD806C /* alice-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC27F5CE8C4578A434353C /* alice-regular.ttf */; };
 		F7F3E5E2241DAF6B00DD806C /* roboto-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 56E82EABCD164D21896DEFA8 /* roboto-regular.ttf */; };
 		F7F3E5E3241DAF6B00DD806C /* space-mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80CBACFBFB0A46F6891B6FFF /* space-mono.ttf */; };
+		DFF7DC33EE3742DBA1933F3E /* roboto-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 48FC0C5DA6D14ED8BDF4C5F9 /* roboto-light.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,7 +54,9 @@
 		E85DFF045E444624B2459FEE /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F75E9CA0241F7E2B00F484CC /* GooglePlaces-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GooglePlaces-Info.plist"; sourceTree = "<group>"; };
 		F79D52CE241DB39700CAEE0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		48FC0C5DA6D14ED8BDF4C5F9 /* roboto-light.ttf */ = {isa = PBXFileReference; name = "roboto-light.ttf"; path = "../assets/fonts/roboto-light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 				5378428E6F574B47B93C9CE3 /* Octicons.ttf */,
 				CC9A60F52E5B4930AD79AD44 /* SimpleLineIcons.ttf */,
 				109EEBE3E48242A799DE527C /* Zocial.ttf */,
+				48FC0C5DA6D14ED8BDF4C5F9 /* roboto-light.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -137,6 +142,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F75E9CA0241F7E2B00F484CC /* GooglePlaces-Info.plist */,
 				F79D52CE241DB39700CAEE0B /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Cotect */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -225,8 +231,10 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F7F3E5E2241DAF6B00DD806C /* roboto-regular.ttf in Resources */,
 				F7F3E5E3241DAF6B00DD806C /* space-mono.ttf in Resources */,
+				F75E9CA1241F7E2B00F484CC /* GooglePlaces-Info.plist in Resources */,
 				F7F3E5E1241DAF6B00DD806C /* alice-regular.ttf in Resources */,
 				F79D52CF241DB39700CAEE0B /* GoogleService-Info.plist in Resources */,
+				DFF7DC33EE3742DBA1933F3E /* roboto-light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +262,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Cotect/Pods-Cotect-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -273,6 +283,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",

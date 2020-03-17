@@ -3369,7 +3369,7 @@ hoist-non-react-statics@^2.3.1:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -5683,7 +5683,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5762,6 +5762,21 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
   integrity sha512-GFMtL0vHkiBv9HluwNZTggSn/sCyEt9n02aM0dSAjGGyqyNlAyftYm4phPxdvCigG15JreC5biwxCgTAJZ7yAA==
 
+react-native-action-sheet@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-action-sheet/-/react-native-action-sheet-2.2.0.tgz#309a87f53bf4e7b17fdd9d24b10b8dcbaebb7230"
+  integrity sha512-4lsuxH+Cn3/aUEs1VCwqvLhEFyXNqYTkT67CzgTwlifD9Ij4OPQAIs8D+HUD9zBvWc4NtT6cyG1lhArPVMQeVw==
+
+react-native-calendars@^1.264.0:
+  version "1.264.0"
+  resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.264.0.tgz#552cfff1480ab6c860f54e12ec2b82f9b514aae6"
+  integrity sha512-NHNekv1iwHMI+evr8dDLFqCdvnCWGlBxPKO0/bw1+HDy4uukuab//akoOx9/GGl/3+XV6MVTLdda+qjT6pD2Bg==
+  dependencies:
+    hoist-non-react-statics "^3.3.1"
+    lodash "^4.0.0"
+    prop-types "^15.5.10"
+    xdate "^0.8.0"
+
 react-native-gesture-handler@~1.5.0:
   version "1.5.6"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.5.6.tgz#5d90145f624e3707db2930f43ab41579683e2375"
@@ -5772,6 +5787,11 @@ react-native-gesture-handler@~1.5.0:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-google-places@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-google-places/-/react-native-google-places-3.1.2.tgz#6aa11f76da6bd58aa9ec1d1b3e2c85edb4ced2ce"
+  integrity sha512-aKPbGHga3k/Vkfw9NMf/1t0sivdqxn4qzCbEyAfmhxO7Mlqv9Nljjnez6rp6MZGwh89ss3/a9lhM4ulyZ6o0ew==
 
 react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
@@ -5810,6 +5830,13 @@ react-native-screens@2.0.0-alpha.12:
   integrity sha512-x9M7FEdcm97bVDp3pi//nhduJHLFMrmDQs0fq299yx3kHdgHbrmhsa8jgW4HvDQhjyPE0FWADY/GrXFuPRj80w==
   dependencies:
     debounce "^1.2.0"
+
+react-native-select-contact@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-select-contact/-/react-native-select-contact-1.3.0.tgz#47836239c064b6f1b352f7b666c51b9155742b67"
+  integrity sha512-olPiF6o7sVoC1xQtrL7uAjuSmHyOQc1Y+P+xSBa2MoFzrE5HIZM5gAA6GrFgxO6ByhmDJZQLGak1UOOPl68otg==
+  optionalDependencies:
+    react-native-action-sheet "^2.2.0"
 
 react-native-unimodules@~0.7.0:
   version "0.7.0"
@@ -7440,6 +7467,11 @@ xcode@^2.0.0:
   dependencies:
     simple-plist "^1.0.0"
     uuid "^3.3.2"
+
+xdate@^0.8.0:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/xdate/-/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
+  integrity sha1-17AzwASF0CaVuvAET06s2j/JYaM=
 
 xml-name-validator@^3.0.0:
   version "3.0.0"

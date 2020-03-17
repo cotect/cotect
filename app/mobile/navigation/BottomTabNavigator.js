@@ -5,6 +5,7 @@ import TabBarMaterialIcon from '../components/TabBarMaterialIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ReportScreen from '../screens/ReportScreen';
 import TabBarMaterialLabel from '../components/TabBarMaterialLabel';
 
 const BottomTab = createBottomTabNavigator();
@@ -19,8 +20,17 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Report"
+        name="Home"
         component={HomeScreen}
+        options={{
+          //title: 'Report',
+          tabBarLabel: ({ focused }) => <TabBarMaterialLabel focused={focused} text="Home" />,
+          tabBarIcon: ({ focused }) => <TabBarMaterialIcon focused={focused} name="shield-plus" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Report"
+        component={ReportScreen}
         options={{
           //title: 'Report',
           tabBarLabel: ({ focused }) => <TabBarMaterialLabel focused={focused} text="Report" />,
@@ -53,6 +63,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'How to get started';
+    case 'Report':
+      return 'Report';
     case 'Links':
       return 'Links to learn more';
     case 'Settings':

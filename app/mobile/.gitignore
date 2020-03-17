@@ -65,3 +65,4 @@ buck-out/
 # Firebase / Google Service key files
 google-services.json
 GoogleService-Info.plist
+GooglePlaces-Info.plist

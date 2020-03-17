@@ -16,6 +16,9 @@
 
 #import <Firebase.h>
 
+@import GooglePlaces; 
+@import GoogleMaps;
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -37,6 +40,11 @@
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
+
+  // add GooglePlaces Info
+  NSDictionary *googlePlacesInfos = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GooglePlaces-Info" ofType:@"plist"]];
+  [GMSPlacesClient provideAPIKey:googlePlacesInfos[@"GMS_PLACES_API_KEY"]];
+  [GMSServices provideAPIKey:googlePlacesInfos[@"GMS_PLACES_API_KEY"]];
 
   [super application:application didFinishLaunchingWithOptions:launchOptions];
 
