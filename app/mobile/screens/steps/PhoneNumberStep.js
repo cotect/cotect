@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 
 import { StyleSheet, View } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
+import { Button, Snackbar, Text, TextInput } from 'react-native-paper';
 
 const styles = StyleSheet.create({
     actionButton: {
@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     },
     inputField: {
         backgroundColor: "white"
+    },
+    snackbar: {
+        backgroundColor: "red",
+        position: "absolute",
+        bottom: -48
     }
 });
 
@@ -27,6 +32,9 @@ export default function PhoneNumberStep(props) {
     const [confirmationCode, setConfirmationCode] = useState();
     const [isPhoneNumberEntered, setPhoneNumberEntered] = useState(false);
     const [confirmation, setConfirmation] = useState();
+
+    const [isSnackbarVisible, setSnackbarVisible] = useState(false);
+    const [snackbarText, setSnackbarText] = useState();
 
     const onVerifyClick = async () => {
         let confirmationResponse = await auth().signInWithPhoneNumber(phoneNumber);
@@ -54,22 +62,35 @@ export default function PhoneNumberStep(props) {
             await confirmation.confirm(confirmationCode); // User entered code
             // Successful login - onAuthStateChanged is triggered
         } catch (e) {
-            console.error(e); // Invalid code
+            setSnackbarText("Confirmation code not valid");
+            setSnackbarVisible(true);
         }
     }
 
     const onAuthStateChanged = (user) => {
         console.log(user);
+       
         if (user) {
-            user.getIdToken().then((e)=>console.log(e)).catch((e) => console.log(e));
+            // user.delete();
+            // user.getIdToken(true).then((e)=>console.log(e)).catch((e) => console.log(e));
             setIsVerified(true);
-            props.stepItem.onFinish(user.phoneNumber, true);
+            let phoneNumber = user.phoneNumber;
+            if (user.isAnonymous && user.phoneNumber === null) {
+                phoneNumber = "anonymous";
+            }
+            props.stepItem.onFinish(phoneNumber, true);
+        } else {
+            setIsVerified(false);
         }
     }
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount 
+    }, []);
+
+    useEffect(() => {
+        props.registerCleanupCallback(onSignInAnonymously);
     }, []);
 
     return (
@@ -87,12 +108,6 @@ export default function PhoneNumberStep(props) {
                         labelStyle={styles.actionButtonLabel} 
                         onPress={() => onVerifyClick()}>
                         Verify
-                    </Button>
-                    <Button
-                        style={styles.actionButton}
-                        labelStyle={styles.actionButtonLabel} 
-                        onPress={() => onSignInAnonymously()}>
-                        Continue anonymously
                     </Button>
 
                     {isPhoneNumberEntered ? (
@@ -116,6 +131,13 @@ export default function PhoneNumberStep(props) {
                 
                     <Text>Phone Number is verified!</Text>
                 }
+            <Snackbar
+                style={styles.snackbar}
+                visible={isSnackbarVisible}
+                onDismiss={() => setSnackbarVisible(false)}
+            >
+                <Text style={styles.snackbarText}>{snackbarText}</Text>
+            </Snackbar>
         </View>
     )
 }

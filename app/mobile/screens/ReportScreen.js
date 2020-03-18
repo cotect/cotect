@@ -9,7 +9,7 @@ import { Button, Dialog, Paragraph, Portal, Text } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { CONTAINER } from '../constants/DefaultStyles';
-import { mapStateToProps, mapDispatchToProps} from '../redux/reduce';
+import { mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
 import { 
     AgeStep, ContactsStep, CurrentLocationStep, 
@@ -104,6 +104,12 @@ function ReportScreen(props) {
     const [stepIndex, setStepIndex] = useState(0);
     //const [isNextButtonEnabled, setNextButtonEnabled] = useState(false);
     // const [isBackButtonEnabled, setBackButtonEnabled] = useState(false);
+
+    // set a Promise that, when called, directly resolves as default.
+    // a component can register a callback here that is called when clicking on next to execute logic before the next logic is called
+    // the function cleanupStep must return a promise
+    const [cleanupStepCallback, setCleanupStepCallback] = useState(() => () => new Promise((resolve) => resolve()));
+
     const [user, setUserPhoneNumber] = useState(props.phoneNumber);
     const [age, setAge] = useState(props.age);
     // TODO: add question for gender
@@ -184,7 +190,11 @@ function ReportScreen(props) {
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
-        setStepIndex(newStepIndex);
+
+        cleanupStepCallback().then(() => {
+            setStepIndex(newStepIndex);
+            setCleanupStepCallback(() => () => new Promise((resolve) => resolve()));
+        });
         
         // if (!stepItem[newStepIndex].initialProps) {
         //     setNextButtonEnabled(false);
@@ -232,6 +242,14 @@ function ReportScreen(props) {
         setModalVisible(true);
     }
 
+    // wrap the to-be-registered cleanupStepCallback in a promise so that 
+    // the child component can execute async code.
+    const registerCleanupCallback = (cleanupStepCallback) => {
+        setCleanupStepCallback(() => () => new Promise((resolve) => {
+            resolve(cleanupStepCallback());
+        }));
+    }
+
     let isBackButtonEnabled = (stepIndex > 0) ? true : false;
     let isNextButtonEnabled = (steps[stepIndex].initialProps) ? true : false;
     return (
@@ -241,6 +259,7 @@ function ReportScreen(props) {
                 {
                     <Step
                         stepItem={steps[stepIndex]}
+                        registerCleanupCallback={registerCleanupCallback}
                     />
                 }
 
