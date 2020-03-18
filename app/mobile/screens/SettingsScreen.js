@@ -1,60 +1,43 @@
-import React, { useState, useEffect } from "react";
-import {  StyleSheet, View } from 'react-native';
 
-import { Button, TextInput } from 'react-native-paper';
+import React from 'react';
 
-import auth from '@react-native-firebase/auth';
+import { connect } from "react-redux";
 
-import { CONTAINER } from '../assets/DefaultStyles';
+import { StyleSheet, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
+import { mapStateToProps, mapDispatchToProps } from '../redux/reduce';
 
 const styles = StyleSheet.create({
-    container: CONTAINER
-  });
-
-
-let confirmation = null;
-
-export default function SettingsScreen() {
-
-    const [phoneNumber, setPhoneNumber] = useState();
-    const [confirmationNumber, setConfirmationNumber] = useState();
-    const [user, setUser] = useState();
-
-    // Handle user state changes
-    function onAuthStateChanged(user) {
-        setUser(user);
+    contentContainer: {
+        height: "100%",
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center"
     }
-    
-    useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        console.log("Authenticate...");
-        return subscriber; // unsubscribe on unmount
-    }, []);
+});
 
-    async function onVerifyClick() {
-        confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+function SettingsScreen(props) {
+
+    const deleteData = () => {
+        props.deleteSettings();
     }
 
-    console.log(user);
     return (
-        <View style={styles.container}>
-            <TextInput
-                label='Phone Number'
-                value={phoneNumber}
-                onChangeText={text => setPhoneNumber(text)}
-            />
-            <Button onPress={() => onVerifyClick()}>
-                Verify
-            </Button>
+        <View style={styles.contentContainer}>
+            <Text>Your data:</Text>
+            <Text>Phone Number: {props.phoneNumber}</Text>
+            <Text>Location: {props.residence}</Text>
+            <Text>Age: {props.age}</Text>
+            <Text>Gender: {props.gender}</Text>
 
-            <TextInput
-                label='Confirm Number'
-                value={confirmationNumber}
-                onChangeText={text => setConfirmationNumber(text)}
-            />
-            <Button onPress={() => confirmation.confirm(confirmationNumber)}>
-                Confirm
+            <Button
+                // style={styles.deleteButton}
+                onPress={deleteData}    
+            >
+                Delete my data!
             </Button>
         </View>
     );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);

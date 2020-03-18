@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import TabBarIcon from '../components/TabBarIcon';
 import TabBarMaterialIcon from '../components/TabBarMaterialIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-import ReportScreen from '../screens/ReportScreen';
+import SettingsScreen from '../screens/SettingsScreen_';
+import ReportHandler from '../screens/ReportHandler';
 import TabBarMaterialLabel from '../components/TabBarMaterialLabel';
 
 const BottomTab = createBottomTabNavigator();
@@ -20,29 +17,12 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          //title: 'Report',
-          tabBarLabel: ({ focused }) => <TabBarMaterialLabel focused={focused} text="Home" />,
-          tabBarIcon: ({ focused }) => <TabBarMaterialIcon focused={focused} name="shield-plus" />,
-        }}
-      />
-      <BottomTab.Screen
         name="Report"
-        component={ReportScreen}
+        component={ReportHandler}
         options={{
           //title: 'Report',
           tabBarLabel: ({ focused }) => <TabBarMaterialLabel focused={focused} text="Report" />,
           tabBarIcon: ({ focused }) => <TabBarMaterialIcon focused={focused} name="shield-plus" />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Assessment"
-        component={LinksScreen}
-        options={{
-          title: 'Assessment',
-          tabBarIcon: ({ focused }) => <TabBarMaterialIcon focused={focused} name="chart-bar-stacked" />,
         }}
       />
       <BottomTab.Screen
@@ -61,14 +41,10 @@ function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
-    case 'Home':
-      return 'How to get started';
     case 'Report':
       return 'Report';
-    case 'Links':
-      return 'Links to learn more';
     case 'Settings':
-      return "Foo";
+      return "Settings";
     default:
       return '';
   }
