@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
 import PropTypes from 'prop-types';
 
-import { ACTIVE_COLOR, INACTIVE_COLOR } from '../assets/DefaultStyles';
+import { ACTIVE_COLOR, INACTIVE_COLOR } from '../constants/DefaultStyles';
 
 const styles = StyleSheet.create({
     activeLabel: {

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { ACTIVE_COLOR, INACTIVE_COLOR } from '../assets/DefaultStyles';
+import { ACTIVE_COLOR, INACTIVE_COLOR } from '../constants/DefaultStyles';
 
 const styles = StyleSheet.create({
     icon: {

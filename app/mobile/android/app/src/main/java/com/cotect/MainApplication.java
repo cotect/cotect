@@ -23,7 +23,6 @@ import java.util.List;
 // import expo.modules.permissions.PermissionsPackage;
 // import expo.modules.filesystem.FileSystemPackage;
 
-
 public class MainApplication extends Application implements ReactApplication {
   // private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
   //   new BasePackageList().getPackageList(),

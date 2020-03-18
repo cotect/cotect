@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarMaterialIcon from '../components/TabBarMaterialIcon';
-import SettingsScreen from '../screens/SettingsScreen_';
+import SettingsScreen from '../screens/SettingsScreen';
 import ReportHandler from '../screens/ReportHandler';
 import TabBarMaterialLabel from '../components/TabBarMaterialLabel';
 

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
-import { mapStateToProps, mapDispatchToProps } from '../redux/reduce';
+import { mapStateToProps, mapDispatchToProps } from '../redux/reducer';
 
 const styles = StyleSheet.create({
     contentContainer: {

@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { store, setSettingsState } from "./redux/reduce";
+import { store, setSettingsState } from "./redux/reducer";
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';

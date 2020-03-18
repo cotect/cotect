@@ -60,8 +60,9 @@ export const setSettingsState = (state) => {
 }
 
 export const setPhoneNumber = (phoneNumber) => {
-
-    AsyncStorage.setItem(STORAGE_PHONE_NUMBER_KEY, phoneNumber);
+    if (phoneNumber) {
+        AsyncStorage.setItem(STORAGE_PHONE_NUMBER_KEY, phoneNumber);
+    }
 
     return {
         type: SET_PHONE_NUMBER,
@@ -70,7 +71,9 @@ export const setPhoneNumber = (phoneNumber) => {
 }
 
 export const setResidence = (residence) => {
-    AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, residence);
+    if (residence) {
+        AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, residence);
+    }
 
     return {
         type: SET_RESIDENCE,
@@ -79,7 +82,9 @@ export const setResidence = (residence) => {
 }
 
 export const setAge = (age) => {
-    AsyncStorage.setItem(STORAGE_AGE_KEY, age);
+    if (age) {
+        AsyncStorage.setItem(STORAGE_AGE_KEY, age);
+    }
 
     return {
         type: SET_AGE,
@@ -88,7 +93,9 @@ export const setAge = (age) => {
 }
 
 export const setGender = (gender) => {
-    AsyncStorage.setItem(STORAGE_GENDER_KEY, gender);
+    if (gender) {
+        AsyncStorage.setItem(STORAGE_GENDER_KEY, gender);
+    }
 
     return {
         type: SET_GENDER,
