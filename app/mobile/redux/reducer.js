@@ -9,19 +9,22 @@ export const SET_PHONE_NUMBER = "SET_PHONE_NUMBER";
 export const SET_AGE = "SET_AGE";
 export const SET_GENDER = "SET_GENDER";
 export const SET_RESIDENCE = "SET_RESIDENCE";
+export const INCREASE_NUMBER_OF_REPORTS = "INCREASE_NUMBER_OF_REPORTS";
 
-const STORAGE_KEY_PREFIX = "@Cotect_";
+export const STORAGE_KEY_PREFIX = "@Cotect_";
 const STORAGE_PHONE_NUMBER_KEY = STORAGE_KEY_PREFIX + "phoneNumber";
 const STORAGE_RESIDENCE_KEY = STORAGE_KEY_PREFIX + "residence";
 const STORAGE_GENDER_KEY = STORAGE_KEY_PREFIX + "gender";
 const STORAGE_AGE_KEY = STORAGE_KEY_PREFIX + "age";
+const INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + "numberOfReports";
 
 const initialState = {
     appLoading: false,
     phoneNumber: "",
     residence: "",
     gender: "",
-    age: ""
+    age: "",
+    numberOfReports: 0
 }
 
 export default reducer = (state = initialState, action) => {
@@ -29,7 +32,7 @@ export default reducer = (state = initialState, action) => {
         case SET_APP_LOADING:
             return {...state, appLoading: true};
         case SET_SETTINGS_STATE:
-            return {...action.payload.state, appLoading: false};
+            return {...state, ...action.payload.state, appLoading: false};
         case DELETE_SETTINGS:
             return {...action.payload.state};
         case SET_PHONE_NUMBER:
@@ -40,6 +43,10 @@ export default reducer = (state = initialState, action) => {
             return {...state, gender: action.payload.data};
         case SET_RESIDENCE:
             return {...state, residence: action.payload.data};
+        case INCREASE_NUMBER_OF_REPORTS:
+            const increaseNumberOfReports = parseInt(state.numberOfReports) + 1;
+            AsyncStorage.setItem(INCREASE_NUMBER_OF_REPORTS_KEY, "" + increaseNumberOfReports);
+            return {...state, numberOfReports: increaseNumberOfReports};
         default:
             return state;
     }
@@ -103,6 +110,13 @@ export const setGender = (gender) => {
     }
 }
 
+export const increaseNumberOfReports = () => {
+    return {
+        type: INCREASE_NUMBER_OF_REPORTS,
+        payload: {}
+    }
+}
+
 export const deleteSettings = () => {
     AsyncStorage.multiRemove([STORAGE_PHONE_NUMBER_KEY, STORAGE_RESIDENCE_KEY, STORAGE_AGE_KEY, STORAGE_GENDER_KEY])
         .then(e => console.log("Error in deleting settings"));
@@ -113,17 +127,21 @@ export const deleteSettings = () => {
     }
 }
 
-export const mapStateToProps = state => ({
-    phoneNumber: state.phoneNumber,
-    residence: state.residence,
-    age: state.age,
-    gender: state.gender
-})
-
-export const store = redux.createStore(reducer);
+export const mapStateToProps = state => {
+    return {
+        phoneNumber: state.phoneNumber,
+        residence: state.residence,
+        age: state.age,
+        gender: state.gender,
+        numberOfReports: state.numberOfReports
+    }
+}
 
 export const mapDispatchToProps = {
     setAppLoading, setSettingsState, 
     setPhoneNumber, setResidence, 
-    setAge, setGender, deleteSettings
+    setAge, setGender, increaseNumberOfReports,
+    deleteSettings
 }
+
+export const store = redux.createStore(reducer);

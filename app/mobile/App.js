@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { store, setSettingsState } from "./redux/reducer";
+import { store, setSettingsState, STORAGE_KEY_PREFIX } from "./redux/reducer";
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
@@ -23,7 +23,7 @@ const loadSavedSettings = () => {
           let key = result[0];
           let value = result[1];
           
-          settingsState[key] = value;
+          settingsState[key.replace(STORAGE_KEY_PREFIX, "")] = value;
         });
         store.dispatch(setSettingsState(settingsState));
       })

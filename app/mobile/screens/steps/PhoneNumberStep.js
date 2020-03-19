@@ -67,9 +67,7 @@ export default function PhoneNumberStep(props) {
         }
     }
 
-    const onAuthStateChanged = (user) => {
-        console.log(user);
-       
+    const onAuthStateChanged = (user) => {       
         if (user) {
             // user.delete();
             // user.getIdToken(true).then((e)=>console.log(e)).catch((e) => console.log(e));

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
+import { connect } from "react-redux";
+
 import ReportScreen from './ReportScreen';
 
 import { View , StyleSheet } from 'react-native';
 
 import { Button, Paragraph, Portal } from 'react-native-paper';
+
+import { mapStateToProps, mapDispatchToProps } from '../redux/reducer';
 
 const styles = StyleSheet.create({
     paragraphContainer: {
@@ -20,18 +24,19 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function ReportHandler(props) {
-
+function ReportHandler(props) {
     const [isReportStarted, setReportStarted] = useState(false);
 
     const reportSubmitted = () => {
-        console.log("reportSubmitted");
         setReportStarted(false);
+        props.increaseNumberOfReports();
     }
 
     const reportExited = () => {
         setReportStarted(false);
     }
+
+    const startButtonText = (props.numberOfReports === 0) ? "Start Report!" : "Update Report";
 
     return (
         <Portal.Host>
@@ -39,6 +44,7 @@ export default function ReportHandler(props) {
                 <ReportScreen 
                     onSubmit={reportSubmitted}
                     onExit={reportExited}
+                    numberOfReports={props.numberOfReports}
                 />
                 :
                 (
@@ -64,7 +70,7 @@ export default function ReportHandler(props) {
                             style={{position: "absolute", bottom: 16, alignSelf: "center"}}
                             onPress={() => setReportStarted(true)}
                         >
-                            Start Report!
+                            {startButtonText}
                     </Button>
                 </View>
                 )
@@ -73,3 +79,5 @@ export default function ReportHandler(props) {
         </Portal.Host>
     );
 }
+
+export default connect(mapStateToProps,  mapDispatchToProps)(ReportHandler);
