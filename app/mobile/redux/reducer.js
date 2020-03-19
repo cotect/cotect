@@ -16,7 +16,7 @@ const STORAGE_PHONE_NUMBER_KEY = STORAGE_KEY_PREFIX + "phoneNumber";
 const STORAGE_RESIDENCE_KEY = STORAGE_KEY_PREFIX + "residence";
 const STORAGE_GENDER_KEY = STORAGE_KEY_PREFIX + "gender";
 const STORAGE_AGE_KEY = STORAGE_KEY_PREFIX + "age";
-const INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + "numberOfReports";
+const STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + "numberOfReports";
 
 const initialState = {
     appLoading: false,
@@ -45,7 +45,7 @@ export default reducer = (state = initialState, action) => {
             return {...state, residence: action.payload.data};
         case INCREASE_NUMBER_OF_REPORTS:
             const increaseNumberOfReports = parseInt(state.numberOfReports) + 1;
-            AsyncStorage.setItem(INCREASE_NUMBER_OF_REPORTS_KEY, "" + increaseNumberOfReports);
+            AsyncStorage.setItem(STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY, "" + increaseNumberOfReports);
             return {...state, numberOfReports: increaseNumberOfReports};
         default:
             return state;
@@ -118,7 +118,13 @@ export const increaseNumberOfReports = () => {
 }
 
 export const deleteSettings = () => {
-    AsyncStorage.multiRemove([STORAGE_PHONE_NUMBER_KEY, STORAGE_RESIDENCE_KEY, STORAGE_AGE_KEY, STORAGE_GENDER_KEY])
+    AsyncStorage.multiRemove(
+        [STORAGE_PHONE_NUMBER_KEY, 
+            STORAGE_RESIDENCE_KEY, 
+            STORAGE_AGE_KEY, 
+            STORAGE_GENDER_KEY,
+            STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY
+        ])
         .then(e => console.log("Error in deleting settings"));
 
     return {

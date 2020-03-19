@@ -129,26 +129,36 @@ function ReportScreen(props) {
     const [onModalClick, setOnModalClick] = useState(() => () => {}); // a function in useState must return the function, otherwise it is directly executed (https://stackoverflow.com/a/55621325/5379273)
     const _hideDialog = () => setModalVisible(false);
 
-    const steps = [
+    const availableSteps = [
         {
             title: "What is your phone number?",
             element: PhoneNumberStep,
             onFinish: (user) => { setUserPhoneNumber(user); },
-            initialProps: user
+            initialProps: user,
+            isPermanentSetting: true
         },
         {
             title: "What is your age?",
             helpText: "We need the age to...",
             element: AgeStep,
             onFinish: (age) => { setAge(age);},
-            initialProps: age
+            initialProps: age,
+            isPermanentSetting: true
         },
         {
             title: "What is your biological gender?",
             helpText: undefined,
             element: GenderStep,
             onFinish: (gender) => { setGender(gender); },
-            initialProps: gender
+            initialProps: gender,
+            isPermanentSetting: true
+        },
+        {
+            title: "What is your current location?",
+            element: CurrentLocationStep,
+            onFinish: (location) => { setCurrentLocation(location);},
+            initialProps: currentLocation,
+            isPermanentSetting: true
         },
         {
             title: "What are your symptoms?",
@@ -163,15 +173,9 @@ function ReportScreen(props) {
             initialProps: temperature
         },
         {
-            title: "What is your current location?",
-            element: CurrentLocationStep,
-            onFinish: (location) => { setCurrentLocation(location);},
-            initialProps: currentLocation
-        },
-        {
             title: "Where have you been?",
             element: LocationsStep,
-            onFinish: (locations, nextEnabled) => { setLocations(locations);},
+            onFinish: (locations) => { setLocations(locations);},
             initialProps: locations
         },
         {
@@ -187,6 +191,19 @@ function ReportScreen(props) {
             initialProps: contacts
         },
     ];
+
+    const getSelectedSteps = () => {
+        let selectedSteps = [];
+        for (let step in availableSteps) {
+            let selectedStep = availableSteps[step];
+            if (props.numberOfReports > 0 && selectedStep.isPermanentSetting) {
+                continue;
+            }
+            selectedSteps.push(selectedStep);
+        }
+
+        return selectedSteps;
+    }
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
@@ -250,6 +267,7 @@ function ReportScreen(props) {
         }));
     }
 
+    const steps = getSelectedSteps();
     let isBackButtonEnabled = (stepIndex > 0) ? true : false;
     let isNextButtonEnabled = (steps[stepIndex].initialProps) ? true : false;
     return (
