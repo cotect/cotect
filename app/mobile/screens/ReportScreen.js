@@ -308,7 +308,7 @@ function ReportScreen(props) {
             if (error) {
                 console.log(error);
             } else {
-                setModalText('We submitted the report! Thanks for your help fighting CoVid!');
+                setModalText(t('report.submit.successText'));
                 setOnModalClick(() => () => props.onSubmit());
             }
         });
