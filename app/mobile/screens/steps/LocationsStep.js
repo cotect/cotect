@@ -68,35 +68,37 @@ export default function LocationsStep(props) {
         setDialogSelectedDates(modifiedDialogSelectedDays);
     }
 
-    let onAddPlace = (location, dates) => {
-        let locationAndDates = {
-            location: location,
-            dates: dates
+    let onAddPlace = (place, dates) => {
+        let location = { 
+            placeId: place.placeID,
+            latitude: place.location.latitude, 
+            longitude: place.location.longitude,
+            placeName: place.address,
+            placeTypes: place.types,
+            visitDates: dates
         }
 
         setDialogLocation({});
         setDialogSelectedDates({});
-        locationAndDates = [...locationsAndDates, locationAndDates];
-        setLocationsAndDates(locationAndDates);
+        let modifiedLocationsAndDates = [...locationsAndDates, location];
+        setLocationsAndDates(modifiedLocationsAndDates);
         _hideDialog();
 
-        const nextEnabled = (locationAndDates.length > 0) ? true : false;
-        props.stepItem.onFinish(locationAndDates, nextEnabled);
+        props.stepItem.onFinish(modifiedLocationsAndDates);
     }
 
     return (
         <View>
             <View style={styles.itemList}>
                 {locationsAndDates.map((item, index) => {
-                    
                     let earliestDateKey;
                     let latestDateKey;
-                    for (let key in item.dates) {
-                        let date = item.dates[key];
-                        if (earliestDateKey === undefined || date.timestamp < item.dates[earliestDateKey].timestamp) {
+                    for (let key in item.visitDates) {
+                        let date = item.visitDates[key];
+                        if (earliestDateKey === undefined || date.timestamp < item.visitDates[earliestDateKey].timestamp) {
                             earliestDateKey = key; 
                         }
-                        if (latestDateKey === undefined || date.timestamp > item.dates[latestDateKey].timestamp) {
+                        if (latestDateKey === undefined || date.timestamp > item.visitDates[latestDateKey].timestamp) {
                             latestDateKey = key;
                         }
                     }
@@ -107,7 +109,7 @@ export default function LocationsStep(props) {
                             style={styles.cardItem}
                         >
                             <Card.Title 
-                                title={item.location.address}
+                                title={item.placeName}
                                 subtitle={earliestDateKey + " to " + latestDateKey}
                             />
                             {/* {Object.entries(item.dates).map(([key, value]) => (

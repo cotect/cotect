@@ -25,13 +25,23 @@ const styles = StyleSheet.create({
 });
 
 export default function CurrentLocationStep(props) {
+
     const [currentLocation, setCurrentLocation] = useState(props.stepItem.initialProps);
+
     let openPlacesSearchModal = () => {
         RNGooglePlaces.openAutocompleteModal()
         .then((place) => {
-            setCurrentLocation(place.address);
+            let location = { 
+                placeId: place.placeID,
+                latitude: place.location.latitude, 
+                longitude: place.location.longitude,
+                placeName: place.address,
+                placeTypes: place.types,
+                visitDates: [new Date()]
+            }
+            setCurrentLocation(location);
 
-            props.stepItem.onFinish(place.address, true);
+            props.stepItem.onFinish(location, true);
             // place represents user's selection from the
             // suggestions and it is a simplified Google Place object.
         })
@@ -50,7 +60,7 @@ export default function CurrentLocationStep(props) {
                     style={styles.cardItem}
                 >
                     <Card.Content>
-                        <Paragraph>{currentLocation}</Paragraph>
+                        <Paragraph>{currentLocation.placeName}</Paragraph>
                     </Card.Content> 
                 </Card>
                 : false 

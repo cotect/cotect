@@ -31,11 +31,12 @@ export default function ContactsStep(props) {
     const [selectedContacts, setSelectedContacts] = useState(props.stepItem.initialProps || []);
 
     let selectPhoneNumber = (number) => {
-        const newSelectedContacts = [...selectedContacts, number];
-        setSelectedContacts(newSelectedContacts);
+        // TODO: add logic so that the contact date can be set
+        let newSelectedContact = { phoneNumber: number, contactDate: new Date() };
+        let modifiedSelectedContacts = [...selectedContacts, newSelectedContact];
+        setSelectedContacts(modifiedSelectedContacts);
 
-        const nextEnabled = (selectedContacts.length > 0) ? true : false;
-        props.stepItem.onFinish(newSelectedContacts, nextEnabled);
+        props.stepItem.onFinish(modifiedSelectedContacts);
     }
 
     let getPhoneNumber = () => {
@@ -55,14 +56,14 @@ export default function ContactsStep(props) {
     return (
         <View>
             <View style={styles.itemList}>
-                {selectedContacts.map((item, index) => {
+                {selectedContacts.map((contact, index) => {
                     return (
                         <Card 
                             key={index}
                             style={styles.cardItem}
                         >
                              <Card.Content>
-                                <Paragraph>{item}</Paragraph>
+                                <Paragraph>{contact.phoneNumber}</Paragraph>
                             </Card.Content> 
                         </Card>
                     )
