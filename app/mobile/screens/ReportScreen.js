@@ -281,13 +281,17 @@ function ReportScreen(props) {
                     />
                 }
 
-                <Button
-                        style={styles.backButton}
-                        disabled={!isBackButtonEnabled}
-                        onPress={() => prevStepItem()}
-                    >
-                        Previous
-                </Button>
+                {/* Don't show the previous button for the first step */}
+                {(isBackButtonEnabled ) ? 
+                    <Button
+                            style={styles.backButton}
+                            // disabled={!isBackButtonEnabled}
+                            onPress={() => prevStepItem()}
+                        >
+                            Previous
+                    </Button> :
+                    false
+                }
 
                 {(stepIndex < steps.length - 1) ?
                     <Button
