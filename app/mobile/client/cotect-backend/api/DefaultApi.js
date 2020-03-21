@@ -128,7 +128,7 @@ export default class DefaultApi {
       let formParams = {
       };
 
-      let authNames = ['APIKeyCookie', 'APIKeyHeader', 'APIKeyQuery', 'HTTPBearer'];
+      let authNames = ['APIKeyCookie', 'APIKeyHeader', 'APIKeyQuery']; // , 'HTTPBearer'];
       let contentTypes = ['application/json'];
       let accepts = ['application/json'];
       let returnType = null;

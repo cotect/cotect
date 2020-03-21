@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CONTAINER} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
-import { DefaultApi as CotectApi, CaseReport, CaseSymptom, CasePlace, CaseContact } from '../client/cotect-backend/index';
+import { DefaultApi as CotectApi, ApiClient, CaseReport, CaseSymptom, CasePlace, CaseContact } from '../client/cotect-backend/index';
 
 import {
     AgeStep,
@@ -141,8 +141,11 @@ function ReportScreen(props) {
         {
             title: t('report.phoneNumber.title'),
             element: PhoneNumberStep,
-            onFinish: user => {
-                setUserPhoneNumber(user);
+            onFinish: (phoneNumber, user) => {
+                setUserPhoneNumber(phoneNumber);
+                user.getIdToken().then((authToken) => {
+                    props.setAuthToken(authToken);
+                });
             },
             initialProps: user,
             isPermanentSetting: true,
@@ -304,7 +307,12 @@ function ReportScreen(props) {
         // }, 1000);
 
         let caseReport = createCaseReport();
-        new CotectApi().updateReportReportsPost(caseReport, (error, data, response) => {
+        let apiClient = new ApiClient();
+        apiClient.basePath = ""; // TODO: add endpoint url here
+        let APIKeyHeader = apiClient.authentications['APIKeyHeader'];
+        APIKeyHeader.apiKey = props.authToken;
+
+        new CotectApi(apiClient).updateReportReportsPost(caseReport, (error, data, response) => {
             if (error) {
                 console.log(error);
             } else {
