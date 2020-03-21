@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {StyleSheet, View} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
+import {useTranslation} from 'react-i18next';
 
 const styles = StyleSheet.create({
     contentContainer: {
@@ -16,22 +17,31 @@ const styles = StyleSheet.create({
 });
 
 function SettingsScreen(props) {
+    const {t} = useTranslation();
     const deleteData = () => {
         props.deleteSettings();
     };
 
     return (
         <View style={styles.contentContainer}>
-            <Text>Your data:</Text>
-            <Text>Phone Number: {props.phoneNumber}</Text>
-            <Text>Location: {props.residence}</Text>
-            <Text>Age: {props.age}</Text>
-            <Text>Gender: {props.gender}</Text>
+            <Text>{t('settings.title')}</Text>
+            <Text>
+                {t('settings.phoneNumberLabel')} {props.phoneNumber}
+            </Text>
+            <Text>
+                {t('settings.locationLabel')} {props.residence}
+            </Text>
+            <Text>
+                {t('settings.ageLabel')} {props.age}
+            </Text>
+            <Text>
+                {t('settings.genderLabel')} {props.gender}
+            </Text>
 
             <Button
                 // style={styles.deleteButton}
                 onPress={deleteData}>
-                Delete my data!
+                {t('settings.deleteDataAction')}
             </Button>
         </View>
     );

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {connect} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
 
@@ -101,6 +102,7 @@ function Step(props) {
 }
 
 function ReportScreen(props) {
+    const {t} = useTranslation();
     const [stepIndex, setStepIndex] = useState(0);
     //const [isNextButtonEnabled, setNextButtonEnabled] = useState(false);
     // const [isBackButtonEnabled, setBackButtonEnabled] = useState(false);
@@ -137,7 +139,7 @@ function ReportScreen(props) {
 
     const availableSteps = [
         {
-            title: 'What is your phone number?',
+            title: t('report.phoneNumber.title'),
             element: PhoneNumberStep,
             onFinish: user => {
                 setUserPhoneNumber(user);
@@ -146,8 +148,8 @@ function ReportScreen(props) {
             isPermanentSetting: true,
         },
         {
-            title: 'What is your age?',
-            helpText: 'We need the age to...',
+            title: t('report.age.title'),
+            helpText: t('report.age.helpText'),
             element: AgeStep,
             onFinish: age => {
                 setAge(age);
@@ -156,7 +158,7 @@ function ReportScreen(props) {
             isPermanentSetting: true,
         },
         {
-            title: 'What is your biological gender?',
+            title: t('report.gender.title'),
             helpText: undefined,
             element: GenderStep,
             onFinish: gender => {
@@ -166,7 +168,7 @@ function ReportScreen(props) {
             isPermanentSetting: true,
         },
         {
-            title: 'What is your current location?',
+            title: t('report.residence.title'),
             element: CurrentLocationStep,
             onFinish: location => {
                 setCurrentLocation(location);
@@ -175,7 +177,7 @@ function ReportScreen(props) {
             isPermanentSetting: true,
         },
         {
-            title: 'What are your symptoms?',
+            title: t('report.symptoms.title'),
             element: SymptomsStep,
             onFinish: symptoms => {
                 setSymptoms(symptoms);
@@ -183,7 +185,7 @@ function ReportScreen(props) {
             initialProps: symptoms,
         },
         {
-            title: 'What is your temperature?',
+            title: t('report.temperature.title'),
             element: TemperatureStep,
             onFinish: temperature => {
                 setTemperature(temperature);
@@ -191,7 +193,7 @@ function ReportScreen(props) {
             initialProps: temperature,
         },
         {
-            title: 'Where have you been?',
+            title: t('report.locations.title'),
             element: LocationsStep,
             onFinish: locations => {
                 setLocations(locations);
@@ -199,7 +201,7 @@ function ReportScreen(props) {
             initialProps: locations,
         },
         {
-            title: 'With how many persons did you have contact?',
+            title: t('report.contacts.amountTitle'),
             element: NumberOfContactsStep,
             onFinish: numberOfContacts => {
                 setNumberOfContacts(numberOfContacts);
@@ -207,7 +209,7 @@ function ReportScreen(props) {
             initialProps: numberOfContacts,
         },
         {
-            title: 'Who had you contact with?',
+            title: t('report.contacts.whoTitle'),
             element: ContactsStep,
             onFinish: contacts => {
                 setContacts(contacts);
@@ -260,10 +262,17 @@ function ReportScreen(props) {
         props.setGender(gender);
 
         // show a dialog with more information about the submitted report
-        setModalTitle('Report Submission');
-        setModalText('We are submitting the report...'); // replace text upon answer of the server
-        setModalButtonText('Submit');
+        setModalTitle(t('report.submit.title'));
+        setModalText(t('report.submit.text')); // replace text upon answer of the server
+        setModalButtonText(t('report.submit.primaryAction'));
         setModalVisible(true);
+
+        // simulate call to backend
+        setTimeout(() => {
+            setModalText(t('report.submit.successText'));
+            // TODO: button text should not be "Submit" here
+            setOnModalClick(() => () => props.onSubmit());
+        }, 1000);
 
         // TODO: execute call to firebase
         
@@ -308,9 +317,9 @@ function ReportScreen(props) {
     };
 
     const exitReport = () => {
-        setModalTitle('Exit Report');
-        setModalText('Do you really want to exit the report? It will not be saved.');
-        setModalButtonText('Exit');
+        setModalTitle(t('report.exit.title'));
+        setModalText(t('report.exit.text'));
+        setModalButtonText(t('report.exit.primaryAction'));
         setOnModalClick(() => () => props.onExit());
         setModalVisible(true);
     };
@@ -356,7 +365,7 @@ function ReportScreen(props) {
                         style={styles.nextButton}
                         // disabled={!isNextButtonEnabled}
                         onPress={() => nextStepItem()}>
-                        {isNextButtonEnabled ? 'Next' : 'Skip'}
+                        {isNextButtonEnabled ? t('report.nextAction') : t('report.skipAction')}
                     </Button>
                 ) : (
                     <Button
@@ -397,4 +406,7 @@ function ReportScreen(props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReportScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ReportScreen);

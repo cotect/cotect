@@ -4,15 +4,18 @@ import TabBarMaterialIcon from '../components/TabBarMaterialIcon';
 import SettingsScreen from '../screens/SettingsScreen';
 import ReportHandler from '../screens/ReportHandler';
 import TabBarMaterialLabel from '../components/TabBarMaterialLabel';
+import {useTranslation} from 'react-i18next';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
 export default function BottomTabNavigator({navigation, route}) {
+    const {t} = useTranslation();
+
     // Set the header title on the parent stack navigator depending on the
     // currently active tab. Learn more in the documentation:
     // https://reactnavigation.org/docs/en/screen-options-resolution.html
-    navigation.setOptions({headerTitle: getHeaderTitle(route)});
+    navigation.setOptions({headerTitle: getHeaderTitle(route, t)});
 
     return (
         <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -20,9 +23,12 @@ export default function BottomTabNavigator({navigation, route}) {
                 name="Report"
                 component={ReportHandler}
                 options={{
-                    //title: 'Report',
+                    title: t('navigation.reportTitle'),
                     tabBarLabel: ({focused}) => (
-                        <TabBarMaterialLabel focused={focused} text="Report" />
+                        <TabBarMaterialLabel
+                            focused={focused}
+                            text={t('navigation.reportTabLabel')}
+                        />
                     ),
                     tabBarIcon: ({focused}) => (
                         <TabBarMaterialIcon focused={focused} name="shield-plus" />
@@ -33,7 +39,13 @@ export default function BottomTabNavigator({navigation, route}) {
                 name="Settings"
                 component={SettingsScreen}
                 options={{
-                    title: 'Settings',
+                    title: t('navigation.settingsTitle'),
+                    tabBarLabel: ({focused}) => (
+                        <TabBarMaterialLabel
+                            focused={focused}
+                            text={t('navigation.settingsTabLabel')}
+                        />
+                    ),
                     tabBarIcon: ({focused}) => (
                         <TabBarMaterialIcon focused={focused} name="settings-outline" />
                     ),
@@ -43,15 +55,15 @@ export default function BottomTabNavigator({navigation, route}) {
     );
 }
 
-function getHeaderTitle(route) {
+function getHeaderTitle(route, t) {
     const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
     switch (routeName) {
         case 'Report':
-            return 'Report';
+            return t('navigation.reportTitle');
         case 'Settings':
-            return 'Settings';
+            return t('navigation.settingsTitle');
         default:
-            return '';
+            return t('navigation.homeTitle');
     }
 }
