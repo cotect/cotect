@@ -1,5 +1,10 @@
 {
     "translation": {
+        "error": {
+            "primaryAction": "",
+            "text": "",
+            "title": ""
+        },
         "navigation": {
             "homeTitle": "Cotect",
             "reportTabLabel": "Report",

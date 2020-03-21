@@ -1,5 +1,10 @@
 {
     "translation": {
+        "error": {
+            "primaryAction": "Reload the app",
+            "text": "Something bad happened. Our developers are looking into the problem and are probably already working on a fix.",
+            "title": "Oh noes."
+        },
         "navigation": {
             "homeTitle": "Home",
             "reportTabLabel": "Report",
