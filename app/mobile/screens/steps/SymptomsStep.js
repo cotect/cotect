@@ -18,22 +18,37 @@ const styles = StyleSheet.create({
 });
 
 export default function SymptomsStep(props) {
-    let symptoms = ["Fever", "Headache", "Cough", "Fever", "Headache", "Cough", "Fever", "Headache", "Cough", "Fever", "Headache", "Cough", "Fever", "Headache", "Cough"];
-    symptoms = [...symptoms, ...symptoms, ...symptoms, ...symptoms];
-    const [selectedSymptoms, setSelectedSymptoms] = useState(props.stepItem.initialProps || []);
 
-    const onSelect = (item, index) => {
-        let modifiedSelectedSymptoms = [...selectedSymptoms];
-        let elementIndex = modifiedSelectedSymptoms.indexOf(index);
-        if (elementIndex > -1) {
-            modifiedSelectedSymptoms.splice(elementIndex, 1);
+    let symptoms = [
+        {name: "Fever", severitySettings: {minimumValue: 0, maximumValue: 10, step: 1}}, 
+        {name: "Headache", severitySettings: ["mild", "moderate", "severe"]}, 
+        {name: "Cough", severitySettings: ["mild", "moderate", "severe"]}
+    ];
+
+    // selectedSymptoms: [{ name, severity, reportDate }]
+    const [selectedSymptoms, setSelectedSymptoms] = useState(props.stepItem.initialProps || {});
+    const [firstOccuredDate, setFirstOccuredDate] = useState();
+
+    const onSelect = (symptom, index) => {
+        let modifiedSelectedSymptoms = {...selectedSymptoms};
+        if (symptom.name in modifiedSelectedSymptoms) {
+            delete modifiedSelectedSymptoms[symptom.name];
         } else {
-            modifiedSelectedSymptoms.push(index);
+            // TODO: set severity
+            modifiedSelectedSymptoms[symptom.name] = { name: symptom.name, severity: "" }
         }
-        setSelectedSymptoms([...modifiedSelectedSymptoms]);
 
-        const nextEnabled = (modifiedSelectedSymptoms.length > 0) ? true : false;
-        props.stepItem.onFinish(modifiedSelectedSymptoms, nextEnabled);
+        for (let i in modifiedSelectedSymptoms) {
+            modifiedSelectedSymptoms[i].reportDate = firstOccuredDate;            
+        }
+
+        setSelectedSymptoms(modifiedSelectedSymptoms);
+        props.stepItem.onFinish(modifiedSelectedSymptoms);
+    }
+
+    // TODO: implement field where first occurrence can be set
+    const onChangeFirstOccured = (firstOccuredDate) => {
+        setFirstOccuredDate(input);
     }
 
     return (
@@ -42,13 +57,13 @@ export default function SymptomsStep(props) {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.chipsContainer}>
-                {symptoms.map((item, key) => (
+                {symptoms.map((symptom, key) => (
                     <Chip
                         style={styles.chip}
                         key={key} 
-                        onPress={() => onSelect(item, key)}
-                        selected={selectedSymptoms.indexOf(key) > -1 ? true : false}>
-                            {item}
+                        onPress={() => onSelect(symptom, key)}
+                        selected={symptom.name in selectedSymptoms ? true : false}>
+                            {symptom.name}
                     </Chip>
                 ))}
             </ScrollView>

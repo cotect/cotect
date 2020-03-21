@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CONTAINER} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
+import { DefaultApi as CotectApi, CaseReport, CaseSymptom, CasePlace, CaseContact } from '../client/cotect-backend/index';
+
 import {
     AgeStep,
     ContactsStep,
@@ -116,10 +118,14 @@ function ReportScreen(props) {
     const [gender, setGender] = useState(props.gender);
     const [currentLocation, setCurrentLocation] = useState(props.residence);
     const [temperature, setTemperature] = useState();
+    // symptoms: {symptomName: { symptomName, reportDate, severity }}
     const [symptoms, setSymptoms] = useState();
 
+    // locations: [{ placeId, visitDates, latitude, longitude, placeName, placeTypes }]
     const [locations, setLocations] = useState();
     const [numberOfContacts, setNumberOfContacts] = useState();
+
+    // contacts: [{ phoneNumber, contactDate }]
     const [contacts, setContacts] = useState();
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -259,13 +265,46 @@ function ReportScreen(props) {
         setModalButtonText('Submit');
         setModalVisible(true);
 
-        // simulate call to backend
-        setTimeout(() => {
-            setModalText('We submitted the report! Thanks for your help fighting CoVid!');
-            setOnModalClick(() => () => props.onSubmit());
-        }, 1000);
-
         // TODO: execute call to firebase
+        
+        let createCaseReport = () => {
+            let caseReport = new  CaseReport();
+            caseReport.age = age;
+            caseReport.gender = gender;
+            caseReport.residence = currentLocation;
+            caseReport.covid_test = ""; // not asked yet
+            caseReport.covid_contact = null; // not asked yet
+
+            let transformedSymptoms = [];
+            for (let i in symptoms) {
+                transformedSymptoms.push(symptoms[i]);
+            }
+
+            caseReport.symptoms = transformedSymptoms;
+            caseReport.places = locations;
+            caseReport.contacts = contacts;
+
+            return caseReport;
+        }
+
+
+         // simulate call to backend
+        //  setTimeout(() => {
+        //     setModalText('We submitted the report! Thanks for your help fighting CoVid!');
+        //     setOnModalClick(() => () => props.onSubmit());
+        // }, 1000);
+
+        let caseReport = createCaseReport();
+        new CotectApi().updateReportReportsPost(caseReport, (error, data, response) => {
+            if (error) {
+                console.log(error);
+            } else {
+                setModalText('We submitted the report! Thanks for your help fighting CoVid!');
+                setOnModalClick(() => () => props.onSubmit());
+            }
+        });
+
+
     };
 
     const exitReport = () => {
