@@ -1,26 +1,24 @@
-
 import React from 'react';
 
-import { connect } from "react-redux";
+import {connect} from 'react-redux';
 
-import { StyleSheet, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-import { mapStateToProps, mapDispatchToProps } from '../redux/reducer';
+import {StyleSheet, View} from 'react-native';
+import {Button, Text} from 'react-native-paper';
+import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
 const styles = StyleSheet.create({
     contentContainer: {
-        height: "100%",
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center"
-    }
+        height: '100%',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 function SettingsScreen(props) {
-
     const deleteData = () => {
         props.deleteSettings();
-    }
+    };
 
     return (
         <View style={styles.contentContainer}>
@@ -32,12 +30,14 @@ function SettingsScreen(props) {
 
             <Button
                 // style={styles.deleteButton}
-                onPress={deleteData}    
-            >
+                onPress={deleteData}>
                 Delete my data!
             </Button>
         </View>
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(SettingsScreen);

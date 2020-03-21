@@ -5,7 +5,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest --watchAll",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettify": "npx prettier --write ./**/*.js"
   },
   "jest": {
     "preset": "react-native"
