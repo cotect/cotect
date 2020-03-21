@@ -361,4 +361,7 @@ function ReportScreen(props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReportScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ReportScreen);

@@ -60,8 +60,8 @@
             "paragraph1": "",
             "paragraph2": "",
             "paragraph3": "",
-            "startReportAction": "",
-            "updateReportAction": ""
+            "startReportAction": "Start Report",
+            "updateReportAction": "Update Report"
         }
     }
 }
