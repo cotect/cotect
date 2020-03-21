@@ -1,11 +1,11 @@
 {
     "translation": {
         "navigation": {
-            "homeTitle": "",
-            "reportTabLabel": "",
-            "reportTitle": "",
-            "settingsTabLabel": "",
-            "settingsTitle": ""
+            "homeTitle": "Cotect",
+            "reportTabLabel": "Report",
+            "reportTitle": "Report",
+            "settingsTabLabel": "Einstellungen",
+            "settingsTitle": "Einstellungen"
         },
         "report": {
             "age": {
