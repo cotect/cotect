@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 
 import {StyleSheet, View} from 'react-native';
 
@@ -212,18 +212,11 @@ function ReportScreen(props) {
         },
     ];
 
-    const getSelectedSteps = () => {
-        let selectedSteps = [];
-        for (let step in availableSteps) {
-            let selectedStep = availableSteps[step];
-            if (props.numberOfReports > 0 && selectedStep.isPermanentSetting) {
-                continue;
-            }
-            selectedSteps.push(selectedStep);
-        }
-
-        return selectedSteps;
-    };
+    const steps = useMemo(() => {
+        return availableSteps.filter(step => {
+            return props.numberOfReports === 0 || step.isPermanentSetting;
+        });
+    }, []);
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
@@ -289,7 +282,6 @@ function ReportScreen(props) {
         );
     };
 
-    const steps = getSelectedSteps();
     let isBackButtonEnabled = stepIndex > 0 ? true : false;
     let isNextButtonEnabled = steps[stepIndex].initialProps ? true : false;
     return (
@@ -361,7 +353,4 @@ function ReportScreen(props) {
     );
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ReportScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ReportScreen);
