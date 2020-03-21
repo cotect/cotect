@@ -6,7 +6,7 @@
         "ios": "react-native run-ios",
         "test": "jest --watchAll",
         "lint": "eslint .",
-        "prettify": "npx prettier --write ./**/*.js",
+        "prettify": "npx prettier --write ./**/*.{js,json,md}",
         "i18n:sync": "npx sync-i18n --files './translations/*.json' --primary en --languages de --newkeysempty"
     },
     "jest": {
