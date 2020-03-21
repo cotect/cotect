@@ -12,8 +12,8 @@
     "jest": {
         "preset": "react-native"
     },
-    "browser": { 
-        "fs": false 
+    "browser": {
+        "fs": false
     },
     "dependencies": {
         "@react-native-community/async-storage": "^1.8.1",
