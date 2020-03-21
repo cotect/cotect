@@ -1,1 +1,67 @@
-{}
+{
+    "translation": {
+        "navigation": {
+            "homeTitle": "",
+            "reportTabLabel": "",
+            "reportTitle": "",
+            "settingsTabLabel": "",
+            "settingsTitle": ""
+        },
+        "report": {
+            "age": {
+                "helpText": "",
+                "title": ""
+            },
+            "contacts": {
+                "amountTitle": "",
+                "whoTitle": ""
+            },
+            "exit": {
+                "primaryAction": "",
+                "text": "",
+                "title": ""
+            },
+            "gender": {
+                "title": ""
+            },
+            "locations": {
+                "title": ""
+            },
+            "nextAction": "",
+            "phoneNumber": {
+                "title": ""
+            },
+            "residence": {
+                "title": ""
+            },
+            "skipAction": "",
+            "submit": {
+                "primaryAction": "",
+                "successText": "",
+                "text": "",
+                "title": ""
+            },
+            "symptoms": {
+                "title": ""
+            },
+            "temperature": {
+                "title": ""
+            }
+        },
+        "settings": {
+            "ageLabel": "",
+            "deleteDataAction": "",
+            "genderLabel": "",
+            "locationLabel": "",
+            "phoneNumberLabel": "",
+            "title": ""
+        },
+        "start": {
+            "paragraph1": "",
+            "paragraph2": "",
+            "paragraph3": "",
+            "startReportAction": "",
+            "updateReportAction": ""
+        }
+    }
+}
