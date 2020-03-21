@@ -5,7 +5,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest --watchAll",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettify": "npx prettier --write ./**/*.js"
   },
   "jest": {
     "preset": "react-native"
@@ -19,6 +20,7 @@
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "@react-navigation/web": "~1.0.0-alpha.9",
+    "husky": "^4.2.3",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
