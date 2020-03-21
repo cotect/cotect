@@ -7,10 +7,12 @@ import { Provider } from "react-redux";
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { store, setSettingsState, STORAGE_KEY_PREFIX } from "./redux/reducer";
+import { store, setSettingsState, setAuthToken, STORAGE_KEY_PREFIX } from "./redux/reducer";
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+
+import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +59,15 @@ export default function App(props) {
   React.useEffect(() => {
     loadSavedSettings();
   }, [])
+
+  React.useEffect(() => {
+    let user = auth().currentUser;
+    if (user) {
+      user.getIdToken().then((token) => {
+        store.dispatch(setAuthToken(token));
+      });
+    }
+  }, []);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
