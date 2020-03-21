@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 
 import {StyleSheet, View} from 'react-native';
 
 import {connect} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
-import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
+import {Button, Dialog, Paragraph, Portal, Text, ProgressBar} from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -62,12 +62,13 @@ const styles = StyleSheet.create({
 });
 
 function Step(props) {
+    const {t} = useTranslation();
     const [isModalVisible, setModalVisible] = useState(false);
 
     const _showDialog = () => setModalVisible(true);
     const _hideDialog = () => setModalVisible(false);
 
-    props.stepItem.helpText = props.stepItem.helpText || 'Lorem ipsum';
+    props.stepItem.helpText = props.stepItem.helpText || t('report.help.defaultText');
 
     return (
         <View style={{...styles.step, position: 'absolute', bottom: 90}}>
@@ -88,12 +89,12 @@ function Step(props) {
 
             <Portal>
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
-                    <Dialog.Title>Help</Dialog.Title>
+                    <Dialog.Title>{t('report.help.title')}</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph>{props.stepItem.helpText}</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={_hideDialog}>Got it!</Button>
+                        <Button onPress={_hideDialog}>{t('report.help.primaryAction')}</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
@@ -116,7 +117,6 @@ function ReportScreen(props) {
 
     const [user, setUserPhoneNumber] = useState(props.phoneNumber);
     const [age, setAge] = useState(props.age);
-    // TODO: add question for gender
     const [gender, setGender] = useState(props.gender);
     const [currentLocation, setCurrentLocation] = useState(props.residence);
     const [temperature, setTemperature] = useState();
@@ -218,18 +218,11 @@ function ReportScreen(props) {
         },
     ];
 
-    const getSelectedSteps = () => {
-        let selectedSteps = [];
-        for (let step in availableSteps) {
-            let selectedStep = availableSteps[step];
-            if (props.numberOfReports > 0 && selectedStep.isPermanentSetting) {
-                continue;
-            }
-            selectedSteps.push(selectedStep);
-        }
-
-        return selectedSteps;
-    };
+    const steps = useMemo(() => {
+        return availableSteps.filter(step => {
+            return props.numberOfReports === 0 || step.isPermanentSetting;
+        });
+    }, []);
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
@@ -334,20 +327,17 @@ function ReportScreen(props) {
         );
     };
 
-    const steps = getSelectedSteps();
     let isBackButtonEnabled = stepIndex > 0 ? true : false;
     let isNextButtonEnabled = steps[stepIndex].initialProps ? true : false;
     return (
         // Portal.Host is used so that the dialogs appear correctly on top of the screen
         <Portal.Host>
             <View style={styles.container}>
-                {
-                    <Step
-                        stepItem={steps[stepIndex]}
-                        registerCleanupCallback={registerCleanupCallback}
-                    />
-                }
-
+                <ProgressBar progress={(stepIndex + 1) / steps.length} />
+                <Step
+                    stepItem={steps[stepIndex]}
+                    registerCleanupCallback={registerCleanupCallback}
+                />
                 {/* Don't show the previous button for the first step */}
                 {isBackButtonEnabled ? (
                     <Button
@@ -406,7 +396,4 @@ function ReportScreen(props) {
     );
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ReportScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ReportScreen);

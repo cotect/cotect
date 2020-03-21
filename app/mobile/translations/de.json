@@ -24,6 +24,11 @@
             "gender": {
                 "title": ""
             },
+            "help": {
+                "defaultText": "",
+                "primaryAction": "",
+                "title": ""
+            },
             "locations": {
                 "title": ""
             },

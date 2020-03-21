@@ -24,6 +24,11 @@
             "gender": {
                 "title": "What is your biological gender?"
             },
+            "help": {
+                "defaultText": "Lorem ipsum",
+                "primaryAction": "Got it!",
+                "title": "Help"
+            },
             "locations": {
                 "title": "Where have you been?"
             },
