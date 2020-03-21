@@ -5,7 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
-import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
+import {Button, Dialog, Paragraph, Portal, Text, ProgressBar} from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -288,13 +288,11 @@ function ReportScreen(props) {
         // Portal.Host is used so that the dialogs appear correctly on top of the screen
         <Portal.Host>
             <View style={styles.container}>
-                {
-                    <Step
-                        stepItem={steps[stepIndex]}
-                        registerCleanupCallback={registerCleanupCallback}
-                    />
-                }
-
+                <ProgressBar progress={(stepIndex + 1) / steps.length} />
+                <Step
+                    stepItem={steps[stepIndex]}
+                    registerCleanupCallback={registerCleanupCallback}
+                />
                 {/* Don't show the previous button for the first step */}
                 {isBackButtonEnabled ? (
                     <Button
