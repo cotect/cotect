@@ -115,7 +115,6 @@ function ReportScreen(props) {
 
     const [user, setUserPhoneNumber] = useState(props.phoneNumber);
     const [age, setAge] = useState(props.age);
-    // TODO: add question for gender
     const [gender, setGender] = useState(props.gender);
     const [currentLocation, setCurrentLocation] = useState(props.residence);
     const [temperature, setTemperature] = useState();
@@ -362,4 +361,7 @@ function ReportScreen(props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReportScreen);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(ReportScreen);
