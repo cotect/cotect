@@ -12,7 +12,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CONTAINER} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
-import { DefaultApi as CotectApi, CaseReport, CaseSymptom, CasePlace, CaseContact } from '../client/cotect-backend/index';
+import {
+    DefaultApi as CotectApi,
+    CaseReport,
+    CaseSymptom,
+    CasePlace,
+    CaseContact,
+} from '../client/cotect-backend/index';
 
 import {
     AgeStep,
@@ -61,46 +67,45 @@ const styles = StyleSheet.create({
     },
 });
 
-function Step(props) {
-    const {t} = useTranslation();
-    const [isModalVisible, setModalVisible] = useState(false);
+// function Step(props) {
+//     const [isModalVisible, setModalVisible] = useState(false);
 
-    const _showDialog = () => setModalVisible(true);
-    const _hideDialog = () => setModalVisible(false);
+//     const _showDialog = () => setModalVisible(true);
+//     const _hideDialog = () => setModalVisible(false);
 
-    props.stepItem.helpText = props.stepItem.helpText || t('report.help.defaultText');
+//     props.stepItem.helpText = props.stepItem.helpText || 'Lorem ipsum';
 
-    return (
-        <View style={{...styles.step, position: 'absolute', bottom: 90}}>
-            <View>
-                <Text style={styles.stepTitle}>
-                    {props.stepItem.title}
-                    <Icon
-                        name="help-circle-outline"
-                        size={25}
-                        borderWidth={2}
-                        padding={5}
-                        onPress={_showDialog}
-                    />
-                </Text>
-            </View>
+//     return (
+//         <View style={{...styles.step, position: 'absolute', bottom: 90}}>
+//             <View>
+//                 <Text style={styles.stepTitle}>
+//                     {props.stepItem.title}
+//                     <Icon
+//                         name="help-circle-outline"
+//                         size={25}
+//                         borderWidth={2}
+//                         padding={5}
+//                         onPress={_showDialog}
+//                     />
+//                 </Text>
+//             </View>
 
-            {<props.stepItem.element {...props} />}
+//             {<props.stepItem.element {...props} />}
 
-            <Portal>
-                <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
-                    <Dialog.Title>{t('report.help.title')}</Dialog.Title>
-                    <Dialog.Content>
-                        <Paragraph>{props.stepItem.helpText}</Paragraph>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={_hideDialog}>{t('report.help.primaryAction')}</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-        </View>
-    );
-}
+//             <Portal>
+//                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
+//                     <Dialog.Title>Help</Dialog.Title>
+//                     <Dialog.Content>
+//                         <Paragraph>{props.stepItem.helpText}</Paragraph>
+//                     </Dialog.Content>
+//                     <Dialog.Actions>
+//                         <Button onPress={_hideDialog}>Got it!</Button>
+//                     </Dialog.Actions>
+//                 </Dialog>
+//             </Portal>
+//         </View>
+//     );
+// }
 
 function ReportScreen(props) {
     const {t} = useTranslation();
@@ -130,23 +135,23 @@ function ReportScreen(props) {
     // contacts: [{ phoneNumber, contactDate }]
     const [contacts, setContacts] = useState();
 
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [modalTitle, setModalTitle] = useState();
-    const [modalText, setModalText] = useState();
-    const [modalButtonText, setModalButtonText] = useState('Ok');
-    const [onModalClick, setOnModalClick] = useState(() => () => {}); // a function in useState must return the function, otherwise it is directly executed (https://stackoverflow.com/a/55621325/5379273)
+    // const [isModalVisible, setModalVisible] = useState(false);
+    // const [modalTitle, setModalTitle] = useState();
+    // const [modalText, setModalText] = useState();
+    // const [modalButtonText, setModalButtonText] = useState('Ok');
+    // const [onModalClick, setOnModalClick] = useState(() => () => {}); // a function in useState must return the function, otherwise it is directly executed (https://stackoverflow.com/a/55621325/5379273)
     const _hideDialog = () => setModalVisible(false);
 
     const availableSteps = [
-        {
-            title: t('report.phoneNumber.title'),
-            element: PhoneNumberStep,
-            onFinish: user => {
-                setUserPhoneNumber(user);
-            },
-            initialProps: user,
-            isPermanentSetting: true,
-        },
+        // {
+        //     title: t('report.phoneNumber.title'),
+        //     element: PhoneNumberStep,
+        //     onFinish: user => {
+        //         setUserPhoneNumber(user);
+        //     },
+        //     initialProps: user,
+        //     isPermanentSetting: true,
+        // },
         {
             title: t('report.age.title'),
             helpText: t('report.age.helpText'),
@@ -224,28 +229,28 @@ function ReportScreen(props) {
         });
     }, []);
 
-    const nextStepItem = () => {
-        const newStepIndex = stepIndex + 1;
+    // const nextStepItem = () => {
+    //     const newStepIndex = stepIndex + 1;
 
-        cleanupStepCallback().then(() => {
-            setStepIndex(newStepIndex);
-            setCleanupStepCallback(() => () => new Promise(resolve => resolve()));
-        });
+    //     cleanupStepCallback().then(() => {
+    //         setStepIndex(newStepIndex);
+    //         setCleanupStepCallback(() => () => new Promise(resolve => resolve()));
+    //     });
 
-        // if (!stepItem[newStepIndex].initialProps) {
-        //     setNextButtonEnabled(false);
-        // }
-    };
+    //     // if (!stepItem[newStepIndex].initialProps) {
+    //     //     setNextButtonEnabled(false);
+    //     // }
+    // };
 
-    const prevStepItem = () => {
-        const newStepIndex = stepIndex - 1;
-        setStepIndex(newStepIndex);
+    // const prevStepItem = () => {
+    //     const newStepIndex = stepIndex - 1;
+    //     setStepIndex(newStepIndex);
 
-        // if the input of the new view is not empty, keep the input text
-        // if (!stepItem[newStepIndex].initialProps) {
-        //     setNextButtonEnabled(false);
-        // }
-    };
+    //     // if the input of the new view is not empty, keep the input text
+    //     // if (!stepItem[newStepIndex].initialProps) {
+    //     //     setNextButtonEnabled(false);
+    //     // }
+    // };
 
     const submitReport = () => {
         // TODO: save permanent entries only if changed
@@ -268,13 +273,13 @@ function ReportScreen(props) {
         }, 1000);
 
         // TODO: execute call to firebase
-        
+
         let createCaseReport = () => {
-            let caseReport = new  CaseReport();
+            let caseReport = new CaseReport();
             caseReport.age = age;
             caseReport.gender = gender;
             caseReport.residence = currentLocation;
-            caseReport.covid_test = ""; // not asked yet
+            caseReport.covid_test = ''; // not asked yet
             caseReport.covid_contact = null; // not asked yet
 
             let transformedSymptoms = [];
@@ -287,10 +292,9 @@ function ReportScreen(props) {
             caseReport.contacts = contacts;
 
             return caseReport;
-        }
+        };
 
-
-         // simulate call to backend
+        // simulate call to backend
         //  setTimeout(() => {
         //     setModalText('We submitted the report! Thanks for your help fighting CoVid!');
         //     setOnModalClick(() => () => props.onSubmit());
@@ -305,17 +309,15 @@ function ReportScreen(props) {
                 setOnModalClick(() => () => props.onSubmit());
             }
         });
-
-
     };
 
-    const exitReport = () => {
-        setModalTitle(t('report.exit.title'));
-        setModalText(t('report.exit.text'));
-        setModalButtonText(t('report.exit.primaryAction'));
-        setOnModalClick(() => () => props.onExit());
-        setModalVisible(true);
-    };
+    // const exitReport = () => {
+    //     setModalTitle(t('report.exit.title'));
+    //     setModalText(t('report.exit.text'));
+    //     setModalButtonText(t('report.exit.primaryAction'));
+    //     setOnModalClick(() => () => props.onExit());
+    //     setModalVisible(true);
+    // };
 
     // wrap the to-be-registered cleanupStepCallback in a promise so that
     // the child component can execute async code.
@@ -365,15 +367,6 @@ function ReportScreen(props) {
                         Submit Report
                     </Button>
                 )}
-
-                <Icon
-                    name="close"
-                    size={25}
-                    borderWidth={2}
-                    padding={5}
-                    style={styles.closeButton}
-                    onPress={exitReport}
-                />
 
                 <Portal>
                     <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
