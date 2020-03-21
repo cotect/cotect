@@ -60,12 +60,13 @@ const styles = StyleSheet.create({
 });
 
 function Step(props) {
+    const {t} = useTranslation();
     const [isModalVisible, setModalVisible] = useState(false);
 
     const _showDialog = () => setModalVisible(true);
     const _hideDialog = () => setModalVisible(false);
 
-    props.stepItem.helpText = props.stepItem.helpText || 'Lorem ipsum';
+    props.stepItem.helpText = props.stepItem.helpText || t('report.help.defaultText');
 
     return (
         <View style={{...styles.step, position: 'absolute', bottom: 90}}>
@@ -86,12 +87,12 @@ function Step(props) {
 
             <Portal>
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
-                    <Dialog.Title>Help</Dialog.Title>
+                    <Dialog.Title>{t('report.help.title')}</Dialog.Title>
                     <Dialog.Content>
                         <Paragraph>{props.stepItem.helpText}</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={_hideDialog}>Got it!</Button>
+                        <Button onPress={_hideDialog}>{t('report.help.primaryAction')}</Button>
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
@@ -361,7 +362,4 @@ function ReportScreen(props) {
     );
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(ReportScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ReportScreen);
