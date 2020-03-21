@@ -1,0 +1,67 @@
+{
+    "translation": {
+        "navigation": {
+            "homeTitle": "Home",
+            "reportTabLabel": "Report",
+            "reportTitle": "Report",
+            "settingsTabLabel": "Settings",
+            "settingsTitle": "Settings"
+        },
+        "report": {
+            "age": {
+                "helpText": "We need the age to...",
+                "title": "What is your age?"
+            },
+            "contacts": {
+                "amountTitle": "With how many persons did you have contact?",
+                "whoTitle": "Who had you contact with?"
+            },
+            "exit": {
+                "primaryAction": "Exit",
+                "text": "Do you really want to exit the report? It will not be saved.",
+                "title": "Exit Report"
+            },
+            "gender": {
+                "title": "What is your biological gender?"
+            },
+            "locations": {
+                "title": "Where have you been?"
+            },
+            "nextAction": "Next",
+            "phoneNumber": {
+                "title": "What is your phone number?"
+            },
+            "residence": {
+                "title": "What is your current location?"
+            },
+            "skipAction": "Skip",
+            "submit": {
+                "primaryAction": "Submit",
+                "successText": "We submitted the report! Thanks for your help fighting CoVid!",
+                "text": "We are submitting the report…",
+                "title": "Report Submission"
+            },
+            "symptoms": {
+                "title": "What are your symptoms?"
+            },
+            "temperature": {
+                "title": "What is your temperature?"
+            }
+        },
+        "settings": {
+            "ageLabel": "Age:",
+            "deleteDataAction": "Delete my data!",
+            "genderLabel": "Gender:",
+            "locationLabel": "Location:",
+            "phoneNumberLabel": "Phone Number:",
+            "title": "Your data"
+        },
+        "start": {
+            "paragraph1": "When starting a report, you are going to be asked a few questions that will help to figure out, on which areas a disease herd might exist and who might be affected. You can exit the report any time without any data stored or sent to our server, but of course for success it is critical to have as many participants as possible.",
+            "paragraph2": "Each step provides a help icon to explain why we need that information. In case you verify your phone number - which will help to make the data more trustworthy - we will only store a secured hash of it on the server and no other information that could identify you. You can request data deletion any time in the settings screen.",
+            "paragraph3": "Thanks for supporting the cause against CoVid19 and we hope you will soon be healthy again!",
+            "startReportAction": "Start Report!",
+            "updateReportAction": "Update Report!"
+        }
+    }
+}
