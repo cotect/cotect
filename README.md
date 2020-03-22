@@ -102,7 +102,7 @@ After reporting the initial case information, the user can always update this in
 
 ### Data Model
 
-The collected case data will be stored within a graph strcture based on the follwing data model:
+The collected case data will be stored within a graph structure based on the follwing data model:
 
 <img style="width: 100%" src="./docs/images/cotect-data-model.png"/>
 
@@ -139,7 +139,7 @@ contact_id = hash(hashed_contact_number, secret)
 - Evaluate optional Bluetooth or GPS tracking for automated contact tracing.
 - Incorporate newest Study results on COVID-19 (e.g.,  symptoms,  ways of infection, risk-factors)
 - Add events visited during the last 14 days to the case data (probably not necessary since any event is mostly bound to a specific location/place)
-- add start-date and end-date to realtion attributes and option to provide specific times.
+- add start-date and end-date to relation attributes and option to provide specific times.
 - Evaluate to use GPS or IP to get user location.
 - Add easy way to share report to contacts via whatsapp.
 
@@ -151,7 +151,7 @@ contact_id = hash(hashed_contact_number, secret)
 <summary><b>Problem Statement</b> (click to expand...)</summary>
 <br>
 <ul>
-<li><b>Hard to get tested:</b> Germany has a theoretical capacity of 12k tests a day, but logistical challenges and limits on medical personal will make it unlikely to have anyone with flu-like symptoms tested in a timely manner. Based on the current scientific state, fast a reliable detection capability is one of the best ways to slow down the virus infections.</li>
+<li><b>Hard to get tested:</b> Germany has a theoretical capacity of 12k tests a day, but logistical challenges and limits on medical personal will make it unlikely to have anyone with flu-like symptoms tested in a timely manner. Based on the current scientific state, fast and reliable detection capability is one of the best ways to slow down the virus infections.</li>
 <li><b>Missing data collection:</b> Within Germany, there is no easy way for individuals to report flu-like symptoms and related information to allow meaningful statistical inference on undetected infection chains. Furthermore, centralized data collection of official hotlines or doctor's offices is very limited or non-existent.</li>
 <li><b>Hard to keep contacts informed:</b> In case of a suspected infection, it's emotionally stressful to reach out to family and friends to provide this potentially valuable information. For other contacts, you might not even be able to inform them. An anonymized way of reporting symptoms and meta-information would allow anybody to keep potential contacts informed.</li>
 <li><b>Unable to make data-informed decisions:</b> If Covid-19 cannot be contained, we will most likely have to deal with it for several months. Of course, a longterm lockdown can not be sustained and public life will go on. A tool that can provide "real-time" predictions about the risk of visiting certain places can be invaluable for many people, especially for high-risk groups.</li>
