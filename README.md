@@ -9,6 +9,14 @@
 </p>
 
 <p align="center">
+    <a href="https://github.com/cotect/cotect/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/cotect/cotect"></a>
+    <a href="https://github.com/cotect/cotect/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/cotect/cotect"></a>
+    <a href="https://github.com/cotect/cotect/blob/master/LICENSE" title="Cotect License"><img src="https://img.shields.io/badge/License-MIT-green.svg"></a>
+    <a href="https://join.slack.com/t/cotectworkspace/shared_invite/zt-cv1ycjh2-qyu2C01IjEQOyPwtsajOIg" title="Chat on Slack"><img src="https://img.shields.io/badge/chat_on-slack-481F58.svg?logo=slack"></a>
+    <a href="https://twitter.com/cotectapp" title="Cotect on Twitter"><img src="https://img.shields.io/twitter/follow/cotectapp.svg?style=social"></a>
+</p>
+
+<p align="center">
   <a href="#problem-statement">Problem Statement</a> •
   <a href="#solution">Solution</a> •
   <a href="#architecture">Architecture</a> •
@@ -123,6 +131,10 @@ contact_id = hash(hashed_contact_number, secret)
 - We plan to roll out the app city-by-city, depending on which city is facing the most significant issues. Our first focus will be cities within Germany and other European countries.
 - Pragmatic and agile decisions with focus on building something useful. Full focus on developing and rolling out scalable and stable software in the fastest possible way.
 - We will slow down or stop this project in case COVID-19 can be contained or we get indications that the situation will not require this kind of software.
+
+## Contributors
+
+[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/0)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/0)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/1)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/1)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/2)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/2)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/3)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/3)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/4)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/4)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/5)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/5)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/6)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/6)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/7)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/7)
 
 ---
 
