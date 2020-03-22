@@ -92,7 +92,7 @@ export const setPhoneNumber = phoneNumber => {
 
 export const setResidence = residence => {
     if (residence) {
-        AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, residence);
+        AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, JSON.stringify(residence));
     }
 
     return {
@@ -103,7 +103,7 @@ export const setResidence = residence => {
 
 export const setAge = age => {
     if (age) {
-        AsyncStorage.setItem(STORAGE_AGE_KEY, age);
+        AsyncStorage.setItem(STORAGE_AGE_KEY, "" + age);
     }
 
     return {

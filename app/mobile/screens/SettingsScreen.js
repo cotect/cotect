@@ -35,7 +35,7 @@ function SettingsScreen(props) {
                 {t('settings.phoneNumberLabel')} {props.phoneNumber}
             </Text>
             <Text>
-                {t('settings.locationLabel')} {props.residence}
+                {t('settings.locationLabel')} {props.residence.address}
             </Text>
             <Text>
                 {t('settings.ageLabel')} {props.age}
