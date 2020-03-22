@@ -161,7 +161,7 @@ contact_id = hash(hashed_contact_number, secret)
 <details>
 <summary><b>Solution</b> (click to expand...)</summary>
 <br>
-Cotect allows anyone to anonymously report their flu-symptoms with relevant meta-information such as visited places or events. By analyzing statistical correlations in the collected data, users that have will get personal risk assessments (e.g., likelihood of Covid-19 infection) based on their reports. Users, especially in the high-risk group, will also be able to get real-time information on the risk of visiting selected places (e.g., city, workplace, school). The full anonymized dataset will be made accessible to research facilities and public institutions for discovering unknown infection chains and assist with data-informed decisions on closing places or canceling events.
+Cotect allows anyone to anonymously report their flu-symptoms with relevant meta-information such as visited places or events. By analyzing statistical correlations in the collected data, users will get personal risk assessments (e.g., likelihood of Covid-19 infection) based on their reports. Users, especially in the high-risk group, will also be able to get real-time information on the risk of visiting selected places (e.g., city, workplace, school). The full anonymized dataset will be made accessible to research facilities and public institutions for discovering unknown infection chains and assist with data-informed decisions on closing places or canceling events.
 
 The initial goal at the start of the project will be to help with containment and slow-down of infections. At a later stage of the project, we will put the main focus on helping to protect the high-risk groups (elderly, people with pre-existing conditions). 
 
@@ -224,4 +224,4 @@ valuable if it's shared publicly so that more people can benefit from it.
 
 ---
 
-Licensed **MIT**. Created and maintained with ❤️ by developers from SAP in Berlin.
+Licensed **MIT**. Created and maintained with ❤️ by a team of friends and colleagues from Germany.
