@@ -1,5 +1,10 @@
 {
     "translation": {
+        "error": {
+            "primaryAction": "",
+            "text": "",
+            "title": ""
+        },
         "navigation": {
             "homeTitle": "Cotect",
             "reportTabLabel": "Report",
@@ -22,6 +27,11 @@
                 "title": ""
             },
             "gender": {
+                "title": ""
+            },
+            "help": {
+                "defaultText": "",
+                "primaryAction": "",
                 "title": ""
             },
             "locations": {

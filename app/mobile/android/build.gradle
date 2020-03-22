@@ -11,6 +11,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
@@ -20,6 +23,8 @@ buildscript {
 
         // for Firebase (see https://invertase.io/oss/react-native-firebase/quick-start/android-firebase-credentials)
         classpath 'com.google.gms:google-services:4.3.3'
+        // for Crashlytics (see https://invertase.io/oss/react-native-firebase/v6/crashlytics/android-setup#add-the-fabric-maven-repository)
+        classpath 'io.fabric.tools:gradle:1.28.1'
     }
 }
 
@@ -39,6 +44,13 @@ allprojects {
         maven { url 'https://jitpack.io' }
         // maven { url 'https://dl.bintray.com/android/android-tools' }
     }
+}
+
+apply plugin: 'com.android.application' // apply after this line
+apply plugin: 'io.fabric'
+
+crashlytics {
+    enableNdk true
 }
 
 
