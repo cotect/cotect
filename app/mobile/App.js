@@ -7,11 +7,13 @@ import {Provider} from 'react-redux';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {store, setSettingsState, STORAGE_KEY_PREFIX} from './redux/reducer';
+import { store, setSettingsState, setAuthToken, STORAGE_KEY_PREFIX, STORAGE_AGE_KEY, STORAGE_RESIDENCE_KEY } from "./redux/reducer";
 
 import ErrorBoundary from './components/ErrorBoundary';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+
+import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,13 @@ const loadSavedSettings = () => {
             stores.map((result, i, store) => {
                 let key = result[0];
                 let value = result[1];
+
+                if (key === STORAGE_RESIDENCE_KEY) {
+                  value = JSON.parse(value);
+                }
+                else if (key === STORAGE_AGE_KEY) {
+                  value = parseInt(value);
+                }
 
                 settingsState[key.replace(STORAGE_KEY_PREFIX, '')] = value;
             });

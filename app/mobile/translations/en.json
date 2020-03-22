@@ -47,12 +47,14 @@
             "skipAction": "Skip",
             "submit": {
                 "primaryAction": "Submit",
+                "exitAction": "Exit",
                 "successText": "We submitted the report! Thanks for your help fighting CoVid!",
                 "text": "We are submitting the report…",
                 "title": "Report Submission"
             },
             "symptoms": {
-                "title": "What are your symptoms?"
+                "title": "What are your symptoms?",
+                "severity": "What is the severity?"
             },
             "temperature": {
                 "title": "What is your temperature?"

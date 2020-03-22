@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import * as redux from 'redux';
 
+export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 export const SET_APP_LOADING = 'SET_APP_LOADING';
 export const SET_SETTINGS_STATE = 'SET_SETTINGS_STATE';
 export const DELETE_SETTINGS = 'DELETE_SETTINGS';
@@ -19,6 +20,7 @@ const STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + 'numberOfRep
 
 const initialState = {
     appLoading: false,
+    authToken: '',
     phoneNumber: '',
     residence: '',
     gender: '',
@@ -28,6 +30,8 @@ const initialState = {
 
 export default (reducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_AUTH_TOKEN:
+            return {...state, authToken: action.payload.data};
         case SET_APP_LOADING:
             return {...state, appLoading: true};
         case SET_SETTINGS_STATE:
@@ -53,6 +57,13 @@ export default (reducer = (state = initialState, action) => {
             return state;
     }
 });
+
+export const setAuthToken = authToken => {
+    return {
+        type: SET_AUTH_TOKEN,
+        payload: { data: authToken }
+    };
+}
 
 export const setAppLoading = () => {
     return {
@@ -81,7 +92,7 @@ export const setPhoneNumber = phoneNumber => {
 
 export const setResidence = residence => {
     if (residence) {
-        AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, residence);
+        AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, JSON.stringify(residence));
     }
 
     return {
@@ -92,7 +103,7 @@ export const setResidence = residence => {
 
 export const setAge = age => {
     if (age) {
-        AsyncStorage.setItem(STORAGE_AGE_KEY, age);
+        AsyncStorage.setItem(STORAGE_AGE_KEY, "" + age);
     }
 
     return {
@@ -136,6 +147,7 @@ export const deleteSettings = () => {
 
 export const mapStateToProps = state => {
     return {
+        authToken: state.authToken,
         phoneNumber: state.phoneNumber,
         residence: state.residence,
         age: state.age,
@@ -145,6 +157,7 @@ export const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = {
+    setAuthToken,
     setAppLoading,
     setSettingsState,
     setPhoneNumber,

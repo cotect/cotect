@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 export default function GenderStep(props) {
 
-    let genders = ["male", "female"];
+    let genders = ["male", "female", "other"];
 
     let initialSelected = genders.indexOf(props.stepItem.initialProps);
     const [selected, setSelected] = useState(initialSelected);

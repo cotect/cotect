@@ -76,7 +76,7 @@ export default function PhoneNumberStep(props) {
             if (user.isAnonymous && user.phoneNumber === null) {
                 phoneNumber = "anonymous";
             }
-            props.stepItem.onFinish(phoneNumber, true);
+            props.stepItem.onFinish(phoneNumber, user);
         } else {
             setIsVerified(false);
         }

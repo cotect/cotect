@@ -7,6 +7,8 @@ import {Button, Text} from 'react-native-paper';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 import {useTranslation} from 'react-i18next';
 
+import auth from '@react-native-firebase/auth';
+
 const styles = StyleSheet.create({
     contentContainer: {
         height: '100%',
@@ -19,6 +21,10 @@ const styles = StyleSheet.create({
 function SettingsScreen(props) {
     const {t} = useTranslation();
     const deleteData = () => {
+        let user = auth().currentUser;
+        if (user) {
+            user.delete();
+        }
         props.deleteSettings();
     };
 
@@ -29,7 +35,7 @@ function SettingsScreen(props) {
                 {t('settings.phoneNumberLabel')} {props.phoneNumber}
             </Text>
             <Text>
-                {t('settings.locationLabel')} {props.residence}
+                {t('settings.locationLabel')} {props.residence.address}
             </Text>
             <Text>
                 {t('settings.ageLabel')} {props.age}

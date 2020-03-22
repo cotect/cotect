@@ -23,7 +23,6 @@ import {
     NumberOfContactsStep,
     PhoneNumberStep,
     SymptomsStep,
-    TemperatureStep,
 } from './steps/index';
 
 const styles = StyleSheet.create({
@@ -119,7 +118,7 @@ function ReportScreen(props) {
     const [age, setAge] = useState(props.age);
     const [gender, setGender] = useState(props.gender);
     const [currentLocation, setCurrentLocation] = useState(props.residence);
-    const [temperature, setTemperature] = useState();
+
     // symptoms: {symptomName: { symptomName, reportDate, severity }}
     const [symptoms, setSymptoms] = useState();
 
@@ -141,8 +140,11 @@ function ReportScreen(props) {
         {
             title: t('report.phoneNumber.title'),
             element: PhoneNumberStep,
-            onFinish: user => {
-                setUserPhoneNumber(user);
+            onFinish: (phoneNumber, user) => {
+                setUserPhoneNumber(phoneNumber);
+                user.getIdToken().then((authToken) => {
+                    props.setAuthToken(authToken);
+                });
             },
             initialProps: user,
             isPermanentSetting: true,
@@ -185,14 +187,6 @@ function ReportScreen(props) {
             initialProps: symptoms,
         },
         {
-            title: t('report.temperature.title'),
-            element: TemperatureStep,
-            onFinish: temperature => {
-                setTemperature(temperature);
-            },
-            initialProps: temperature,
-        },
-        {
             title: t('report.locations.title'),
             element: LocationsStep,
             onFinish: locations => {
@@ -220,9 +214,9 @@ function ReportScreen(props) {
 
     const steps = useMemo(() => {
         return availableSteps.filter(step => {
-            return props.numberOfReports === 0 || step.isPermanentSetting;
+            return props.numberOfReports === 0 || !step.isPermanentSetting;
         });
-    }, []);
+    });//, []);
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
@@ -259,15 +253,6 @@ function ReportScreen(props) {
         setModalText(t('report.submit.text')); // replace text upon answer of the server
         setModalButtonText(t('report.submit.primaryAction'));
         setModalVisible(true);
-
-        // simulate call to backend
-        setTimeout(() => {
-            setModalText(t('report.submit.successText'));
-            // TODO: button text should not be "Submit" here
-            setOnModalClick(() => () => props.onSubmit());
-        }, 1000);
-
-        // TODO: execute call to firebase
         
         let createCaseReport = () => {
             let caseReport = new  CaseReport();
@@ -291,20 +276,24 @@ function ReportScreen(props) {
 
 
          // simulate call to backend
-        //  setTimeout(() => {
-        //     setModalText('We submitted the report! Thanks for your help fighting CoVid!');
-        //     setOnModalClick(() => () => props.onSubmit());
-        // }, 1000);
+        setTimeout(() => {
+            setModalText(t('report.submit.successText'));
+            setModalButtonText(t('report.submit.exitAction'));
+            // TODO: button text should not be "Submit" here
+            setOnModalClick(() => () => props.onSubmit());
+        }, 1000);
 
         let caseReport = createCaseReport();
-        new CotectApi().updateReportReportsPost(caseReport, (error, data, response) => {
-            if (error) {
-                console.log(error);
-            } else {
-                setModalText(t('report.submit.successText'));
-                setOnModalClick(() => () => props.onSubmit());
-            }
-        });
+        console.log(caseReport);
+        // new CotectApi().updateReportReportsPost(caseReport, (error, data, response) => {
+        //     if (error) {
+        //         console.log(error);
+        //     } else {
+        //         setModalText(t('report.submit.successText'));
+        //         setModalButtonText(t('report.submit.exitAction'));
+        //         setOnModalClick(() => () => props.onSubmit());
+        //     }
+        // });
 
 
     };
