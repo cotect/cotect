@@ -67,7 +67,7 @@ We are committed to keep the cotect project fully open-source and non-profit wit
 
 <br>
 
-## Getting Started
+## Try It Out
 
 _Coming soon..._
 
