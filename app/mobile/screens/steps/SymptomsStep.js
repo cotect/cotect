@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {StyleSheet, ScrollView, TouchableOpacity, View} from 'react-native';
 
 import {useTranslation} from 'react-i18next';
 
 import {Button, Chip, Dialog, Portal, RadioButton, Text, TextInput} from 'react-native-paper';
 
 import {CalendarList} from 'react-native-calendars';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
     chipsContainer: {
@@ -62,7 +61,6 @@ const SelectionElement = props => {
                 style={styles.chipsContainer}>
                 {selections.map((selection, index) => {
                     return (
-
                         <RadioButton.Item
                             key={index}
                             label={selection}
@@ -140,9 +138,9 @@ export default function SymptomsStep(props) {
 
     const onDialogPress = () => {
         if (dialogType === 'severity') {
-            onAdd(selectedSymptom, dialogSeverity)
+            onAdd(selectedSymptom, dialogSeverity);
         }
-    }
+    };
 
     const showSymptomDialog = symptom => {
         setSelectedSymptom(symptom);
@@ -155,7 +153,7 @@ export default function SymptomsStep(props) {
         setDialogType('calendar');
         setDialogTitle('Day of First Occurence');
         _showDialog();
-    }
+    };
 
     const renderSymptomSeverityElement = (selectedSymptom, setValue) => {
         for (let i in symptoms) {
@@ -169,10 +167,10 @@ export default function SymptomsStep(props) {
     };
 
     const renderCalendar = () => {
-        const onDayPress = (day) => {
+        const onDayPress = day => {
             setFirstOccuredDate(day);
             _hideDialog();
-        }
+        };
 
         return (
             <CalendarList
@@ -215,10 +213,8 @@ export default function SymptomsStep(props) {
             </ScrollView>
 
             <View>
-                <TouchableOpacity
-                     onPress={() => showCalendarDialog()}
-                >
-                    <TextInput 
+                <TouchableOpacity onPress={() => showCalendarDialog()}>
+                    <TextInput
                         style={styles.inputField}
                         label="First Occurence"
                         value={firstOccuredDate && firstOccuredDate.dateString}
@@ -232,14 +228,15 @@ export default function SymptomsStep(props) {
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
                     <Dialog.Title>{dialogTitle}</Dialog.Title>
                     <Dialog.Content>
-                        {(dialogType === 'severity') ? 
-                            renderSymptomSeverityElement(selectedSymptom, severity => setDialogSeverity(severity))
-                            : renderCalendar()
-                        }
+                        {dialogType === 'severity'
+                            ? renderSymptomSeverityElement(selectedSymptom, severity =>
+                                  setDialogSeverity(severity),
+                              )
+                            : renderCalendar()}
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={cancelSelectionDialog}>Cancel</Button>
-                        {(dialogType === 'severity') ? 
+                        {dialogType === 'severity' ? (
                             <Button
                                 onPress={() => {
                                     onDialogPress();
@@ -247,8 +244,9 @@ export default function SymptomsStep(props) {
                                 }}>
                                 Add
                             </Button>
-                            : false
-                        }
+                        ) : (
+                            false
+                        )}
                     </Dialog.Actions>
                 </Dialog>
             </Portal>

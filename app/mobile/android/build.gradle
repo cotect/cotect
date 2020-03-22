@@ -46,14 +46,6 @@ allprojects {
     }
 }
 
-apply plugin: 'com.android.application' // apply after this line
-apply plugin: 'io.fabric'
-
-crashlytics {
-    enableNdk true
-}
-
-
 // task wrapper(type: Wrapper) {
 //     gradleVersion = '4.7'
 //     distributionUrl = distributionUrl.replace("bin", "all")
