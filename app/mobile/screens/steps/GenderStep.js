@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { StyleSheet, View } from 'react-native';
 
+import {useTranslation} from 'react-i18next';
+
 import { Chip } from 'react-native-paper';
 
 const styles = StyleSheet.create({
@@ -19,8 +21,8 @@ const styles = StyleSheet.create({
 });
 
 export default function GenderStep(props) {
-
-    let genders = ["male", "female", "other"];
+    const {t} = useTranslation();
+    let genders = [t('male'), t('female'), t('other')];
 
     let initialSelected = genders.indexOf(props.stepItem.initialProps);
     const [selected, setSelected] = useState(initialSelected);

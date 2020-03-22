@@ -216,7 +216,7 @@ export default function SymptomsStep(props) {
                 <TouchableOpacity onPress={() => showCalendarDialog()}>
                     <TextInput
                         style={styles.inputField}
-                        label="First Occurence"
+                        label={t('report.symptoms.firstOccurenceLabel')}
                         value={firstOccuredDate && firstOccuredDate.dateString}
                         editable={false}
                         mode="outlined"
@@ -242,7 +242,7 @@ export default function SymptomsStep(props) {
                                     onDialogPress();
                                     _hideDialog();
                                 }}>
-                                Add
+                                {t('actions.add')}
                             </Button>
                         ) : (
                             false

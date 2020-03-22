@@ -12,10 +12,17 @@
             "settingsTabLabel": "Settings",
             "settingsTitle": "Settings"
         },
+        "actions": {
+            "add": "Add",
+            "exit": "Exit",
+            "confirm": "Confirm",
+            "verify": "Verify"
+        },
         "report": {
             "age": {
                 "helpText": "We need the age to...",
-                "title": "What is your age?"
+                "title": "What is your age?",
+                "inputLabel": "Age"
             },
             "contacts": {
                 "amountTitle": "With how many persons did you have contact?",
@@ -27,7 +34,10 @@
                 "title": "Exit Report"
             },
             "gender": {
-                "title": "What is your biological gender?"
+                "title": "What is your biological gender?",
+                "genderMale": "male",
+                "genderFemale": "female",
+                "genderOther": "other"
             },
             "help": {
                 "defaultText": "Lorem ipsum",
@@ -39,10 +49,17 @@
             },
             "nextAction": "Next",
             "phoneNumber": {
-                "title": "What is your phone number?"
+                "title": "What is your phone number?",
+                "numberVerified": "Phone Numbe is verified!"
             },
             "residence": {
-                "title": "What is your current location?"
+                "title": "What is your current location?",
+                "dialogTitle": "Location and Time",
+                "locationClick": "Click to pick a location",
+                "locationLabel": "Location",
+                "titleDates": "Select the dates on which you have been here",
+                "addLocation": "Add a location",
+                "primaryAction": "Pick current location"
             },
             "skipAction": "Skip",
             "submit": {
@@ -54,7 +71,8 @@
             },
             "symptoms": {
                 "title": "What are your symptoms?",
-                "severity": "What is the severity?"
+                "severity": "What is the severity?",
+                "firstOccurenceLabel": "First Occurence"
             },
             "temperature": {
                 "title": "What is your temperature?"
