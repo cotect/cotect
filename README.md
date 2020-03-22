@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#getting-started">Getting Started</a> •
+  <a href="#try-it-out">Try It Out</a> •
   <a href="#concept">Concept</a> •
   <a href="#architecture">Architecture</a> •
   <a href="#support">Support</a> •
