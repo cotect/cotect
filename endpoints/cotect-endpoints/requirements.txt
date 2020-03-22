@@ -1,0 +1,9 @@
+requests
+setuptools
+uvicorn
+fastapi
+pydantic
+ujson
+neo4j
+firebase-admin
+phonenumbers
