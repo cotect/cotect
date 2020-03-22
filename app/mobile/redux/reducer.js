@@ -12,11 +12,11 @@ export const SET_RESIDENCE = 'SET_RESIDENCE';
 export const INCREASE_NUMBER_OF_REPORTS = 'INCREASE_NUMBER_OF_REPORTS';
 
 export const STORAGE_KEY_PREFIX = '@Cotect_';
-const STORAGE_PHONE_NUMBER_KEY = STORAGE_KEY_PREFIX + 'phoneNumber';
-const STORAGE_RESIDENCE_KEY = STORAGE_KEY_PREFIX + 'residence';
-const STORAGE_GENDER_KEY = STORAGE_KEY_PREFIX + 'gender';
-const STORAGE_AGE_KEY = STORAGE_KEY_PREFIX + 'age';
-const STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + 'numberOfReports';
+export const STORAGE_PHONE_NUMBER_KEY = STORAGE_KEY_PREFIX + 'phoneNumber';
+export const STORAGE_RESIDENCE_KEY = STORAGE_KEY_PREFIX + 'residence';
+export const STORAGE_GENDER_KEY = STORAGE_KEY_PREFIX + 'gender';
+export const STORAGE_AGE_KEY = STORAGE_KEY_PREFIX + 'age';
+export const STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + 'numberOfReports';
 
 const initialState = {
     appLoading: false,

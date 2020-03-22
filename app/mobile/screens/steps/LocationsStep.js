@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import {useTranslation} from 'react-i18next';
+
 import { Button, Card, Dialog, Portal, Text } from 'react-native-paper';
 
 import { CalendarList } from 'react-native-calendars';
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
 });
 
 export default function LocationsStep(props) {
-
+    const {t} = useTranslation();
     const [locationsAndDates, setLocationsAndDates] = useState(props.stepItem.initialProps || []);
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -124,7 +126,7 @@ export default function LocationsStep(props) {
                     style={styles.actionButton}
                     labelStyle={styles.actionButtonLabel}
                     onPress={() => _showDialog()}>
-                    Add a location
+                    {t('report.residence.addLocation')}
                 </Button>
             </View>
 
@@ -133,20 +135,20 @@ export default function LocationsStep(props) {
                     style={{height: "80%"}}
                     visible={isModalVisible}
                     onDismiss={_hideDialog}>
-                    <Dialog.Title>Location and Time</Dialog.Title>
+                    <Dialog.Title>{t('report.residence.dialogTitle')}</Dialog.Title>
                     {/* <Dialog.Content> */}
                         {/* <Paragraph>This is simple dialog</Paragraph> */}
                         <Dialog.ScrollArea>
                         <ScrollView>
                             <View style={styles.dialogLocation}>
                                 <Text>
-                                    Location:  
+                                    {t('report.residence.locationLabel')}:  
                                     
                                 </Text>
                                 <Text 
                                         style={styles.coloredText}
                                         onPress={() => openPlacesSearchModal()}>
-                                        {dialogLocation.address || "Click to pick a location"}
+                                        {dialogLocation.address || t('report.residence.locationClick')}
                                     </Text>
                                 
                                 {/* <Button
@@ -157,7 +159,7 @@ export default function LocationsStep(props) {
                                 </Button> */}
                             </View>  
                             <View>
-                                <Text>Select the dates on which you have been here:</Text>
+                                <Text>{t('report.residence.titleDates')}:</Text>
                                 <CalendarList
                                     // Max amount of months allowed to scroll to the past. Default = 50
                                     pastScrollRange={1}
@@ -189,7 +191,7 @@ export default function LocationsStep(props) {
                             disabled={Object.keys(dialogLocation).length === 0}
                             onPress={() => onAddPlace(dialogLocation, dialogSelectedDates)}
                         >
-                            Add
+                            {t('actions.add')}
                         </Button>
                     </Dialog.Actions>
                 </Dialog>

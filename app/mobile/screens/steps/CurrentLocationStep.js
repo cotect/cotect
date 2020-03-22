@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 
 import { StyleSheet, View } from 'react-native';
 
+import {useTranslation} from 'react-i18next';
+
 import { Button, Card, Paragraph } from 'react-native-paper';
 
 import RNGooglePlaces from 'react-native-google-places';
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 export default function CurrentLocationStep(props) {
-
+    const {t} = useTranslation();
     const [currentLocation, setCurrentLocation] = useState(props.stepItem.initialProps);
 
     let openPlacesSearchModal = () => {
@@ -70,7 +72,7 @@ export default function CurrentLocationStep(props) {
                 style={styles.actionButton}
                 labelStyle={styles.actionButtonLabel}
                 onPress={() => openPlacesSearchModal()}>
-                Pick current location
+                {t('report.residence.primaryAction')}
             </Button>
         </View>
     )

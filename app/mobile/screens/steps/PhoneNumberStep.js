@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import auth from '@react-native-firebase/auth';
 
+import {useTranslation} from 'react-i18next';
+
 import { StyleSheet, View } from 'react-native';
 import { Button, Snackbar, Text, TextInput } from 'react-native-paper';
 
@@ -27,6 +29,8 @@ const styles = StyleSheet.create({
 });
 
 export default function PhoneNumberStep(props) {
+    const {t} = useTranslation();
+
     const [isVerified, setIsVerified] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState();
     const [confirmationCode, setConfirmationCode] = useState();
@@ -105,7 +109,7 @@ export default function PhoneNumberStep(props) {
                         style={styles.actionButton}
                         labelStyle={styles.actionButtonLabel} 
                         onPress={() => onVerifyClick()}>
-                        Verify
+                        {t('actions.verify')}
                     </Button>
 
                     {isPhoneNumberEntered ? (
@@ -120,14 +124,14 @@ export default function PhoneNumberStep(props) {
                                 style={styles.actionButton}
                                 labelStyle={styles.actionButtonLabel} 
                                 onPress={() => onConfirmClick()}>
-                                Confirm
+                                {t('actions.confirm')}
                             </Button>
                         </View>
                         ) : false
                     }
                     </View>) : 
                 
-                    <Text>Phone Number is verified!</Text>
+                    <Text>{t('report.phoneNumber.numberVerified')}</Text>
                 }
             <Snackbar
                 style={styles.snackbar}
