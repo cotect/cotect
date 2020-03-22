@@ -17,11 +17,12 @@
 </p>
 
 <p align="center">
-  <a href="#problem-statement">Problem Statement</a> •
-  <a href="#solution">Solution</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#concept">Concept</a> •
   <a href="#architecture">Architecture</a> •
-  <a href="#challenges">Challenges</a> •
-  <a href="#organization--execution">Organization</a>
+  <a href="#support">Support</a> •
+  <a href="https://github.com/cotect/cotect/issues/new?labels=bug&template=01_bug-report.md">Report a Bug</a> •
+  <a href="#contribution">Contribution</a>
 </p>
 
 <img style="width: 100%" src="./docs/images/cotect-mockups.png"/>
@@ -65,7 +66,13 @@ We are committed to keep the cotect project fully open-source and non-profit wit
 </details>
 
 <br>
- 
+
+## Getting Started
+
+_Coming soon..._
+
+<br>
+
 ## Concept
 
 <details>
@@ -113,8 +120,9 @@ The initial goal at the start of the project will be to help with containment an
 </ul>
 </details>
 
+<br>
 
-### Architecture
+## Architecture
 
 <img style="width: 100%" src="./docs/images/cotect-architecture.png"/>
 
@@ -183,6 +191,8 @@ contact_id = hash(hashed_contact_number, secret)
 - add start-date and end-date to realtion attributes and option to provide specific times.
 - Evaluate to use GPS or IP to get user location.
 - Add easy way to share report to contacts via whatsapp.
+
+<br>
 
 ## Support
 
