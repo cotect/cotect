@@ -26,6 +26,46 @@
 
 <img style="width: 100%" src="./docs/images/cotect-mockups.png"/>
 
+## Highlights
+
+<details>
+<summary><b>🤳 Anonymized reporting</b></summary>
+<br>
+Cotect allows anyone to anonymously report their symptoms with relevant meta-information such as visited places or contacts. The user can update their case at any time to keep track of changing symptoms, new contacts, or place visits. Cotect combines this data without storing any personally identifiable information. The user has full control over what information is reported and can delete this data at any time.
+</details>
+<details>
+<summary><b>🚦 Personal risk assessments</b></summary>
+<br>
+By analyzing statistical correlations in the collected data, users will get personal risk assessments (e.g., likelihood of infection) based on their case reports. This includes Users, especially in the high-risk group, will also be able to get real-time information on the risk of visiting selected places (e.g., city, workplace, school). With this situation probably going on for months, a tool to get a data-driven risk assessment might be helpful for many.
+</details>
+<details>
+<summary><b>📉 Support containment & mitigation</b></summary>
+<br>
+We are committed to support public institutions with containment and mitigation efforts. Our anonymized case dataset will be made accessible to research facilities and public institutions for discovering unknown infection chains and assist with data-informed decisions like closing places or canceling events. We are also ready to cooperate with health institutions to implement features within cotect to smoothen the testing process (e.g., find testing sites, enrollment, digital waiting list).
+</details> 
+<details>
+<summary><b>🔐 Priority on data privacy</b></summary>
+<br>
+The cotect project aims to provide the highest level of data privacy while still allowing sophisticated data analytics. Cotect is fully GDPR compliant and allows single-click data export and deletion. All data traffic is fully encrypted, and data is stored with the highest level of security. The only purpose of data collection is to help with containment and mitigation. Once this goal is fulfilled, all data will be deleted.
+</details> 
+<details>
+<summary><b>🎛 Scalable infrastructure</b></summary>
+<br>
+The cotect architecture allows scalability to millions of users. It is built with components of the GCP platform, including Kubernetes, Firebase, and the Places API, which are designed for high performance and unlimited scalability.
+</details>
+<details>
+<summary><b>📊 Sophisticated data analytics</b></summary>
+<br>
+Our data collection, infrastructure, and data model are optimized for applying statistical- and machine-learning methods to instantly detect chains of infection. The data collected via contact and location report capabilities are processed into a highly-connected graph structure, which also provides a lot of flexibility to integrate new information. The authorization and data verification capabilities minimize misuse and ensure the collection of high-quality data.
+</details>
+<details>
+<summary><b>🌐 Open-source & non-profit</b></summary>
+<br>
+We are committed to keep the cotect project fully open-source and non-profit with the highest level of transparency. This project is set-up to allow broad collaboration between different companies, organizations, and institutions to support with development and provide funding for cloud expenses.
+</details>
+
+<br>
+ 
 ## Problem Statement
 
 - **Hard to get tested:** Germany has a theoretical capacity of 12k tests a day, but logistical challenges and limits on medical personal will make it unlikely to have anyone with flu-like symptoms tested in a timely manner. Based on the current scientific state, fast a reliable detection capability is one of the best ways to slow down the virus infections.
@@ -132,11 +172,25 @@ contact_id = hash(hashed_contact_number, secret)
 - Pragmatic and agile decisions with focus on building something useful. Full focus on developing and rolling out scalable and stable software in the fastest possible way.
 - We will slow down or stop this project in case COVID-19 can be contained or we get indications that the situation will not require this kind of software.
 
+## Support
+
+The cotect repository is maintained by [Lukas Masuch](https://twitter.com/LukasMasuch)
+and [Benjamin Räthlein](https://twitter.com/raethlein). Please understand that we won't be able
+to provide individual support via email. We also believe that help is much more
+valuable if it's shared publicly so that more people can benefit from it.
+
+| Type                     | Channel                                              |
+| ------------------------ | ------------------------------------------------------ |
+| 🚨 **Bug Reports**       | <a href="https://github.com/cotect/cotect/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3Abug+sort%3Areactions-%2B1-desc+" title="Open Bug Report"><img src="https://img.shields.io/github/issues/cotect/cotect/bug.svg"></a>                                 |
+| 🎁 **Feature Requests**  | <a href="https://github.com/cotect/cotect/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc" title="Open Feature Request"><img src="https://img.shields.io/github/issues/cotect/cotect/feature-request.svg?label=feature%20requests"></a>                                 |
+| 👩‍💻 **Usage Questions**   |  <a href="https://join.slack.com/t/cotectworkspace/shared_invite/zt-cv1ycjh2-qyu2C01IjEQOyPwtsajOIg" title="Chat on Slack"><img src="https://img.shields.io/badge/chat_on-slack-481F58.svg?logo=slack"></a> <a href="https://twitter.com/cotectapp" title="Cotect on Twitter"><img src="https://img.shields.io/twitter/follow/cotectapp.svg?style=social"></a> |
+| 🗯 **General Discussion** | <a href="https://join.slack.com/t/cotectworkspace/shared_invite/zt-cv1ycjh2-qyu2C01IjEQOyPwtsajOIg" title="Chat on Slack"><img src="https://img.shields.io/badge/chat_on-slack-481F58.svg?logo=slack"></a> <a href="https://twitter.com/cotectapp" title="Cotect on Twitter"><img src="https://img.shields.io/twitter/follow/cotectapp.svg?style=social"></a>                  |
+
+<br>
+
 ## Contributors
 
 [![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/0)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/0)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/1)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/1)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/2)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/2)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/3)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/3)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/4)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/4)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/5)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/5)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/6)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/6)[![](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/images/7)](https://sourcerer.io/fame/LukasMasuch/cotect/cotect/links/7)
-
----
 
 <br>
 
