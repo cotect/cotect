@@ -7,6 +7,8 @@ import { Button, Card, Paragraph } from 'react-native-paper';
 
 import { selectContactPhone } from 'react-native-select-contact';
 
+import {PermissionsAndroid} from 'react-native';
+
 const styles = StyleSheet.create({
     actionButton: {
         borderRadius: 32,
@@ -39,7 +41,42 @@ export default function ContactsStep(props) {
         props.stepItem.onFinish(modifiedSelectedContacts);
     }
 
-    let getPhoneNumber = () => {
+    let getPhoneNumber = async () => {
+        let readContactsPermission = true;
+        if (Platform.OS === 'android') {
+            async function requestPermission() {
+                try {
+                    const granted = await PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+                        {
+                            title: 'Contact Permission',
+                            message:
+                                'Cotect needs to request your contact when you want to add them here',
+                            buttonNeutral: 'Ask Me Later',
+                            buttonNegative: 'Cancel',
+                            buttonPositive: 'OK',
+                        },
+                    );
+                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                        console.log('Contact permission granted');
+                        return true;
+                    } else {
+                        console.log('Contact permission denied');
+                        return false;
+                    }
+                } catch (err) {
+                    console.warn(err);
+                    return false;
+                }
+            }
+    
+            readContactsPermission = await requestPermission();
+        }
+
+        if (!readContactsPermission) {
+            return true;
+        }
+
         return selectContactPhone()
             .then(selection => {
                 if (!selection) {
