@@ -1,0 +1,5 @@
+{
+    "hooks": {
+        "pre-commit": "yarn prettify && yarn i18n:sync",
+    }
+}
