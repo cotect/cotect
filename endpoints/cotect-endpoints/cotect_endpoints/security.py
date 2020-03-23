@@ -49,12 +49,13 @@ def get_active_user(
         api_key = api_key_query
     elif api_key_header:
         api_key = api_key_header
-    #elif api_key_cookie:
-    #    api_key = api_key_header
     else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="No API Key was provided.",
         )
+    #elif api_key_cookie:
+    #    api_key = api_key_header
+    
 
     if api_key == "demo":
         # Remove
@@ -86,7 +87,9 @@ def get_active_user(
                 user_id=id_utils.generate_user_id(decoded_token["uid"], secret),
                 verified=False,
             )
-    except Exception:
+    except Exception as ex:
+        log.info("Failed to validate firebase token: " + str(ex.msg))
+        
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Failed to validate the firebase token.",
