@@ -47,17 +47,19 @@ export default function PhoneNumberStep(props) {
     }
 
     const onSignInAnonymously = async () => {
-        try {
-            await auth().signInAnonymously();
-        } catch (e) {
-            switch (e.code) {
-                case 'auth/operation-not-allowed':
-                  console.log('Enable anonymous in your firebase console.');
-                  break;
-                default:
-                  console.error(e);
-                  break;
-              }
+        if (auth().currentUser === null) {
+            try {
+                await auth().signInAnonymously();
+            } catch (e) {
+                switch (e.code) {
+                    case 'auth/operation-not-allowed':
+                    console.log('Enable anonymous in your firebase console.');
+                    break;
+                    default:
+                    console.error(e);
+                    break;
+                }
+            }
         }
     }
 
