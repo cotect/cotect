@@ -35,7 +35,6 @@ target 'Cotect' do
   pod 'DoubleConversion', :podspec => "#{rnPrefix}/third-party-podspecs/DoubleConversion.podspec"
   pod 'glog', :podspec => "#{rnPrefix}/third-party-podspecs/glog.podspec"
   pod 'Folly', :podspec => "#{rnPrefix}/third-party-podspecs/Folly.podspec"
-  pod 'RNFBCrashlytics', :path => '../node_modules/@react-native-firebase/crashlytics'
 
   # Other native modules
 

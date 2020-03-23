@@ -227,6 +227,7 @@ export default function SymptomsStep(props) {
                         value={firstOccuredDate && firstOccuredDate.dateString}
                         editable={false}
                         mode="outlined"
+                        pointerEvents="none"
                     />
                 </TouchableOpacity>
             </View>

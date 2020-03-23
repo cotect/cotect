@@ -9,10 +9,12 @@ import {Button, Dialog, Paragraph, Portal, Text, ProgressBar} from 'react-native
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import {COTECT_BACKEND_URL} from 'react-native-dotenv';
+
 import {CONTAINER} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
-import { DefaultApi as CotectApi, CaseReport, CaseSymptom, CasePlace, CaseContact } from '../client/cotect-backend/index';
+import { ApiClient as CotectApiClient,  ReportsApi, CaseReport, CaseSymptom, CasePlace, CaseContact, AdministrationApi } from '../client/cotect-backend/index';
 
 import {
     AgeStep,
@@ -253,14 +255,25 @@ function ReportScreen(props) {
         setModalText(t('report.submit.text')); // replace text upon answer of the server
         setModalButtonText(t('report.submit.primaryAction'));
         setModalVisible(true);
-        
+
         let createCaseReport = () => {
             let caseReport = new  CaseReport();
             caseReport.age = age;
             caseReport.gender = gender;
+            // gender must not be empty
+            if (caseReport.gender === '') {
+                caseReport.gender = 'other';
+            }
+
             caseReport.residence = currentLocation;
-            caseReport.covid_test = ""; // not asked yet
-            caseReport.covid_contact = null; // not asked yet
+            caseReport.residence.place_id = caseReport.residence.placeId;
+            // place_id must exist, otherwise whole residence cannot be set
+            if (!caseReport.residence.place_id) {
+                caseReport.residence = undefined;
+            }
+
+            caseReport.covid_test = "not-tested"; // not asked yet
+            caseReport.covid_contact = false; // not asked yet
 
             let transformedSymptoms = [];
             for (let i in symptoms) {
@@ -268,8 +281,23 @@ function ReportScreen(props) {
             }
 
             caseReport.symptoms = transformedSymptoms;
+            caseReport.symptoms = caseReport.symptoms.map((symptom) => {
+                symptom.symptom_name = symptom.name;
+                return symptom;
+            });
+
             caseReport.places = locations;
+            caseReport.places = caseReport.places.map((place, index) => {
+                place.place_id = place.placeId;
+                return place;
+            });
+
             caseReport.contacts = contacts;
+            caseReport.contacts = caseReport.contacts.map((contact, index) => {
+                contact.phone_number = contact.phoneNumber;
+                contact.contact_date = contact.contactDate;
+                return contact;
+            })
 
             return caseReport;
         }
@@ -284,18 +312,23 @@ function ReportScreen(props) {
         }, 1000);
 
         let caseReport = createCaseReport();
-        console.log(caseReport);
-        // new CotectApi().updateReportReportsPost(caseReport, (error, data, response) => {
-        //     if (error) {
-        //         console.log(error);
-        //     } else {
-        //         setModalText(t('report.submit.successText'));
-        //         setModalButtonText(t('report.submit.exitAction'));
-        //         setOnModalClick(() => () => props.onSubmit());
-        //     }
-        // });
 
-
+        const cotectApiClient = new CotectApiClient();
+        // cotectApiClient.authentications['APIKeyHeader'].apiKey = props.authToken;
+        cotectApiClient.authentications['HTTPBearer'].accessToken = props.authToken;
+        //cotectApiClient.authentications['APIKeyQuery'].apiKey = props.authToken;
+        
+        cotectApiClient.basePath = COTECT_BACKEND_URL;
+        new ReportsApi(cotectApiClient).updateReport(caseReport, (error, data, response) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Sending report was successful!");
+                setModalText(t('report.submit.successText'));
+                setModalButtonText(t('report.submit.exitAction'));
+                setOnModalClick(() => () => props.onSubmit());
+            }
+        });
     };
 
     const exitReport = () => {

@@ -67,3 +67,6 @@ buck-out/
 google-services.json
 GoogleService-Info.plist
 GooglePlaces-Info.plist
+
+# File contains environment variables used for configuration
+.env
