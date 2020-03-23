@@ -22,6 +22,13 @@ const styles = StyleSheet.create({
     inputField: {
         backgroundColor: 'white',
     },
+    radioButtonItem: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    radioButton: {
+        color: "#8c81dd"
+    }
 });
 
 const InputElement = props => {
@@ -58,18 +65,18 @@ const SelectionElement = props => {
             <RadioButton.Group
                 onValueChange={onSelect}
                 value={selected}
-                style={styles.chipsContainer}>
-                {selections.map((selection, index) => {
-                    return (
-                        <RadioButton.Item
-                            key={index}
-                            label={selection}
+            >
+            {selections.map((selection, index) => {
+                return (
+                    <View key={index} style={styles.radioButtonItem}>
+                        <RadioButton.Android // (implement .Android for iOS to also have a visible radiobuttn)
                             value={selection}
-                            // status={selected === {selection} ? 'checked' : 'unchecked'}
-                            // onPress={() => onSelect(selection)}
+                            color={styles.radioButton.color}
                         />
-                    );
-                })}
+                        <Text>{selection}</Text>
+                    </View>
+                );
+            })}
             </RadioButton.Group>
         </View>
     );
