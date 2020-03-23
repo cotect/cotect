@@ -3,7 +3,7 @@ import logging
 from neo4j import GraphDatabase, Session
 from neo4j.exceptions import ServiceUnavailable
 
-from cotect_endpoints import utils
+from cotect_endpoints.utils import id_utils
 from cotect_endpoints.schema import (
     CaseContact,
     CasePlace,
@@ -159,8 +159,8 @@ def add_residence(tx, user: User, place: CasePlace):
 
 def add_contact(tx, user: User, contact: CaseContact):
 
-    contact_id = utils.generate_user_id(
-        contact.phone_number, utils.get_id_generation_secret()
+    contact_id = id_utils.generate_user_id(
+        contact.phone_number, id_utils.get_id_generation_secret()
     )
 
     # Create contact user
@@ -199,7 +199,7 @@ def add_contact(tx, user: User, contact: CaseContact):
 
 def add_symptom(tx, user: User, symptom: CaseSymptom):
 
-    symptom_id = utils.generate_symptom_id(symptom.symptom_name)
+    symptom_id = id_utils.generate_symptom_id(symptom.symptom_name)
 
     # Create or update symptom
     symptom_node_stmt = (
