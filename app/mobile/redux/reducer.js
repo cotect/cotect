@@ -24,7 +24,7 @@ const initialState = {
     phoneNumber: '',
     residence: {},
     gender: '',
-    age: 0,
+    age: '',
     numberOfReports: 0,
 };
 
