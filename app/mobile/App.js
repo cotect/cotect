@@ -67,6 +67,15 @@ export default function App(props) {
         loadSavedSettings();
     }, []);
 
+    React.useEffect(() => {
+      let user = auth().currentUser;
+      if (user) {
+        user.getIdToken().then((authToken) => {
+          store.dispatch(setAuthToken(authToken));
+        });
+      }
+    }, []);
+
     if (!isLoadingComplete && !props.skipLoadingScreen) {
         return null;
     } else {
