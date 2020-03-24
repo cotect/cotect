@@ -73,7 +73,7 @@ export default function PhoneNumberStep(props) {
         }
     }
 
-    const onAuthStateChanged = (user) => {       
+    const onAuthStateChanged = async (user) => {       
         if (user) {
             // user.delete();
             // user.getIdToken(true).then((e)=>console.log(e)).catch((e) => console.log(e));
@@ -81,6 +81,29 @@ export default function PhoneNumberStep(props) {
             let phoneNumber = user.phoneNumber;
             if (user.isAnonymous && user.phoneNumber === null) {
                 phoneNumber = "anonymous";
+            }
+            // Phone number is deleted from firebase, after 
+            // successful validation. Account is online anonymous then.
+            if (user.isAnonymous === false && user.phoneNumber !== null){
+                phoneNumber = (' ' + user.phoneNumber).slice(1); // Save phone number locally
+                try{
+                    await user.unlink(auth.PhoneAuthProvider.PROVIDER_ID);
+                } catch (e){
+                    switch (e.code) {
+                        case 'auth/unknown':
+                            console.log("Number deleted from Firebase already.");
+                            break;                   
+                        default:
+                            console.error(e);
+                            break;
+                    }
+                }
+                try {
+                    // reload so local user is updated
+                    await auth().currentUser.reload();
+                } catch (e) {
+                    console.error(e);                    
+                }
             }
             props.stepItem.onFinish(phoneNumber, user);
         } else {
