@@ -14,7 +14,15 @@ import {COTECT_BACKEND_URL} from 'react-native-dotenv';
 import {CONTAINER} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
-import { ApiClient as CotectApiClient,  ReportsApi, CaseReport, CaseSymptom, CasePlace, CaseContact, AdministrationApi } from '../client/cotect-backend/index';
+import {
+    ApiClient as CotectApiClient,
+    ReportsApi,
+    CaseReport,
+    CaseSymptom,
+    CasePlace,
+    CaseContact,
+    AdministrationApi,
+} from '../client/cotect-backend/index';
 
 import {
     AgeStep,
@@ -25,7 +33,7 @@ import {
     PhoneNumberStep,
     SymptomsStep,
     CovidContactStep,
-    CovidTestStep
+    CovidTestStep,
 } from './steps/index';
 
 const styles = StyleSheet.create({
@@ -148,7 +156,7 @@ function ReportScreen(props) {
             element: PhoneNumberStep,
             onFinish: (phoneNumber, user) => {
                 setUserPhoneNumber(phoneNumber);
-                user.getIdToken().then((authToken) => {
+                user.getIdToken().then(authToken => {
                     props.setAuthToken(authToken);
                 });
             },
@@ -206,7 +214,7 @@ function ReportScreen(props) {
             onFinish: hadCovidContact => {
                 setCovidContact(hadCovidContact);
             },
-            initialProps: hadCovidContact
+            initialProps: hadCovidContact,
         },
         {
             title: t('report.covidTest.title'),
@@ -214,7 +222,7 @@ function ReportScreen(props) {
             onFinish: covidTestStatus => {
                 setCovidTestStatus(covidTestStatus);
             },
-            initialProps: covidTestStatus
+            initialProps: covidTestStatus,
         },
         {
             title: t('report.contacts.whoTitle'),
@@ -230,7 +238,7 @@ function ReportScreen(props) {
         return availableSteps.filter(step => {
             return props.numberOfReports === 0 || !step.isPermanentSetting;
         });
-    });//, []);
+    }); //, []);
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
@@ -268,7 +276,7 @@ function ReportScreen(props) {
         setModalVisible(true);
 
         let createCaseReport = () => {
-            let caseReport = new  CaseReport();
+            let caseReport = new CaseReport();
             caseReport.age = age;
             if (!age) {
                 caseReport.age = 0;
@@ -299,7 +307,7 @@ function ReportScreen(props) {
 
             caseReport.symptoms = transformedSymptoms;
             if (caseReport.symptoms) {
-                caseReport.symptoms = caseReport.symptoms.map((symptom) => {
+                caseReport.symptoms = caseReport.symptoms.map(symptom => {
                     symptom.symptom_name = symptom.name;
                     return symptom;
                 });
@@ -307,7 +315,7 @@ function ReportScreen(props) {
 
             caseReport.places = locations;
             if (caseReport.places) {
-                caseReport.places = caseReport.places.map((place) => {
+                caseReport.places = caseReport.places.map(place => {
                     place.place_id = place.placeId;
                     return place;
                 });
@@ -315,18 +323,17 @@ function ReportScreen(props) {
 
             caseReport.contacts = contacts;
             if (caseReport.contacts) {
-                caseReport.contacts = caseReport.contacts.map((contact) => {
+                caseReport.contacts = caseReport.contacts.map(contact => {
                     contact.phone_number = contact.phoneNumber;
                     contact.contact_date = contact.contactDate;
                     return contact;
                 });
             }
-           
+
             return caseReport;
-        }
+        };
 
-
-         // simulate call to backend
+        // simulate call to backend
         // setTimeout(() => {
         //     setModalText(t('report.submit.successText'));
         //     setModalButtonText(t('report.submit.exitAction'));
@@ -345,7 +352,7 @@ function ReportScreen(props) {
             if (error) {
                 console.log(error);
             } else {
-                console.log("Sending report was successful!");
+                console.log('Sending report was successful!');
                 setModalText(t('report.submit.successText'));
                 setModalButtonText(t('report.submit.exitAction'));
                 setOnModalClick(() => () => props.onSubmit());
