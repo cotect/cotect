@@ -22,9 +22,10 @@ import {
     CurrentLocationStep,
     GenderStep,
     LocationsStep,
-    NumberOfContactsStep,
     PhoneNumberStep,
     SymptomsStep,
+    CovidContactStep,
+    CovidTestStep
 } from './steps/index';
 
 const styles = StyleSheet.create({
@@ -126,7 +127,10 @@ function ReportScreen(props) {
 
     // locations: [{ placeId, visitDates, latitude, longitude, placeName, placeTypes }]
     const [locations, setLocations] = useState();
-    const [numberOfContacts, setNumberOfContacts] = useState();
+
+    const [hadCovidContact, setCovidContact] = useState();
+
+    const [covidTestStatus, setCovidTestStatus] = useState();
 
     // contacts: [{ phoneNumber, contactDate }]
     const [contacts, setContacts] = useState();
@@ -197,12 +201,20 @@ function ReportScreen(props) {
             initialProps: locations,
         },
         {
-            title: t('report.contacts.amountTitle'),
-            element: NumberOfContactsStep,
-            onFinish: numberOfContacts => {
-                setNumberOfContacts(numberOfContacts);
+            title: t('report.covidContact.title'),
+            element: CovidContactStep,
+            onFinish: hadCovidContact => {
+                setCovidContact(hadCovidContact);
             },
-            initialProps: numberOfContacts,
+            initialProps: hadCovidContact
+        },
+        {
+            title: t('report.covidTest.title'),
+            element: CovidTestStep,
+            onFinish: covidTestStatus => {
+                setCovidTestStatus(covidTestStatus);
+            },
+            initialProps: covidTestStatus
         },
         {
             title: t('report.contacts.whoTitle'),
@@ -244,7 +256,6 @@ function ReportScreen(props) {
     };
 
     const submitReport = () => {
-        // TODO: save permanent entries only if changed
         props.setPhoneNumber(user);
         props.setResidence(currentLocation);
         props.setAge(age);
@@ -259,6 +270,12 @@ function ReportScreen(props) {
         let createCaseReport = () => {
             let caseReport = new  CaseReport();
             caseReport.age = age;
+            if (!age) {
+                caseReport.age = 0;
+            } else {
+                caseReport.age = parseInt(age);
+            }
+
             caseReport.gender = gender;
             // gender must not be empty
             if (caseReport.gender === '') {
@@ -272,8 +289,8 @@ function ReportScreen(props) {
                 caseReport.residence = undefined;
             }
 
-            caseReport.covid_test = "not-tested"; // not asked yet
-            caseReport.covid_contact = false; // not asked yet
+            caseReport.covid_test = covidTestStatus;
+            caseReport.covid_contact = hadCovidContact;
 
             let transformedSymptoms = [];
             for (let i in symptoms) {
@@ -281,35 +298,41 @@ function ReportScreen(props) {
             }
 
             caseReport.symptoms = transformedSymptoms;
-            caseReport.symptoms = caseReport.symptoms.map((symptom) => {
-                symptom.symptom_name = symptom.name;
-                return symptom;
-            });
+            if (caseReport.symptoms) {
+                caseReport.symptoms = caseReport.symptoms.map((symptom) => {
+                    symptom.symptom_name = symptom.name;
+                    return symptom;
+                });
+            }
 
             caseReport.places = locations;
-            caseReport.places = caseReport.places.map((place, index) => {
-                place.place_id = place.placeId;
-                return place;
-            });
+            if (caseReport.places) {
+                caseReport.places = caseReport.places.map((place) => {
+                    place.place_id = place.placeId;
+                    return place;
+                });
+            }
 
             caseReport.contacts = contacts;
-            caseReport.contacts = caseReport.contacts.map((contact, index) => {
-                contact.phone_number = contact.phoneNumber;
-                contact.contact_date = contact.contactDate;
-                return contact;
-            })
-
+            if (caseReport.contacts) {
+                caseReport.contacts = caseReport.contacts.map((contact) => {
+                    contact.phone_number = contact.phoneNumber;
+                    contact.contact_date = contact.contactDate;
+                    return contact;
+                });
+            }
+           
             return caseReport;
         }
 
 
          // simulate call to backend
-        setTimeout(() => {
-            setModalText(t('report.submit.successText'));
-            setModalButtonText(t('report.submit.exitAction'));
-            // TODO: button text should not be "Submit" here
-            setOnModalClick(() => () => props.onSubmit());
-        }, 1000);
+        // setTimeout(() => {
+        //     setModalText(t('report.submit.successText'));
+        //     setModalButtonText(t('report.submit.exitAction'));
+        //     // TODO: button text should not be "Submit" here
+        //     setOnModalClick(() => () => props.onSubmit());
+        // }, 1000);
 
         let caseReport = createCaseReport();
 
@@ -317,7 +340,6 @@ function ReportScreen(props) {
         // cotectApiClient.authentications['APIKeyHeader'].apiKey = props.authToken;
         cotectApiClient.authentications['HTTPBearer'].accessToken = props.authToken;
         //cotectApiClient.authentications['APIKeyQuery'].apiKey = props.authToken;
-        
         cotectApiClient.basePath = COTECT_BACKEND_URL;
         new ReportsApi(cotectApiClient).updateReport(caseReport, (error, data, response) => {
             if (error) {
