@@ -6,6 +6,8 @@ import LocationsStep from './LocationsStep';
 import NumberOfContactsStep from './NumberOfContactsStep';
 import PhoneNumberStep from './PhoneNumberStep';
 import SymptomsStep from './SymptomsStep';
+import CovidContactStep from './CovidContactStep';
+import CovidTestStep from './CovidTestStep';
 
 export {
     AgeStep,
@@ -15,5 +17,7 @@ export {
     LocationsStep,
     NumberOfContactsStep,
     PhoneNumberStep,
-    SymptomsStep
+    SymptomsStep,
+    CovidContactStep,
+    CovidTestStep
 };

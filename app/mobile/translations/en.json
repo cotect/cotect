@@ -18,6 +18,10 @@
             "confirm": "Confirm",
             "verify": "Verify"
         },
+        "basics": {
+            "yes": "Yes",
+            "no": "No"
+        },
         "report": {
             "age": {
                 "helpText": "We need the age to...",
@@ -76,6 +80,16 @@
             },
             "temperature": {
                 "title": "What is your temperature?"
+            },
+            "covidContact": {
+                "title": "Did you have contact with a Covid-positive person?"
+            },
+            "covidTest": {
+                "title": "Have you  been tested for Covid?",
+                "notTested": "not tested",
+                "testedNegative": "tested negative",
+                "testedPositive": "tested positive",
+                "testedPending": "tested pending"
             }
         },
         "settings": {
