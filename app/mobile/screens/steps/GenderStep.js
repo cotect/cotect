@@ -1,49 +1,52 @@
+import React, {useState} from 'react';
 
-import React, { useState } from 'react';
-
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import {useTranslation} from 'react-i18next';
 
-import { Chip } from 'react-native-paper';
+import {RadioButton, Text} from 'react-native-paper';
 
 const styles = StyleSheet.create({
-    chipsContainer: {
-        flexDirection: "column",
-        flexWrap: "wrap",
-        flexGrow: 1,
-        height: 150
+    radioButtonItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
-    chip: {
-        marginBottom: 8,
-        marginRight: 8,
+    radioButton: {
+        color: '#8c81dd',
     },
 });
 
 export default function GenderStep(props) {
     const {t} = useTranslation();
-    let genders = [t('male'), t('female'), t('other')];
+    let genders = [
+        {key: 'male', value: t('male')},
+        {key: 'female', value: t('female')},
+        {key: 'other', value: t('other')},
+    ];
 
     let initialSelected = genders.indexOf(props.stepItem.initialProps);
     const [selected, setSelected] = useState(initialSelected);
-    const onSelect = (item, index) => {
-        setSelected(index);
-        props.stepItem.onFinish(genders[index], true);
-    }
+
+    const onSelect = (item) => {
+        setSelected(item);
+        props.stepItem.onFinish(item, true);
+    };
 
     return (
         <View>
-            <View style={styles.chipsContainer}>
-                {genders.map((item, key) => (
-                    <Chip
-                        style={styles.chip}
-                        key={key} 
-                        onPress={() => onSelect(item, key)}
-                        selected={key === selected}>
-                            {item}
-                    </Chip>
-                ))}
-            </View>
+            <RadioButton.Group onValueChange={onSelect} value={selected}>
+                {genders.map((item, index) => {
+                    return (
+                        <View key={index} style={styles.radioButtonItem}>
+                            <RadioButton.Android
+                                value={item.key}
+                                color={styles.radioButton.color}
+                            />
+                            <Text>{item.value}</Text>
+                        </View>
+                    );
+                })}
+            </RadioButton.Group>
         </View>
     );
 }

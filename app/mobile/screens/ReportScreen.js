@@ -214,7 +214,7 @@ function ReportScreen(props) {
             onFinish: hadCovidContact => {
                 setCovidContact(hadCovidContact);
             },
-            initialProps: hadCovidContact,
+            initialProps: hadCovidContact
         },
         {
             title: t('report.covidTest.title'),
@@ -222,7 +222,7 @@ function ReportScreen(props) {
             onFinish: covidTestStatus => {
                 setCovidTestStatus(covidTestStatus);
             },
-            initialProps: covidTestStatus,
+            initialProps: covidTestStatus
         },
         {
             title: t('report.contacts.whoTitle'),
@@ -286,7 +286,7 @@ function ReportScreen(props) {
 
             caseReport.gender = gender;
             // gender must not be empty
-            if (caseReport.gender === '') {
+            if (!caseReport.gender || caseReport.gender === '') {
                 caseReport.gender = 'other';
             }
 
@@ -297,8 +297,8 @@ function ReportScreen(props) {
                 caseReport.residence = undefined;
             }
 
-            caseReport.covid_test = covidTestStatus;
-            caseReport.covid_contact = hadCovidContact;
+            caseReport.covid_test = covidTestStatus || "not-tested";
+            caseReport.covid_contact = hadCovidContact || false;
 
             let transformedSymptoms = [];
             for (let i in symptoms) {
@@ -378,15 +378,16 @@ function ReportScreen(props) {
         );
     };
 
+    let step = steps[stepIndex];
     let isBackButtonEnabled = stepIndex > 0 ? true : false;
-    let isNextButtonEnabled = steps[stepIndex].initialProps ? true : false;
+    let isNextButtonEnabled = step.initialProps || step.skipDisabled ? true : false;
     return (
         // Portal.Host is used so that the dialogs appear correctly on top of the screen
         <Portal.Host>
             <View style={styles.container}>
                 <ProgressBar progress={(stepIndex + 1) / steps.length} />
                 <Step
-                    stepItem={steps[stepIndex]}
+                    stepItem={step}
                     registerCleanupCallback={registerCleanupCallback}
                 />
                 {/* Don't show the previous button for the first step */}

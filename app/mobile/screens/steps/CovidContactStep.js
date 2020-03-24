@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 export default function CovidContactStep(props) {
     const {t} = useTranslation();
 
-    const [hadCovidContact, setCovidContact] = useState(props.stepItem.initialProps || false);
+    const [hadCovidContact, setCovidContact] = useState(props.stepItem.initialProps);
     const hadCovidContactStr = "" + hadCovidContact;
 
     const onSelect = selectionStr => {
