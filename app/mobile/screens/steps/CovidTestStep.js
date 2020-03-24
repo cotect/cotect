@@ -29,7 +29,7 @@ export default function CovidTestStep(props) {
     ];
 
     // value corresponds to 'key' of testStatuses
-    const [value, setValue] = useState(props.stepItem.initialProps || notTestedKey);
+    const [value, setValue] = useState(props.stepItem.initialProps);
 
     const onSelect = selection => {
         setValue(selection);
@@ -39,9 +39,10 @@ export default function CovidTestStep(props) {
     return (
         <View>
             <RadioButton.Group onValueChange={onSelect} value={value}>
-                {testStatuses.map(testStatus => {
+                {testStatuses.map((testStatus, index) => {
+                    console.log(index);
                     return (
-                        <View style={styles.radioButtonItem}>
+                        <View key={index} style={styles.radioButtonItem}>
                             <RadioButton.Android
                                 value={testStatus.key}
                                 color={styles.radioButton.color}
