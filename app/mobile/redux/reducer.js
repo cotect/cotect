@@ -22,7 +22,7 @@ const initialState = {
     appLoading: false,
     authToken: '',
     phoneNumber: '',
-    residence: '',
+    residence: {},
     gender: '',
     age: '',
     numberOfReports: 0,

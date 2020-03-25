@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 
 export default function CurrentLocationStep(props) {
     const {t} = useTranslation();
-    const [currentLocation, setCurrentLocation] = useState(props.stepItem.initialProps);
+    const [currentLocation, setCurrentLocation] = useState(props.stepItem.initialProps || {});
 
     let openPlacesSearchModal = () => {
         RNGooglePlaces.openAutocompleteModal()
@@ -57,7 +57,7 @@ export default function CurrentLocationStep(props) {
     return (
         <View>
             {/* <Text>{currentLocation.address}</Text> */}
-            {currentLocation ?
+            {currentLocation.placeName ?
                 <Card 
                     style={styles.cardItem}
                 >

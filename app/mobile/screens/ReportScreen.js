@@ -9,10 +9,20 @@ import {Button, Dialog, Paragraph, Portal, Text, ProgressBar} from 'react-native
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import {COTECT_BACKEND_URL} from 'react-native-dotenv';
+
 import {CONTAINER} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
-import { DefaultApi as CotectApi, CaseReport, CaseSymptom, CasePlace, CaseContact } from '../client/cotect-backend/index';
+import {
+    ApiClient as CotectApiClient,
+    ReportsApi,
+    CaseReport,
+    CaseSymptom,
+    CasePlace,
+    CaseContact,
+    AdministrationApi,
+} from '../client/cotect-backend/index';
 
 import {
     AgeStep,
@@ -20,9 +30,10 @@ import {
     CurrentLocationStep,
     GenderStep,
     LocationsStep,
-    NumberOfContactsStep,
     PhoneNumberStep,
     SymptomsStep,
+    CovidContactStep,
+    CovidTestStep,
 } from './steps/index';
 
 const styles = StyleSheet.create({
@@ -124,7 +135,10 @@ function ReportScreen(props) {
 
     // locations: [{ placeId, visitDates, latitude, longitude, placeName, placeTypes }]
     const [locations, setLocations] = useState();
-    const [numberOfContacts, setNumberOfContacts] = useState();
+
+    const [hadCovidContact, setCovidContact] = useState();
+
+    const [covidTestStatus, setCovidTestStatus] = useState();
 
     // contacts: [{ phoneNumber, contactDate }]
     const [contacts, setContacts] = useState();
@@ -142,7 +156,7 @@ function ReportScreen(props) {
             element: PhoneNumberStep,
             onFinish: (phoneNumber, user) => {
                 setUserPhoneNumber(phoneNumber);
-                user.getIdToken().then((authToken) => {
+                user.getIdToken().then(authToken => {
                     props.setAuthToken(authToken);
                 });
             },
@@ -195,12 +209,20 @@ function ReportScreen(props) {
             initialProps: locations,
         },
         {
-            title: t('report.contacts.amountTitle'),
-            element: NumberOfContactsStep,
-            onFinish: numberOfContacts => {
-                setNumberOfContacts(numberOfContacts);
+            title: t('report.covidContact.title'),
+            element: CovidContactStep,
+            onFinish: hadCovidContact => {
+                setCovidContact(hadCovidContact);
             },
-            initialProps: numberOfContacts,
+            initialProps: hadCovidContact
+        },
+        {
+            title: t('report.covidTest.title'),
+            element: CovidTestStep,
+            onFinish: covidTestStatus => {
+                setCovidTestStatus(covidTestStatus);
+            },
+            initialProps: covidTestStatus
         },
         {
             title: t('report.contacts.whoTitle'),
@@ -216,7 +238,7 @@ function ReportScreen(props) {
         return availableSteps.filter(step => {
             return props.numberOfReports === 0 || !step.isPermanentSetting;
         });
-    });//, []);
+    }); //, []);
 
     const nextStepItem = () => {
         const newStepIndex = stepIndex + 1;
@@ -242,7 +264,6 @@ function ReportScreen(props) {
     };
 
     const submitReport = () => {
-        // TODO: save permanent entries only if changed
         props.setPhoneNumber(user);
         props.setResidence(currentLocation);
         props.setAge(age);
@@ -253,14 +274,31 @@ function ReportScreen(props) {
         setModalText(t('report.submit.text')); // replace text upon answer of the server
         setModalButtonText(t('report.submit.primaryAction'));
         setModalVisible(true);
-        
+
         let createCaseReport = () => {
-            let caseReport = new  CaseReport();
+            let caseReport = new CaseReport();
             caseReport.age = age;
+            if (!age) {
+                caseReport.age = 0;
+            } else {
+                caseReport.age = parseInt(age);
+            }
+
             caseReport.gender = gender;
+            // gender must not be empty
+            if (!caseReport.gender || caseReport.gender === '') {
+                caseReport.gender = 'other';
+            }
+
             caseReport.residence = currentLocation;
-            caseReport.covid_test = ""; // not asked yet
-            caseReport.covid_contact = null; // not asked yet
+            caseReport.residence.place_id = caseReport.residence.placeId;
+            // place_id must exist, otherwise whole residence cannot be set
+            if (!caseReport.residence.place_id) {
+                caseReport.residence = undefined;
+            }
+
+            caseReport.covid_test = covidTestStatus || "not-tested";
+            caseReport.covid_contact = hadCovidContact || false;
 
             let transformedSymptoms = [];
             for (let i in symptoms) {
@@ -268,34 +306,58 @@ function ReportScreen(props) {
             }
 
             caseReport.symptoms = transformedSymptoms;
+            if (caseReport.symptoms) {
+                caseReport.symptoms = caseReport.symptoms.map(symptom => {
+                    symptom.symptom_name = symptom.name;
+                    return symptom;
+                });
+            }
+
             caseReport.places = locations;
+            if (caseReport.places) {
+                caseReport.places = caseReport.places.map(place => {
+                    place.place_id = place.placeId;
+                    return place;
+                });
+            }
+
             caseReport.contacts = contacts;
+            if (caseReport.contacts) {
+                caseReport.contacts = caseReport.contacts.map(contact => {
+                    contact.phone_number = contact.phoneNumber;
+                    contact.contact_date = contact.contactDate;
+                    return contact;
+                });
+            }
 
             return caseReport;
-        }
+        };
 
-
-         // simulate call to backend
-        setTimeout(() => {
-            setModalText(t('report.submit.successText'));
-            setModalButtonText(t('report.submit.exitAction'));
-            // TODO: button text should not be "Submit" here
-            setOnModalClick(() => () => props.onSubmit());
-        }, 1000);
+        // simulate call to backend
+        // setTimeout(() => {
+        //     setModalText(t('report.submit.successText'));
+        //     setModalButtonText(t('report.submit.exitAction'));
+        //     // TODO: button text should not be "Submit" here
+        //     setOnModalClick(() => () => props.onSubmit());
+        // }, 1000);
 
         let caseReport = createCaseReport();
-        console.log(caseReport);
-        // new CotectApi().updateReportReportsPost(caseReport, (error, data, response) => {
-        //     if (error) {
-        //         console.log(error);
-        //     } else {
-        //         setModalText(t('report.submit.successText'));
-        //         setModalButtonText(t('report.submit.exitAction'));
-        //         setOnModalClick(() => () => props.onSubmit());
-        //     }
-        // });
 
-
+        const cotectApiClient = new CotectApiClient();
+        // cotectApiClient.authentications['APIKeyHeader'].apiKey = props.authToken;
+        cotectApiClient.authentications['HTTPBearer'].accessToken = props.authToken;
+        //cotectApiClient.authentications['APIKeyQuery'].apiKey = props.authToken;
+        cotectApiClient.basePath = COTECT_BACKEND_URL;
+        new ReportsApi(cotectApiClient).updateReport(caseReport, (error, data, response) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Sending report was successful!');
+                setModalText(t('report.submit.successText'));
+                setModalButtonText(t('report.submit.exitAction'));
+                setOnModalClick(() => () => props.onSubmit());
+            }
+        });
     };
 
     const exitReport = () => {
@@ -316,15 +378,16 @@ function ReportScreen(props) {
         );
     };
 
+    let step = steps[stepIndex];
     let isBackButtonEnabled = stepIndex > 0 ? true : false;
-    let isNextButtonEnabled = steps[stepIndex].initialProps ? true : false;
+    let isNextButtonEnabled = step.initialProps || step.skipDisabled ? true : false;
     return (
         // Portal.Host is used so that the dialogs appear correctly on top of the screen
         <Portal.Host>
             <View style={styles.container}>
                 <ProgressBar progress={(stepIndex + 1) / steps.length} />
                 <Step
-                    stepItem={steps[stepIndex]}
+                    stepItem={step}
                     registerCleanupCallback={registerCleanupCallback}
                 />
                 {/* Don't show the previous button for the first step */}
