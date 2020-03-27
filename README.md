@@ -147,6 +147,10 @@ contact_id = hash(hashed_contact_number, secret)
 
 ## Concept
 
+**Introduction Video:**
+
+[![Cotect](https://img.youtube.com/vi/mfEvBedZyLs/0.jpg)](https://www.youtube.com/watch?v=mfEvBedZyLs "Cotect")
+
 <details>
 <summary><b>Problem Statement</b> (click to expand...)</summary>
 <br>
