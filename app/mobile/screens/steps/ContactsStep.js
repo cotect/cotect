@@ -59,32 +59,45 @@ export default function ContactsStep(props) {
     };
 
     let getMinDate = () => {
-        return format(subDays(new Date(), 14), 'yyyy-MM-dd');
+        try {
+            return format(subDays(new Date(), 14), 'yyyy-MM-dd');
+        } catch(e) {
+            console.error(e);
+        }
     };
 
     let getMaxDate = () => {
-        return format(new Date(), 'yyyy-MM-dd');
+        try {    
+            return format(new Date(), 'yyyy-MM-dd');
+        } catch(e) {
+            console.error(e);
+        }
     };
 
     let getRangeDate = (visitCount, earliestDate, latestDate) => {
-        if (earliestDate == null || latestDate == null) {
-            return t('report.contacts.noDatesDesc');
-        }
+        try {
+            if (earliestDate == null || latestDate == null) {
+                return t('report.contacts.noDatesDesc');
+            }
 
-        if (isSameDay(earliestDate, latestDate)) {
-            return t('report.contacts.singleDateDesc', {date: format(earliestDate, 'd.M')});
-        } else if (isSameMonth(earliestDate, latestDate)) {
-            return t('report.contacts.datesDesc', {
-                visitCount: visitCount,
-                earliestDate: format(earliestDate, 'd.'),
-                latestDate: format(latestDate, 'd.M.'),
-            });
-        } else {
-            return t('report.contacts.datesDesc', {
-                visitCount: visitCount,
-                earliestDate: format(earliestDate, 'd.M.'),
-                latestDate: format(latestDate, 'd.M.'),
-            });
+            if (isSameDay(earliestDate, latestDate)) {
+                return t('report.contacts.singleDateDesc', {date: format(earliestDate, 'd.M')});
+            } else if (isSameMonth(earliestDate, latestDate)) {
+                return t('report.contacts.datesDesc', {
+                    visitCount: visitCount,
+                    earliestDate: format(earliestDate, 'd.'),
+                    latestDate: format(latestDate, 'd.M.'),
+                });
+            } else {
+                return t('report.contacts.datesDesc', {
+                    visitCount: visitCount,
+                    earliestDate: format(earliestDate, 'd.M.'),
+                    latestDate: format(latestDate, 'd.M.'),
+                });
+            }
+        } catch (e) {
+            console.error(e);
+            return t('report.contacts.noDatesDesc');
         }
     };
 

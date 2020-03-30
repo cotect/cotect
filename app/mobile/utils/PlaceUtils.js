@@ -84,24 +84,28 @@ export let getPlaceDisplayType = (types, translation) => {
 
 export let getRangeDate = (visitCount, earliestDate, latestDate, translation) => {
     let t = translation;
+    try {
+        if (earliestDate == null || latestDate == null) {
+            return t('report.places.noVisitsDesc');
+        }
 
-    if (earliestDate == null || latestDate == null) {
+        if (isSameDay(earliestDate, latestDate)) {
+            return t('report.places.singleVisitDesc', {date: format(earliestDate, 'd.M')});
+        } else if (isSameMonth(earliestDate, latestDate)) {
+            return t('report.places.visitsDesc', {
+                visitCount: visitCount,
+                earliestDate: format(earliestDate, 'd.'),
+                latestDate: format(latestDate, 'd.M.'),
+            });
+        } else {
+            return t('report.places.visitsDesc', {
+                visitCount: visitCount,
+                earliestDate: format(earliestDate, 'd.M.'),
+                latestDate: format(latestDate, 'd.M.'),
+            });
+        }
+    } catch(e) {
+        console.error(e);
         return t('report.places.noVisitsDesc');
-    }
-
-    if (isSameDay(earliestDate, latestDate)) {
-        return t('report.places.singleVisitDesc', {date: format(earliestDate, 'd.M')});
-    } else if (isSameMonth(earliestDate, latestDate)) {
-        return t('report.places.visitsDesc', {
-            visitCount: visitCount,
-            earliestDate: format(earliestDate, 'd.'),
-            latestDate: format(latestDate, 'd.M.'),
-        });
-    } else {
-        return t('report.places.visitsDesc', {
-            visitCount: visitCount,
-            earliestDate: format(earliestDate, 'd.M.'),
-            latestDate: format(latestDate, 'd.M.'),
-        });
     }
 };

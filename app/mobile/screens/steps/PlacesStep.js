@@ -51,11 +51,21 @@ export default function PlacesStep(props) {
     };
 
     let getMinDate = () => {
-        return format(subDays(new Date(), 14), 'yyyy-MM-dd');
+        try {
+            return format(subDays(new Date(), 14), 'yyyy-MM-dd');
+        } catch(e) {
+            console.error(e);
+            return new subDays(new Date(), 14);
+        }
     };
 
     let getMaxDate = () => {
-        return format(new Date(), 'yyyy-MM-dd');
+        try {
+            return format(new Date(), 'yyyy-MM-dd');
+        } catch(e) {
+            console.error(e);
+            return new Date();
+        }
     };
 
     let openPlacesSearchModal = () => {
