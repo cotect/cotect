@@ -19,17 +19,20 @@ const styles = StyleSheet.create({});
 export default function SymptomsDateStep(props) {
     const {t} = useTranslation();
 
-    if (!props.caseReport.symptoms) {
+    let reportDate = undefined;
+    let existingMarkedDate = {};
+    
+    if (!props.caseReport.symptoms || props.caseReport.symptoms.length < 1) {
         // ignore step
         props.onNext(props.caseReport);
-    }
 
-    // Initialize Dates
-    //alert(JSON.stringify(props.caseReport.symptoms))
-    const reportDate = props.caseReport.symptoms[0].report_date;
-    const existingMarkedDate = {};
-    if (reportDate) {
-        existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true};
+    } else {
+        // TODO: Initialize Dates - just use the date of the first symptom
+        reportDate = props.caseReport.symptoms[0].report_date;
+        
+        if (reportDate) {
+            existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true};
+        }
     }
 
     const [selectedDate, setSelectedDate] = useState(reportDate);
