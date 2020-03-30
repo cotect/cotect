@@ -1,23 +1,23 @@
 import AgeStep from './AgeStep';
-import ContactsStep from './ContactsStep';
-import CurrentLocationStep from './CurrentLocationStep';
-import GenderStep from './GenderStep';
-import LocationsStep from './LocationsStep';
-import NumberOfContactsStep from './NumberOfContactsStep';
 import PhoneNumberStep from './PhoneNumberStep';
-import SymptomsStep from './SymptomsStep';
+import PlacesStep from './PlacesStep';
+import ContactsStep from './ContactsStep';
+import ResidenceStep from './ResidenceStep';
+import GenderStep from './GenderStep';
+import CovidTestedStep from './CovidTestedStep';
 import CovidContactStep from './CovidContactStep';
-import CovidTestStep from './CovidTestStep';
+import SymptomsDateStep from './SymptomsDateStep';
+import SymptomsStep from './SymptomsStep';
 
 export {
     AgeStep,
-    ContactsStep,
-    CurrentLocationStep,
-    GenderStep,
-    LocationsStep,
-    NumberOfContactsStep,
     PhoneNumberStep,
-    SymptomsStep,
+    PlacesStep,
+    ContactsStep,
+    ResidenceStep,
+    GenderStep,
+    CovidTestedStep,
     CovidContactStep,
-    CovidTestStep
+    SymptomsDateStep,
+    SymptomsStep
 };

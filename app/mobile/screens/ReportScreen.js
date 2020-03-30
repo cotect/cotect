@@ -16,16 +16,18 @@ import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
 import {ApiClient as CotectApiClient, ReportsApi, CaseReport} from '../client/cotect-backend/index';
 
-import AgeStep from './steps/AgeStep';
-import PhoneNumberStep from './steps/PhoneNumberStep';
-import PlacesStep from './steps/PlacesStep';
-import ContactsStep from './steps/ContactsStep';
-import ResidenceStep from './steps/ResidenceStep';
-import GenderStep from './steps/GenderStep';
-import CovidTestedStep from './steps/CovidTestedStep';
-import CovidContactStep from './steps/CovidContactStep';
-import SymptomsDateStep from './steps/SymptomsDateStep';
-import SymptomsStep from './steps/SymptomsStep';
+import {
+    AgeStep,
+    PhoneNumberStep,
+    PlacesStep,
+    ContactsStep,
+    ResidenceStep,
+    GenderStep,
+    CovidTestedStep,
+    CovidContactStep,
+    SymptomsDateStep,
+    SymptomsStep,
+} from './steps/index';
 
 const styles = StyleSheet.create({
     container: CONTAINER,
