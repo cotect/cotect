@@ -1,52 +1,81 @@
 import React, {useState} from 'react';
 
-import {StyleSheet, View} from 'react-native';
+import PropTypes from 'prop-types';
 
 import {useTranslation} from 'react-i18next';
 
-import {RadioButton, Text} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+
+import {RadioButton, Text, TouchableRipple} from 'react-native-paper';
+
+import {
+    CaseReport,
+} from '../../client/cotect-backend/index';
+
+import StepContainer from './StepContainer';
 
 const styles = StyleSheet.create({
     radioButtonItem: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    radioButton: {
-        color: '#8c81dd',
-    },
 });
 
 export default function GenderStep(props) {
     const {t} = useTranslation();
-    let genders = [
-        {key: 'male', value: t('male')},
-        {key: 'female', value: t('female')},
-        {key: 'other', value: t('other')},
+    let selectionOptions = [
+        {key: CaseReport.GenderEnum.male, value: t('report.gender.male')},
+        {key: CaseReport.GenderEnum.female, value: t('report.gender.female')},
+        {key: CaseReport.GenderEnum.other, value: t('report.gender.other')},
     ];
 
-    let initialSelected = genders.indexOf(props.stepItem.initialProps);
-    const [selected, setSelected] = useState(initialSelected);
+    const [selection, setSelection] = useState(props.caseReport.gender);
 
-    const onSelect = (item) => {
-        setSelected(item);
-        props.stepItem.onFinish(item, true);
+    const onSelect = item => {
+        setSelection(item);
+        // onNext is triggered faster then the state change?
+        props.onNext(getStateToBeSaved(item));
+    };
+
+    const getStateToBeSaved = (gender = null) => {
+        const caseReport = {...props.caseReport};
+        if (gender) {
+            // set gender from parameter (optional)
+            caseReport.gender = gender;
+        } else {
+            caseReport.gender = selection;
+        }
+        return caseReport;
     };
 
     return (
-        <View>
-            <RadioButton.Group onValueChange={onSelect} value={selected}>
-                {genders.map((item, index) => {
+        <StepContainer
+            title={t('report.gender.title')}
+            helpText={t('report.help.defaultText')}
+            onNext={() => props.onNext(getStateToBeSaved())}
+            onBack={() => props.onBack(getStateToBeSaved())}
+            hideNextButton={props.hideNextButton}
+            hideBackButton={props.hideBackButton}>
+            <RadioButton.Group onValueChange={onSelect} value={selection}>
+                {selectionOptions.map((item, index) => {
                     return (
-                        <View key={index} style={styles.radioButtonItem}>
-                            <RadioButton.Android
-                                value={item.key}
-                                color={styles.radioButton.color}
-                            />
-                            <Text>{item.value}</Text>
-                        </View>
+                        <TouchableRipple key={index} onPress={() => onSelect(item.key)}>
+                            <View style={styles.radioButtonItem}>
+                                <RadioButton.Android value={item.key} />
+                                <Text>{item.value}</Text>
+                            </View>
+                        </TouchableRipple>
                     );
                 })}
             </RadioButton.Group>
-        </View>
+        </StepContainer>
     );
 }
+
+GenderStep.propTypes = {
+    caseReport: PropTypes.object.isRequired,
+    onNext: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired,
+    hideBackButton: PropTypes.bool,
+    hideNextButton: PropTypes.bool,
+};

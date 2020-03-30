@@ -4,14 +4,17 @@ import {Button, Paragraph, Portal} from 'react-native-paper';
 import {connect} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
-import ReportScreen from './ReportScreen';
+import ReportScreen from '../screens/ReportScreen';
 
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
 const styles = StyleSheet.create({
+    homeView: {
+        backgroundColor: '#fff'
+    },
     paragraphContainer: {
         height: '100%',
-        margin: 16,
+        margin: 16
     },
     paragraph: {
         marginBottom: 20,
@@ -47,8 +50,8 @@ function ReportHandler(props) {
                     numberOfReports={props.numberOfReports}
                 />
             ) : (
-                <View style={styles.paragraphContainer}>
-                    <View>
+                <View style={styles.homeView}>
+                    <View style={styles.paragraphContainer}>
                         <Paragraph style={styles.paragraph}>{t('start.paragraph1')}</Paragraph>
                         <Paragraph style={styles.paragraph}>{t('start.paragraph2')}</Paragraph>
                         <Paragraph style={styles.paragraph}>{t('start.paragraph3')}</Paragraph>

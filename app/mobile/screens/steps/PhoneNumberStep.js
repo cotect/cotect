@@ -1,38 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
+
+import PropTypes from 'prop-types';
 
 import auth from '@react-native-firebase/auth';
 
 import {useTranslation} from 'react-i18next';
 
-import { StyleSheet, View } from 'react-native';
-import { Button, Snackbar, Text, TextInput } from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {Button, Snackbar, Text, TextInput} from 'react-native-paper';
+
+import PhoneInput from 'react-native-phone-input';
+
+import StepContainer from './StepContainer';
+
+import * as RNLocalize from 'react-native-localize';
+
+import {DEFAULT_COUNTRY_CODE} from '../../constants/Configuration';
+
+import {
+    ACTION_BUTTON,
+    ACTION_BUTTON_LABEL,
+    PRIMARY_COLOR,
+    REPORTING_BACKGROUND,
+} from '../../constants/DefaultStyles';
 
 const styles = StyleSheet.create({
-    actionButton: {
-        borderRadius: 32,
-        borderColor: "rgba(50,20,190,1)",
-        borderWidth: 1,
-        marginTop: 8,
-        padding: 2
-    },
-    actionButtonLabel: {
-        fontSize: 12
-    },
+    actionButton: ACTION_BUTTON,
+    actionButtonLabel: ACTION_BUTTON_LABEL,
     inputField: {
-        backgroundColor: "white"
+        backgroundColor: REPORTING_BACKGROUND,
     },
     snackbar: {
-        backgroundColor: "red",
-        position: "absolute",
-        bottom: -48
-    }
+        //backgroundColor: 'red',
+        position: 'absolute',
+        bottom: -24,
+    },
 });
 
 export default function PhoneNumberStep(props) {
     const {t} = useTranslation();
 
     const [isVerified, setIsVerified] = useState(false);
-    const [phoneNumber, setPhoneNumber] = useState();
     const [confirmationCode, setConfirmationCode] = useState();
     const [isPhoneNumberEntered, setPhoneNumberEntered] = useState(false);
     const [confirmation, setConfirmation] = useState();
@@ -41,10 +49,24 @@ export default function PhoneNumberStep(props) {
     const [snackbarText, setSnackbarText] = useState();
 
     const onVerifyClick = async () => {
-        let confirmationResponse = await auth().signInWithPhoneNumber(phoneNumber);
-        setPhoneNumberEntered(true);
-        setConfirmation(confirmationResponse);
-    }
+        try {
+            if (phoneRef.current && phoneRef.current.isValidNumber() == true) {
+                var phoneNumber = phoneRef.current.getValue();
+
+                let confirmationResponse = await auth().signInWithPhoneNumber(phoneNumber);
+                setPhoneNumberEntered(true);
+                setConfirmation(confirmationResponse);
+            } else {
+                setSnackbarText(t('report.phoneNumber.invalidNumber'));
+                setSnackbarVisible(true);
+            }
+        } catch (error) {
+            alert(error);
+            console.log(error);
+            setSnackbarText(t('report.phoneNumber.verificationFailed'));
+            setSnackbarVisible(true);
+        }
+    };
 
     const onSignInAnonymously = async () => {
         if (auth().currentUser === null) {
@@ -53,46 +75,47 @@ export default function PhoneNumberStep(props) {
             } catch (e) {
                 switch (e.code) {
                     case 'auth/operation-not-allowed':
-                    console.log('Enable anonymous in your firebase console.');
-                    break;
+                        console.log('Enable anonymous in your firebase console.');
+                        break;
                     default:
-                    console.error(e);
-                    break;
+                        console.error(e);
+                        break;
                 }
             }
         }
-    }
+    };
 
     const onConfirmClick = async () => {
         try {
             await confirmation.confirm(confirmationCode); // User entered code
             // Successful login - onAuthStateChanged is triggered
         } catch (e) {
-            setSnackbarText("Confirmation code not valid");
+            setSnackbarText(t('report.phoneNumber.invalidConfirmation'));
             setSnackbarVisible(true);
+            setPhoneNumberEntered(false);
         }
-    }
+    };
 
-    const onAuthStateChanged = async (user) => {       
+    const onAuthStateChanged = async user => {
         if (user) {
             // user.delete();
             // user.getIdToken(true).then((e)=>console.log(e)).catch((e) => console.log(e));
             setIsVerified(true);
             let phoneNumber = user.phoneNumber;
             if (user.isAnonymous && user.phoneNumber === null) {
-                phoneNumber = "anonymous";
+                phoneNumber = 'anonymous';
             }
-            // Phone number is deleted from firebase, after 
+            // Phone number is deleted from firebase, after
             // successful validation. Account is online anonymous then.
-            if (user.isAnonymous === false && user.phoneNumber !== null){
+            if (user.isAnonymous === false && user.phoneNumber !== null) {
                 phoneNumber = (' ' + user.phoneNumber).slice(1); // Save phone number locally
-                try{
+                try {
                     await user.unlink(auth.PhoneAuthProvider.PROVIDER_ID);
-                } catch (e){
+                } catch (e) {
                     switch (e.code) {
                         case 'auth/unknown':
-                            console.log("Number deleted from Firebase already.");
-                            break;                   
+                            console.log('Number deleted from Firebase already.');
+                            break;
                         default:
                             console.error(e);
                             break;
@@ -102,69 +125,122 @@ export default function PhoneNumberStep(props) {
                     // reload so local user is updated
                     await auth().currentUser.reload();
                 } catch (e) {
-                    console.error(e);                    
+                    console.error(e);
                 }
             }
-            props.stepItem.onFinish(phoneNumber, user);
+            props.onNext(getStateToBeSaved(phoneNumber));
         } else {
             setIsVerified(false);
         }
-    }
+    };
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        return subscriber; // unsubscribe on unmount 
+        return subscriber; // unsubscribe on unmount
     }, []);
 
-    useEffect(() => {
-        props.registerCleanupCallback(onSignInAnonymously);
-    }, []);
+    const getStateToBeSaved = (phone_number = null) => {
+        const caseReport = {...props.caseReport};
+        // TODO: fill caseReport?
+        return caseReport;
+    };
+
+    const getCountryCode = () => {
+        var countryCode = null;
+        try {
+            countryCode = RNLocalize.getCountry();
+        } catch {
+            countryCode = DEFAULT_COUNTRY_CODE;
+        }
+
+        if (countryCode == null) {
+            countryCode = DEFAULT_COUNTRY_CODE;
+        }
+
+        return countryCode.toLowerCase();
+    };
+
+    const phoneRef = React.createRef();
 
     return (
-        <View>
-            {!isVerified ? (
-                <View>
-                    <TextInput
-                        style={styles.inputField}
-                        label='Phone Number'
-                        value={phoneNumber}
-                        onChangeText={text => setPhoneNumber(text)}
-                    />
-                    <Button
-                        style={styles.actionButton}
-                        labelStyle={styles.actionButtonLabel} 
-                        onPress={() => onVerifyClick()}>
-                        {t('actions.verify')}
-                    </Button>
-
-                    {isPhoneNumberEntered ? (
-                        <View>
-                            <TextInput
-                                style={styles.inputField}
-                                label='Confirmation Code'
-                                value={confirmationCode}
-                                onChangeText={text => setConfirmationCode(text)}
-                            />
-                            <Button
-                                style={styles.actionButton}
-                                labelStyle={styles.actionButtonLabel} 
-                                onPress={() => onConfirmClick()}>
-                                {t('actions.confirm')}
-                            </Button>
+        <StepContainer
+            title={t('report.phoneNumber.title')}
+            helpText={t('report.help.defaultText')}
+            onNext={() => props.onNext(getStateToBeSaved())}
+            onBack={() => props.onBack(getStateToBeSaved())}
+            hideNextButton={props.hideNextButton}
+            hideBackButton={props.hideBackButton}>
+            <View>
+                {!isVerified ? (
+                    <View>
+                        {!isPhoneNumberEntered ? (
+                            <View>
+                        <PhoneInput
+                            style={{marginLeft: 8, marginRight: 32}}
+                            ref={phoneRef}
+                            pickerButtonColor={PRIMARY_COLOR}
+                            initialCountry={getCountryCode()}
+                            autoFormat={true}
+                            autoCorrect={true}
+                            allowZeroAfterCountryCode={false}
+                            textComponent={props => <TextInput {...props} />}
+                            textStyle={{...styles.inputField, fontSize: 14, height: 64}}
+                            textProps={{label: t('report.phoneNumber.inputLabelPhoneNumber')}}
+                        />
+                        <Button
+                            mode="outlined"
+                            style={styles.actionButton}
+                            labelStyle={styles.actionButtonLabel}
+                            onPress={() => onVerifyClick()}>
+                            {t('actions.verify')}
+                        </Button>
                         </View>
-                        ) : false
-                    }
-                    </View>) : 
-                
+                         ) : (
+                            <View>
+                                <TextInput
+                                    mode="outlined"
+                                    style={{...styles.inputField, marginTop: 8, marginLeft: 32, marginRight: 32}}
+                                    label={t('report.phoneNumber.inputLabelConfirmation')}
+                                    value={confirmationCode}
+                                    keyboardType="numeric"
+                                    maxLength={6}
+                                    onChangeText={text => setConfirmationCode(text)}
+                                />
+                                <Button
+                                    mode="outlined"
+                                    style={styles.actionButton}
+                                    labelStyle={styles.actionButtonLabel}
+                                    onPress={() => onConfirmClick()}>
+                                    {t('actions.confirm')}
+                                </Button>
+                            </View>
+                        )}
+                    </View>
+                ) : (
                     <Text>{t('report.phoneNumber.numberVerified')}</Text>
-                }
-            <Snackbar
-                style={styles.snackbar}
-                visible={isSnackbarVisible}
-                onDismiss={() => setSnackbarVisible(false)}
-            >
-                <Text style={styles.snackbarText}>{snackbarText}</Text>
-            </Snackbar>
-        </View>
-    )
+                )}
+
+                <Snackbar
+                    style={styles.snackbar}
+                    visible={isSnackbarVisible}
+                    onDismiss={() => setSnackbarVisible(false)}
+                    action={{
+                        label: t('actions.dismiss'),
+                        onPress: () => {
+                            setSnackbarVisible(false);
+                        },
+                    }}>
+                    {snackbarText}
+                </Snackbar>
+            </View>
+        </StepContainer>
+    );
 }
+
+PhoneNumberStep.propTypes = {
+    caseReport: PropTypes.object.isRequired,
+    onNext: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired,
+    hideBackButton: PropTypes.bool,
+    hideNextButton: PropTypes.bool,
+};

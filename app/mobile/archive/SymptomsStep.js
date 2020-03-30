@@ -1,34 +1,35 @@
 import React, {useState} from 'react';
 
-import PropTypes from 'prop-types';
+import {StyleSheet, ScrollView, TouchableOpacity, View} from 'react-native';
 
 import {useTranslation} from 'react-i18next';
 
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {Button, Chip, Dialog, Portal, RadioButton, Text, TextInput} from 'react-native-paper';
 
-import {Button, Chip, Dialog, Portal, RadioButton, Text, TextInput, TouchableRipple} from 'react-native-paper';
-
-import StepContainer from './StepContainer';
-
-import {PRIMARY_COLOR, PRIMARY_BACKGROUND_COLOR} from '../../constants/DefaultStyles';
+import {CalendarList} from 'react-native-calendars';
 
 const styles = StyleSheet.create({
-    radioButtonItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
     chipsContainer: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         flexWrap: 'wrap',
         flexGrow: 1,
-        width: '100%',
+        height: 150,
     },
     chip: {
         marginBottom: 8,
         marginRight: 8,
-    }
+    },
+    inputField: {
+        backgroundColor: 'white',
+    },
+    radioButtonItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    radioButton: {
+        color: '#8c81dd',
+    },
 });
-
 
 const InputElement = props => {
     const [value, setValue] = useState();
@@ -40,7 +41,7 @@ const InputElement = props => {
 
     return (
         <TextInput
-            style={{backgroundColor: 'white'}}
+            style={styles.inputField}
             label={props.label}
             value={value}
             onChangeText={onChangeText}></TextInput>
@@ -49,29 +50,28 @@ const InputElement = props => {
 
 const SelectionElement = props => {
     const {t} = useTranslation();
-    const selectionOptions = props.selections;
+    const selections = props.selections;
 
-    const [selection, setSelection] = useState();
+    const [selected, setSelected] = useState();
 
     const onSelect = selection => {
-        setSelection(selection);
+        setSelected(selection);
         props.setValue(selection);
-        // directly close dialog after selection
-        props.onDialogPress(selection);
     };
 
-    // <Text>{t('report.symptoms.severity')}</Text>
     return (
         <View>
-            <RadioButton.Group onValueChange={onSelect} value={selection}>
-                {selectionOptions.map((item, index) => {
+            <Text>{t('report.symptoms.severity')}</Text>
+            <RadioButton.Group onValueChange={onSelect} value={selected}>
+                {selections.map((selection, index) => {
                     return (
-                        <TouchableRipple key={index} onPress={() => onSelect(item)}>
-                            <View style={styles.radioButtonItem}>
-                                <RadioButton.Android value={item} />
-                                <Text>{item}</Text>
-                            </View>
-                        </TouchableRipple>
+                        <View key={index} style={styles.radioButtonItem}>
+                            <RadioButton.Android // (implement .Android for iOS to also have a visible radiobuttn)
+                                value={selection}
+                                color={styles.radioButton.color}
+                            />
+                            <Text>{selection}</Text>
+                        </View>
                     );
                 })}
             </RadioButton.Group>
@@ -79,11 +79,10 @@ const SelectionElement = props => {
     );
 };
 
-
 export default function SymptomsStep(props) {
     const {t} = useTranslation();
 
-    const symptomsOptions = [
+    let symptoms = [
         {name: 'Fever', severityElement: props => <InputElement label="Temperature" {...props} />},
         {
             name: 'Headache',
@@ -147,67 +146,41 @@ export default function SymptomsStep(props) {
         },
     ];
 
-    const symptomState = {}
-    if (props.caseReport.symptoms) {
-        for (var symptom in props.caseReport.symptoms){
-            symptomState[symptom.name] = symptom
-        }
-    }
-    
-    const [selectedSymptoms, setSelectedSymptoms] = useState(symptomState);
+    // selectedSymptoms: {name: { name, severity, reportDate }}
+    const [selectedSymptoms, setSelectedSymptoms] = useState(props.stepItem.initialProps || {});
+    const [firstOccuredDate, setFirstOccuredDate] = useState({});
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedSymptom, setSelectedSymptom] = useState({});
+    const [dialogType, setDialogType] = useState();
     const [dialogTitle, setDialogTitle] = useState();
     const [dialogSeverity, setDialogSeverity] = useState();
 
     const _showDialog = () => setModalVisible(true);
     const _hideDialog = () => setModalVisible(false);
 
-    const onSelected = (symptom, dialogSeverity) => {
-        let modifiedSelectedSymptoms = {}
-        if (selectedSymptoms) {
-            modifiedSelectedSymptoms = selectedSymptoms
-        }
+    const onAdd = (symptom, dialogSeverity) => {
+        let modifiedSelectedSymptoms = {...selectedSymptoms};
         if (symptom.name in modifiedSelectedSymptoms) {
             delete modifiedSelectedSymptoms[symptom.name];
         } else {
             modifiedSelectedSymptoms[symptom.name] = {name: symptom.name, severity: dialogSeverity};
         }
-        
+
+        for (let i in modifiedSelectedSymptoms) {
+            modifiedSelectedSymptoms[i].reportDate = firstOccuredDate.timestamp;
+        }
+
         setSelectedSymptoms(modifiedSelectedSymptoms);
-        resetSelection()
-    };
+        props.stepItem.onFinish(modifiedSelectedSymptoms);
 
-    const isSymptomSelected = (symptomName) => {
-        if (selectedSymptoms == null || selectedSymptoms == undefined) {
-            return false;
-        }
-
-        if (symptomName in selectedSymptoms) {
-            return true;
-        }
-
-        return false;
-    };
-
-    const getStateToBeSaved = () => {
-        const caseReport = {...props.caseReport};
-        caseReport.symptoms = []
-        if (selectedSymptoms) {
-            var symptoms = []
-            for(var key in selectedSymptoms) {
-                symptoms.push(selectedSymptoms[key])
-            }
-            caseReport.symptoms = symptoms
-        }
-        
-        return caseReport;
+        resetSelection();
     };
 
     const resetSelection = () => {
         setSelectedSymptom({});
         setDialogSeverity();
+        setDialogType();
     };
 
     const cancelSelectionDialog = () => {
@@ -215,87 +188,121 @@ export default function SymptomsStep(props) {
         resetSelection();
     };
 
-    const onDialogPress = (severity = null) => {
-        if (severity == null) {
-            severity = dialogSeverity
+    const onDialogPress = () => {
+        if (dialogType === 'severity') {
+            onAdd(selectedSymptom, dialogSeverity);
         }
-
-        onSelected(selectedSymptom, severity);
-        _hideDialog();
     };
 
     const showSymptomDialog = symptom => {
         setSelectedSymptom(symptom);
-        setDialogTitle(symptom.name + " - Severity");
+        setDialogType('severity');
+        setDialogTitle(symptom.name);
+        _showDialog();
+    };
+
+    const showCalendarDialog = () => {
+        setDialogType('calendar');
+        setDialogTitle('Day of First Occurence');
         _showDialog();
     };
 
     const renderSymptomSeverityElement = (selectedSymptom, setValue) => {
-        for (let i in symptomsOptions) {
-            const symptom = symptomsOptions[i];
+        for (let i in symptoms) {
+            const symptom = symptoms[i];
             if (symptom.name === selectedSymptom.name && symptom.severityElement) {
-                return symptom.severityElement({setValue: setValue, onDialogPress: onDialogPress});
+                return symptom.severityElement({setValue: setValue});
             }
         }
 
         return <View></View>;
     };
 
+    const renderCalendar = () => {
+        const onDayPress = day => {
+            setFirstOccuredDate(day);
+            _hideDialog();
+        };
+
+        return (
+            <CalendarList
+                // Max amount of months allowed to scroll to the past. Default = 50
+                pastScrollRange={1}
+                // Max amount of months allowed to scroll to the future. Default = 50
+                futureScrollRange={0}
+                // Enable or disable scrolling of calendar list
+                scrollEnabled={true}
+                horizontal={true}
+                // pagingEnabled={true}
+                // Enable or disable vertical scroll indicator. Default = false
+                showScrollIndicator={true}
+                onDayPress={onDayPress}
+                // markedDates={dialogDay}
+            />
+        );
+    };
+
     return (
-        <StepContainer
-            title={t('report.symptoms.title')}
-            helpText={t('report.help.defaultText')}
-            onNext={() => props.onNext(getStateToBeSaved())}
-            onBack={() => props.onBack(getStateToBeSaved())}
-            hideNextButton={props.hideNextButton}
-            hideBackButton={props.hideBackButton}>
-            <View style={{justifyContent: 'flex-end'}}>
+        <View>
             <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.chipsContainer}>
-                {symptomsOptions.map((symptom, key) => {
-                    const isSelected = isSymptomSelected(symptom.name);
+                {symptoms.map((symptom, key) => {
+                    const isSelected = symptom.name in selectedSymptoms ? true : false;
                     return (
                         <Chip
-                            style={[styles.chip, isSelected ? {backgroundColor: PRIMARY_BACKGROUND_COLOR}: {}]}
+                            style={styles.chip}
                             key={key}
-                            selectedColor={isSelected ? PRIMARY_COLOR : undefined}
                             onPress={() => {
-                                !isSelected ? showSymptomDialog(symptom) : onSelected(symptom);
+                                !isSelected ? showSymptomDialog(symptom) : onAdd(symptom);
                             }} // when the symptom is already selected, deselect it on press
-                            //selected={isSelected} -> adds check mark -> not needed
-                            >
+                            selected={isSelected}>
                             {symptom.name}
                         </Chip>
                     );
                 })}
             </ScrollView>
+
+            <View>
+                <TouchableOpacity onPress={() => showCalendarDialog()}>
+                    <TextInput
+                        style={styles.inputField}
+                        label={t('report.symptoms.firstOccurenceLabel')}
+                        value={firstOccuredDate && firstOccuredDate.dateString}
+                        editable={false}
+                        mode="outlined"
+                        pointerEvents="none"
+                    />
+                </TouchableOpacity>
             </View>
+
             <Portal>
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
                     <Dialog.Title>{dialogTitle}</Dialog.Title>
                     <Dialog.Content>
-                        {renderSymptomSeverityElement(selectedSymptom, setDialogSeverity)}
+                        {dialogType === 'severity'
+                            ? renderSymptomSeverityElement(selectedSymptom, severity =>
+                                  setDialogSeverity(severity),
+                              )
+                            : renderCalendar()}
                     </Dialog.Content>
                     <Dialog.Actions>
-                        <Button onPress={cancelSelectionDialog}>{t('actions.cancel')}</Button>
-                        <Button onPress={() => {
+                        <Button onPress={cancelSelectionDialog}>Cancel</Button>
+                        {dialogType === 'severity' ? (
+                            <Button
+                                onPress={() => {
                                     onDialogPress();
+                                    _hideDialog();
                                 }}>
                                 {t('actions.add')}
-                        </Button>
+                            </Button>
+                        ) : (
+                            false
+                        )}
                     </Dialog.Actions>
                 </Dialog>
             </Portal>
-        </StepContainer>
+        </View>
     );
 }
-
-SymptomsStep.propTypes = {
-    caseReport: PropTypes.object.isRequired,
-    onNext: PropTypes.func.isRequired,
-    onBack: PropTypes.func.isRequired,
-    hideBackButton: PropTypes.bool,
-    hideNextButton: PropTypes.bool,
-};

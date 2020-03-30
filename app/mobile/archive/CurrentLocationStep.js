@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 
 import {useTranslation} from 'react-i18next';
 
-import { Button, Card, Paragraph } from 'react-native-paper';
+import { Button, Card, Dialog, Portal, Text, Title, Paragraph, IconButton, Avatar } from 'react-native-paper';
 
 import RNGooglePlaces from 'react-native-google-places';
 
@@ -16,13 +16,16 @@ const styles = StyleSheet.create({
         borderColor: "rgba(50,20,190,1)",
         borderWidth: 1,
         marginTop: 8,
-        padding: 2
+        width: 170,
+        alignSelf: "center"
     },
     actionButtonLabel: {
         fontSize: 12
     },
     cardItem: {
-        marginBottom: 8
+        elevation: 1,
+        margin: 8,
+        borderRadius: 8 
     }
 });
 
@@ -31,13 +34,16 @@ export default function CurrentLocationStep(props) {
     const [currentLocation, setCurrentLocation] = useState(props.stepItem.initialProps || {});
 
     let openPlacesSearchModal = () => {
-        RNGooglePlaces.openAutocompleteModal()
+        RNGooglePlaces.openAutocompleteModal({
+            type: 'regions',
+            useOverlay: true
+        })
         .then((place) => {
             let location = { 
                 placeId: place.placeID,
                 latitude: place.location.latitude, 
                 longitude: place.location.longitude,
-                placeName: place.address,
+                placeName: place.name,
                 placeTypes: place.types,
                 visitDates: [new Date()]
             }
@@ -58,12 +64,14 @@ export default function CurrentLocationStep(props) {
         <View>
             {/* <Text>{currentLocation.address}</Text> */}
             {currentLocation.placeName ?
-                <Card 
-                    style={styles.cardItem}
-                >
-                    <Card.Content>
-                        <Paragraph>{currentLocation.placeName}</Paragraph>
-                    </Card.Content> 
+                <Card
+                    style={styles.cardItem}>
+                  <Card.Title
+                    title={currentLocation.placeName}
+                    subtitle="City"
+                    left={props => <Avatar.Icon {...props} icon="home-city" />}
+                    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
+                  />
                 </Card>
                 : false 
             }

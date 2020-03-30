@@ -1,16 +1,19 @@
 import * as React from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View, KeyboardAvoidingView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {Provider} from 'react-redux';
+import {Provider as PaperProvider } from 'react-native-paper';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { store, setSettingsState, setAuthToken, STORAGE_KEY_PREFIX, STORAGE_AGE_KEY, STORAGE_RESIDENCE_KEY } from "./redux/reducer";
 
+import {APP_THEME} from './constants/DefaultStyles';
+
 import ErrorBoundary from './components/ErrorBoundary';
-import BottomTabNavigator from './navigation/BottomTabNavigator';
+import HomeScreen from './screens/HomeScreen';
 import useLinking from './navigation/useLinking';
 
 import auth from '@react-native-firebase/auth';
@@ -82,16 +85,17 @@ export default function App(props) {
         return (
             <ErrorBoundary>
                 <Provider store={store}>
-                    <View style={styles.container}>
-                        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                    <PaperProvider theme={APP_THEME}>
+                    <KeyboardAvoidingView style={styles.container} behavior={Platform.Os == "ios" ? "padding" : "height"}>
                         <NavigationContainer
                             ref={containerRef}
                             initialState={initialNavigationState}>
-                            <Stack.Navigator>
-                                <Stack.Screen name="Root" component={BottomTabNavigator} />
+                            <Stack.Navigator headerMode="none">
+                                <Stack.Screen name="Root" component={HomeScreen} />
                             </Stack.Navigator>
                         </NavigationContainer>
-                    </View>
+                    </KeyboardAvoidingView>
+                    </PaperProvider>
                 </Provider>
             </ErrorBoundary>
         );

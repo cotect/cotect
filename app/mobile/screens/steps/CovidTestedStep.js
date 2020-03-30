@@ -19,37 +19,47 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function CovidContactStep(props) {
+export default function CovidTestedStep(props) {
     const {t} = useTranslation();
 
     const selectionOptions = [
-        {key: 'true', value: t('basics.yes')},
-        {key: 'false', value: t('basics.no')},
+        {key: CaseReport.CovidTestEnum['not-tested'], value: t('report.covidTest.notTested')},
+        {
+            key: CaseReport.CovidTestEnum['tested-negative'],
+            value: t('report.covidTest.testedNegative'),
+        },
+        {
+            key: CaseReport.CovidTestEnum['tested-positive'],
+            value: t('report.covidTest.testedPositive'),
+        },
+        {
+            key: CaseReport.CovidTestEnum['tested-pending'],
+            value: t('report.covidTest.testedPending'),
+        },
     ];
 
-    const [selection, setSelection] = useState(String(props.caseReport.covidContact));
+    const [selection, setSelection] = useState(props.caseReport.covidTest);
 
     const onSelect = item => {
-        var tested = item === 'true';
-        setSelection(tested);
-        // onNext is triggers faster then the state change?
-        props.onNext(getStateToBeSaved(tested));
+        setSelection(item);
+        // onNext is triggered faster then the state change?
+        props.onNext(getStateToBeSaved(item));
     };
 
     const getStateToBeSaved = (status = null) => {
         const caseReport = {...props.caseReport};
-        if (status != null) {
-            // set status from parameter (optional)
-            caseReport.covidContact = status;
+        if (status) {
+            // set test status from parameter (optional)
+            caseReport.covidTest = status;
         } else {
-            caseReport.covidContact = selection;
+            caseReport.covidTest = selection;
         }
         return caseReport;
     };
 
     return (
         <StepContainer
-            title={t('report.covidContact.title')}
+            title={t('report.covidTest.title')}
             helpText={t('report.help.defaultText')}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
@@ -71,7 +81,7 @@ export default function CovidContactStep(props) {
     );
 }
 
-CovidContactStep.propTypes = {
+CovidTestedStep.propTypes = {
     caseReport: PropTypes.object.isRequired,
     onNext: PropTypes.func.isRequired,
     onBack: PropTypes.func.isRequired,

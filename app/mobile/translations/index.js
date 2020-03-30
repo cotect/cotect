@@ -1,4 +1,5 @@
-import de from './de.json';
+// TODO: import de from './de.json';
 import en from './en.json';
 
-export {de, en};
+// TODO: de
+export {en};

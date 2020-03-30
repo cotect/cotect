@@ -13,8 +13,7 @@ import {
     Portal,
     Paragraph,
     IconButton,
-    Avatar,
-    Menu,
+    Avatar
 } from 'react-native-paper';
 
 import StepContainer from './StepContainer';
@@ -23,26 +22,26 @@ import {Calendar} from 'react-native-calendars';
 
 import {format, subDays, parseISO, isSameDay, isSameMonth, min, max} from 'date-fns';
 
-import {selectContactPhone} from 'react-native-select-contact';
+import RNGooglePlaces from 'react-native-google-places';
 
-import {PermissionsAndroid} from 'react-native';
+import {CasePlace} from '../../client/cotect-backend/index';
 
-import {CaseContact} from '../../client/cotect-backend/index';
+import {getPlaceDisplayType} from  '../../utils/PlaceUtils';
 
 import {ACTION_BUTTON, ACTION_BUTTON_LABEL, CARD_ITEM, CALENDAR_THEME} from '../../constants/DefaultStyles';
 
 const styles = StyleSheet.create({
     cardItem: CARD_ITEM,
     actionButton: ACTION_BUTTON,
-    actionButtonLabel: ACTION_BUTTON_LABEL,
+    actionButtonLabel: ACTION_BUTTON_LABEL
 });
 
-export default function ContactsStep(props) {
+export default function PlacesStep(props) {
     const {t} = useTranslation();
 
-    const [selectedContacts, setSelectedContacts] = useState(props.caseReport.contacts || []);
+    const [visitedPlaces, setVisitedPlaces] = useState(props.caseReport.places || []);
     const [isModalVisible, setModalVisible] = useState(false);
-    const [dialogSelectedContact, setDialogSelectedContact] = useState({});
+    const [dialogSelectedPlace, setDialogSelectedPlace] = useState({});
     const [dialogSelectedDates, setDialogSelectedDates] = useState({});
 
     const _showDialog = () => setModalVisible(true);
@@ -50,7 +49,7 @@ export default function ContactsStep(props) {
 
     const getStateToBeSaved = () => {
         const caseReport = {...props.caseReport};
-        caseReport.contacts = selectedContacts;
+        caseReport.places = visitedPlaces;
         return caseReport;
     };
 
@@ -64,24 +63,44 @@ export default function ContactsStep(props) {
 
     let getRangeDate = (visitCount, earliestDate, latestDate) => {
         if (earliestDate == null || latestDate == null) {
-            return t('report.contacts.noDatesDesc');
+            return t('report.places.noVisitsDesc');
         }
 
         if (isSameDay(earliestDate, latestDate)) {
-            return t('report.contacts.singleDateDesc', {date: format(earliestDate, 'd.M')});
+            return t('report.places.singleVisitDesc', {date: format(earliestDate, 'd.M')});
         } else if (isSameMonth(earliestDate, latestDate)) {
-            return t('report.contacts.datesDesc', {
+            return t('report.places.visitsDesc', {
                 visitCount: visitCount,
                 earliestDate: format(earliestDate, 'd.'),
                 latestDate: format(latestDate, 'd.M.'),
             });
         } else {
-            return t('report.contacts.datesDesc', {
+            return t('report.places.visitsDesc', {
                 visitCount: visitCount,
                 earliestDate: format(earliestDate, 'd.M.'),
                 latestDate: format(latestDate, 'd.M.'),
             });
         }
+    };
+
+    let openPlacesSearchModal = () => {
+        var locationBias = undefined
+        if (props.caseReport.residence && props.caseReport.residence.place_area) {
+            // if residence is set with place_area boundaries -> use it as location bias
+            locationBias = props.caseReport.residence.place_area
+        }
+        
+        RNGooglePlaces.openAutocompleteModal({
+            useOverlay: true,
+            locationBias: locationBias
+        })
+            .then(place => {
+                setDialogSelectedPlace(place);
+                _showDialog();
+                // place represents user's selection from the
+                // suggestions and it is a simplified Google Place object.
+            })
+            .catch(error => console.log(error.message)); // error is a Javascript Error object
     };
 
     let onDayPress = day => {
@@ -101,34 +120,34 @@ export default function ContactsStep(props) {
         setDialogSelectedDates(modifiedDialogSelectedDays);
     };
 
-    let getSelectedContactByNumber = phoneNumber => {
-        if (phoneNumber == null) {
+    let getVisitedPlaceByID = placeID => {
+        if (visitedPlaces == null) {
             return null;
         }
 
-        for (let selectedContact of selectedContacts) {
-            if (selectedContact && selectedContact.phone_number === phoneNumber) {
-                return selectedContact;
+        for (let visitedPlace of visitedPlaces) {
+            if (visitedPlace && visitedPlace.place_id === placeID) {
+                return visitedPlace;
             }
         }
         return null;
     };
 
-    let removeContact = phoneNumber => {
-        let contact = getSelectedContactByNumber(phoneNumber);
-        if (contact) {
-            var index = selectedContacts.indexOf(contact);
+    let removePlace = placeID => {
+        let place = getVisitedPlaceByID(placeID);
+        if (place) {
+            var index = visitedPlaces.indexOf(place);
             if (index !== -1) {
-                selectedContacts.splice(index, 1);
+                visitedPlaces.splice(index, 1);
 
                 // TODO: workaround to reset view -> otherwise card is not removed
-                setDialogSelectedContact({});
+                setDialogSelectedPlace({});
                 setDialogSelectedDates({});
             }
         }
     };
 
-    let onAddContact = (contact, markedDates) => {
+    let onAddPlace = (place, markedDates) => {
         let dates = [];
         if (markedDates) {
             for (let date of markedDates) {
@@ -137,83 +156,37 @@ export default function ContactsStep(props) {
         }
 
         // sometimes this is null or undefined
-        if (contact && contact.phone_number) {
-            let existingContact = getSelectedContactByNumber(contact.phone_number);
-            if (existingContact && dates) {
-                // contact was already added -> update
-                if (existingContact.contact_dates) {
-                    existingContact.contact_dates = existingContact.contact_dates.concat(dates);
+        if (place && place.placeID) {
+            let visitedPlace = getVisitedPlaceByID(place.placeID);
+            if (visitedPlace && dates) {
+                // place was already added -> update dates
+                if (visitedPlace.visit_dates) {
+                    visitedPlace.visit_dates = visitedPlace.visit_dates.concat(dates);
                 } else {
-                    existingContact.contact_dates = dates;
+                    visitedPlace.visit_dates = dates;
                 }
             } else {
-                // only set dates, the rest is already set before
-                contact.contact_dates = dates;
-                let modifiedSelectedContacts = [...selectedContacts, contact];
-                setSelectedContacts(modifiedSelectedContacts);
+                let casePlace = new CasePlace(place.placeID);
+                casePlace.latitude = place.location.latitude;
+                casePlace.longitude = place.location.longitude;
+                casePlace.place_name = place.name;
+                casePlace.place_types = place.types;
+                casePlace.visit_dates = dates;
+
+                let modifiedVisitedPlaces = [...visitedPlaces, casePlace];
+                setVisitedPlaces(modifiedVisitedPlaces);
             }
         }
 
-        setDialogSelectedContact({});
+        setDialogSelectedPlace({});
         setDialogSelectedDates({});
         _hideDialog();
-    };
-
-    let openSelectPhoneNumberModal = async () => {
-        let readContactsPermission = true;
-        if (Platform.OS === 'android') {
-            async function requestPermission() {
-                try {
-                    const granted = await PermissionsAndroid.request(
-                        PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
-                        {
-                            title: t('report.contacts.permissionTitle'),
-                            message: t('report.contacts.permissionMessage'),
-                            buttonNeutral: t('actions.askLater'),
-                            buttonNegative: t('actions.cancel'),
-                            buttonPositive: t('actions.ok'),
-                        },
-                    );
-                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                        console.log('Contact permission granted');
-                        return true;
-                    } else {
-                        console.log('Contact permission denied');
-                        return false;
-                    }
-                } catch (err) {
-                    console.warn(err);
-                    return false;
-                }
-            }
-
-            readContactsPermission = await requestPermission();
-        }
-
-        if (!readContactsPermission) {
-            return true;
-        }
-
-        return selectContactPhone().then(selection => {
-            if (!selection) {
-                return null;
-            }
-
-            let {contact, selectedPhone} = selection;
-
-            let caseContact = new CaseContact(selectedPhone.number);
-            // this property will not be send to the server:
-            caseContact.contact_name = contact.name;
-
-            setDialogSelectedContact(caseContact);
-            _showDialog();
-        });
     };
 
     const scrollViewRef = React.createRef();
     return (
         <StepContainer
-            title={t('report.contacts.title')}
+            title={t('report.places.title')}
             helpText={t('report.help.defaultText')}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
@@ -227,22 +200,27 @@ export default function ContactsStep(props) {
                     }}
                     ref={scrollViewRef}
                     onLayout={e => scrollViewRef.current.scrollToEnd({animated: true})}>
-                    {selectedContacts.map((item, index) => {
+                    {visitedPlaces.map((item, index) => {
                         let visitCount = 0;
                         let earliestDate = null;
                         let latestDate = null;
-                        if (item && item.contact_dates && item.contact_dates.length > 0) {
-                            visitCount = item.contact_dates.length;
-                            earliestDate = min(item.contact_dates);
-                            latestDate = max(item.contact_dates);
+                        if (item && item.visit_dates && item.visit_dates.length > 0) {
+                            visitCount = item.visit_dates.length;
+                            earliestDate = min(item.visit_dates);
+                            latestDate = max(item.visit_dates);
                         }
 
                         return (
                             <Card key={index} style={styles.cardItem}>
                                 <Card.Title
-                                    title={item.contact_name}
-                                    subtitle={item.phone_number}
-                                    left={props => <Avatar.Icon {...props} icon="account" />}
+                                    title={item.place_name}
+                                    subtitle={getPlaceDisplayType(item.place_types, t)[0]}
+                                    left={props => (
+                                        <Avatar.Icon
+                                            {...props}
+                                            icon={getPlaceDisplayType(item.place_types, t)[1]}
+                                        />
+                                    )}
                                 />
                                 <IconButton
                                     {...props}
@@ -250,7 +228,7 @@ export default function ContactsStep(props) {
                                     icon="close"
                                     size={17}
                                     onPress={() => {
-                                        removeContact(item.phone_number);
+                                        removePlace(item.place_id);
                                     }}
                                 />
                                 <Card.Content>
@@ -267,13 +245,13 @@ export default function ContactsStep(props) {
                     mode="outlined"
                     style={styles.actionButton}
                     labelStyle={styles.actionButtonLabel}
-                    onPress={() => openSelectPhoneNumberModal()}>
-                    {t('report.contacts.addContact')}
+                    onPress={() => openPlacesSearchModal()}>
+                    {t('report.places.addPlace')}
                 </Button>
             </View>
             <Portal>
                 <Dialog style={{height: '70%'}} visible={isModalVisible} onDismiss={_hideDialog}>
-                    <Dialog.Title>{t('report.contacts.dialogTitle')}</Dialog.Title>
+                    <Dialog.Title>{t('report.places.dialogTitle')}</Dialog.Title>
                     <Dialog.ScrollArea>
                         <ScrollView>
                             <View>
@@ -290,10 +268,7 @@ export default function ContactsStep(props) {
                     <Dialog.Actions>
                         <Button
                             onPress={() =>
-                                onAddContact(
-                                    dialogSelectedContact,
-                                    Object.keys(dialogSelectedDates),
-                                )
+                                onAddPlace(dialogSelectedPlace, Object.keys(dialogSelectedDates))
                             }>
                             {t('actions.add')}
                         </Button>
@@ -304,7 +279,7 @@ export default function ContactsStep(props) {
     );
 }
 
-ContactsStep.propTypes = {
+PlacesStep.propTypes = {
     caseReport: PropTypes.object.isRequired,
     onNext: PropTypes.func.isRequired,
     onBack: PropTypes.func.isRequired,

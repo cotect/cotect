@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {NativeModules} from 'react-native';
 import {Platform} from 'react-native';
 
-import {de, en} from './translations';
+// TODO de
+import {en} from './translations';
 
 function localeToLanguage(locale) {
     return locale.replace('_', '-');
@@ -45,7 +46,7 @@ i18n.use(initReactI18next)
     })
     .init({
         resources: {
-            de,
+            //de,
             en,
         },
         fallbackLng: 'en',

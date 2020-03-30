@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import TabBarMaterialIcon from '../components/TabBarMaterialIcon';
 import SettingsScreen from '../screens/SettingsScreen';
 import ReportHandler from '../screens/ReportHandler';
 import TabBarMaterialLabel from '../components/TabBarMaterialLabel';
 import {useTranslation} from 'react-i18next';
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createMaterialBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
 export default function BottomTabNavigator({navigation, route}) {
