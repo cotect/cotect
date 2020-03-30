@@ -42,7 +42,7 @@ function ReportScreen(props) {
     const {t} = useTranslation();
     const [stepIndex, setStepIndex] = useState(0);
 
-    const [caseReport, setCaseReport] = useState(new CaseReport());
+    const [caseReport, setCaseReport] = useState(props.caseReport);
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [modalTitle, setModalTitle] = useState();
@@ -130,7 +130,7 @@ function ReportScreen(props) {
         />,
         <ReportSubmitStep
             caseReport={caseReport}
-            onNext={caseReport => handleNextCallback(caseReport)}
+            onNext={caseReport => submitReport(caseReport)}
             onBack={caseReport => handleBackCallback(caseReport)}
             hideNextButton={true}
         />
@@ -142,76 +142,15 @@ function ReportScreen(props) {
         });
     });
 
-    const submitReport = () => {
+    const submitReport = (caseReport) => {
         // TODO refactor!
-        props.setPhoneNumber(user);
-        props.setResidence(currentLocation);
-        props.setAge(age);
-        props.setGender(gender);
+        props.setCaseReport(caseReport);
 
         // show a dialog with more information about the submitted report
         setModalTitle(t('report.submit.title'));
         setModalText(t('report.submit.text')); // replace text upon answer of the server
         setModalButtonText(t('report.submit.primaryAction'));
         setModalVisible(true);
-
-        let createCaseReport = () => {
-            let caseReport = new CaseReport();
-            caseReport.age = age;
-            if (!age) {
-                caseReport.age = 0;
-            } else {
-                caseReport.age = parseInt(age);
-            }
-
-            caseReport.gender = gender;
-            // gender must not be empty
-            if (!caseReport.gender || caseReport.gender === '') {
-                caseReport.gender = 'other';
-            }
-
-            caseReport.residence = currentLocation;
-            caseReport.residence.place_id = caseReport.residence.placeId;
-            // place_id must exist, otherwise whole residence cannot be set
-            if (!caseReport.residence.place_id) {
-                caseReport.residence = undefined;
-            }
-
-            caseReport.covid_test = covidTestStatus || 'not-tested';
-            caseReport.covid_contact = hadCovidContact || false;
-
-            let transformedSymptoms = [];
-            for (let i in symptoms) {
-                transformedSymptoms.push(symptoms[i]);
-            }
-
-            caseReport.symptoms = transformedSymptoms;
-            if (caseReport.symptoms) {
-                caseReport.symptoms = caseReport.symptoms.map(symptom => {
-                    symptom.symptom_name = symptom.name;
-                    return symptom;
-                });
-            }
-
-            caseReport.places = locations;
-            if (caseReport.places) {
-                caseReport.places = caseReport.places.map(place => {
-                    place.place_id = place.placeId;
-                    return place;
-                });
-            }
-
-            caseReport.contacts = contacts;
-            if (caseReport.contacts) {
-                caseReport.contacts = caseReport.contacts.map(contact => {
-                    contact.phone_number = contact.phoneNumber;
-                    contact.contact_date = contact.contactDate;
-                    return contact;
-                });
-            }
-
-            return caseReport;
-        };
 
         // simulate call to backend
         // setTimeout(() => {
@@ -220,8 +159,6 @@ function ReportScreen(props) {
         //     // TODO: button text should not be "Submit" here
         //     setOnModalClick(() => () => props.onSubmit());
         // }, 1000);
-
-        let caseReport = createCaseReport();
 
         const cotectApiClient = new CotectApiClient();
         // cotectApiClient.authentications['APIKeyHeader'].apiKey = props.authToken;

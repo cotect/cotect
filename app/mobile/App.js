@@ -13,8 +13,7 @@ import {
     setSettingsState,
     setAuthToken,
     STORAGE_KEY_PREFIX,
-    STORAGE_AGE_KEY,
-    STORAGE_RESIDENCE_KEY,
+    STORAGE_CASE_REPORT_KEY
 } from './redux/reducer';
 
 import {APP_THEME} from './constants/DefaultStyles';
@@ -36,10 +35,8 @@ const loadSavedSettings = () => {
                 let key = result[0];
                 let value = result[1];
 
-                if (key === STORAGE_RESIDENCE_KEY) {
+                if (key === STORAGE_CASE_REPORT_KEY) {
                     value = JSON.parse(value);
-                } else if (key === STORAGE_AGE_KEY) {
-                    value = parseInt(value);
                 }
 
                 settingsState[key.replace(STORAGE_KEY_PREFIX, '')] = value;

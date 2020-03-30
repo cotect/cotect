@@ -5,30 +5,23 @@ export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 export const SET_APP_LOADING = 'SET_APP_LOADING';
 export const SET_SETTINGS_STATE = 'SET_SETTINGS_STATE';
 export const DELETE_SETTINGS = 'DELETE_SETTINGS';
-export const SET_PHONE_NUMBER = 'SET_PHONE_NUMBER';
-export const SET_AGE = 'SET_AGE';
-export const SET_GENDER = 'SET_GENDER';
 export const SET_RESIDENCE = 'SET_RESIDENCE';
 export const INCREASE_NUMBER_OF_REPORTS = 'INCREASE_NUMBER_OF_REPORTS';
+export const SET_CASE_REPORT = 'SET_CASE_REPORT';
 
 export const STORAGE_KEY_PREFIX = '@Cotect_';
-export const STORAGE_PHONE_NUMBER_KEY = STORAGE_KEY_PREFIX + 'phoneNumber';
-export const STORAGE_RESIDENCE_KEY = STORAGE_KEY_PREFIX + 'residence';
-export const STORAGE_GENDER_KEY = STORAGE_KEY_PREFIX + 'gender';
-export const STORAGE_AGE_KEY = STORAGE_KEY_PREFIX + 'age';
+// The key should be the same as the key in the initialState variable (without the prefix)
 export const STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY = STORAGE_KEY_PREFIX + 'numberOfReports';
+export const STORAGE_CASE_REPORT_KEY = STORAGE_KEY_PREFIX + 'caseReport';
 
 const initialState = {
     appLoading: false,
     authToken: '',
-    phoneNumber: '',
-    residence: {},
-    gender: '',
-    age: '',
     numberOfReports: 0,
+    caseReport: {},
 };
 
-export default (reducer = (state = initialState, action) => {
+export default reducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_AUTH_TOKEN:
             return {...state, authToken: action.payload.data};
@@ -38,14 +31,6 @@ export default (reducer = (state = initialState, action) => {
             return {...state, ...action.payload.state, appLoading: false};
         case DELETE_SETTINGS:
             return {...action.payload.state};
-        case SET_PHONE_NUMBER:
-            return {...state, phoneNumber: action.payload.data};
-        case SET_AGE:
-            return {...state, age: action.payload.data};
-        case SET_GENDER:
-            return {...state, gender: action.payload.data};
-        case SET_RESIDENCE:
-            return {...state, residence: action.payload.data};
         case INCREASE_NUMBER_OF_REPORTS:
             const increaseNumberOfReports = parseInt(state.numberOfReports) + 1;
             AsyncStorage.setItem(
@@ -53,17 +38,24 @@ export default (reducer = (state = initialState, action) => {
                 '' + increaseNumberOfReports,
             );
             return {...state, numberOfReports: increaseNumberOfReports};
+        case SET_CASE_REPORT:
+            const caseReport = action.payload.data;
+            if (caseReport) {
+                AsyncStorage.setItem(STORAGE_CASE_REPORT_KEY, JSON.stringify(caseReport));
+            }
+            
+            return {...state, caseReport: caseReport};
         default:
             return state;
     }
-});
+};
 
 export const setAuthToken = authToken => {
     return {
         type: SET_AUTH_TOKEN,
-        payload: { data: authToken }
+        payload: {data: authToken},
     };
-}
+};
 
 export const setAppLoading = () => {
     return {
@@ -79,50 +71,6 @@ export const setSettingsState = state => {
     };
 };
 
-export const setPhoneNumber = phoneNumber => {
-    if (phoneNumber) {
-        AsyncStorage.setItem(STORAGE_PHONE_NUMBER_KEY, phoneNumber);
-    }
-
-    return {
-        type: SET_PHONE_NUMBER,
-        payload: {data: phoneNumber},
-    };
-};
-
-export const setResidence = residence => {
-    if (residence) {
-        AsyncStorage.setItem(STORAGE_RESIDENCE_KEY, JSON.stringify(residence));
-    }
-
-    return {
-        type: SET_RESIDENCE,
-        payload: {data: residence},
-    };
-};
-
-export const setAge = age => {
-    if (age) {
-        AsyncStorage.setItem(STORAGE_AGE_KEY, "" + age);
-    }
-
-    return {
-        type: SET_AGE,
-        payload: {data: age},
-    };
-};
-
-export const setGender = gender => {
-    if (gender) {
-        AsyncStorage.setItem(STORAGE_GENDER_KEY, gender);
-    }
-
-    return {
-        type: SET_GENDER,
-        payload: {data: gender},
-    };
-};
-
 export const increaseNumberOfReports = () => {
     return {
         type: INCREASE_NUMBER_OF_REPORTS,
@@ -130,13 +78,17 @@ export const increaseNumberOfReports = () => {
     };
 };
 
+export const setCaseReport = caseReport => {
+    return {
+        type: SET_CASE_REPORT,
+        payload: {data: caseReport},
+    };
+};
+
 export const deleteSettings = () => {
     AsyncStorage.multiRemove([
-        STORAGE_PHONE_NUMBER_KEY,
-        STORAGE_RESIDENCE_KEY,
-        STORAGE_AGE_KEY,
-        STORAGE_GENDER_KEY,
         STORAGE_INCREASE_NUMBER_OF_REPORTS_KEY,
+        STORAGE_CASE_REPORT_KEY,
     ]).then(e => console.log('Error in deleting settings'));
 
     return {
@@ -148,11 +100,8 @@ export const deleteSettings = () => {
 export const mapStateToProps = state => {
     return {
         authToken: state.authToken,
-        phoneNumber: state.phoneNumber,
-        residence: state.residence,
-        age: state.age,
-        gender: state.gender,
         numberOfReports: state.numberOfReports,
+        caseReport: state.caseReport,
     };
 };
 
@@ -160,11 +109,8 @@ export const mapDispatchToProps = {
     setAuthToken,
     setAppLoading,
     setSettingsState,
-    setPhoneNumber,
-    setResidence,
-    setAge,
-    setGender,
     increaseNumberOfReports,
+    setCaseReport,
     deleteSettings,
 };
 
