@@ -10,6 +10,8 @@ import {RadioButton, Text, TouchableRipple} from 'react-native-paper';
 
 import StepContainer from './StepContainer';
 
+import {AUTO_NEXT_ENABLED} from '../../constants/Configuration';
+
 const styles = StyleSheet.create({
     radioButtonItem: {
         flexDirection: 'row',
@@ -28,10 +30,12 @@ export default function CovidContactStep(props) {
     const [selection, setSelection] = useState(props.caseReport.covidContact !== undefined && props.caseReport.covidContact !== null ? String(props.caseReport.covidContact) : undefined);
 
     const onSelect = item => {
-        var tested = item === 'true';
-        setSelection(tested);
-        // onNext is triggers faster then the state change?
-        props.onNext(getStateToBeSaved(tested));
+        var covidContact = item === 'true';
+        setSelection(covidContact);
+        if (AUTO_NEXT_ENABLED) {
+            // onNext is triggers faster then the state change?
+            props.onNext(getStateToBeSaved(covidContact));
+        }
     };
 
     const getStateToBeSaved = (status = null) => {

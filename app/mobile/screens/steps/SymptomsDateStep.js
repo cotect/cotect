@@ -14,6 +14,8 @@ import {format, subDays, parseISO} from 'date-fns';
 
 import {CALENDAR_THEME} from '../../constants/DefaultStyles';
 
+import {AUTO_NEXT_ENABLED} from '../../constants/Configuration';
+
 const styles = StyleSheet.create({});
 
 export default function SymptomsDateStep(props) {
@@ -21,7 +23,7 @@ export default function SymptomsDateStep(props) {
 
     let reportDate = undefined;
     let existingMarkedDate = {};
-    
+
     if (!props.caseReport.symptoms || props.caseReport.symptoms.length < 1) {
         // ignore step
         props.onNext(props.caseReport);
@@ -71,8 +73,10 @@ export default function SymptomsDateStep(props) {
             var date = parseISO(day.dateString);
             setSelectedDate(date);
             setMarkedDate(newMarkedDate);
-            // jump to next step
-            props.onNext(getStateToBeSaved(date));
+            if (AUTO_NEXT_ENABLED) {
+                // jump to next step
+                props.onNext(getStateToBeSaved(date));
+            }
         }
     };
 
