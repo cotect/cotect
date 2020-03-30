@@ -20,32 +20,31 @@ export default function SymptomsDateStep(props) {
     const {t} = useTranslation();
 
     if (!props.caseReport.symptoms) {
-        // ignore step 
-        props.onNext(props.caseReport)
+        // ignore step
+        props.onNext(props.caseReport);
     }
 
     // Initialize Dates
     //alert(JSON.stringify(props.caseReport.symptoms))
-    const reportDate = props.caseReport.symptoms[0].report_date
-    const existingMarkedDate = {}
-    if (reportDate){
-        existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true}
+    const reportDate = props.caseReport.symptoms[0].report_date;
+    const existingMarkedDate = {};
+    if (reportDate) {
+        existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true};
     }
-    
 
     const [selectedDate, setSelectedDate] = useState(reportDate);
     const [markedDate, setMarkedDate] = useState(existingMarkedDate);
 
-    const getStateToBeSaved = (date=null) => {
+    const getStateToBeSaved = (date = null) => {
         const caseReport = {...props.caseReport};
 
-        if (date == null){
-            date = selectedDate
+        if (date == null) {
+            date = selectedDate;
         }
 
         if (props.caseReport.symptoms) {
             for (var symptom of props.caseReport.symptoms) {
-                symptom.report_date = date
+                symptom.report_date = date;
             }
         }
 
@@ -61,16 +60,16 @@ export default function SymptomsDateStep(props) {
     };
 
     let onDayPress = day => {
-        if (day && day.dateString){
-            var newMarkedDate = {}
+        if (day && day.dateString) {
+            var newMarkedDate = {};
             newMarkedDate[day.dateString] = {
-                selected: true
+                selected: true,
             };
-            var date = parseISO(day.dateString)
-            setSelectedDate(date)
-            setMarkedDate(newMarkedDate)
+            var date = parseISO(day.dateString);
+            setSelectedDate(date);
+            setMarkedDate(newMarkedDate);
             // jump to next step
-            props.onNext(getStateToBeSaved(date))
+            props.onNext(getStateToBeSaved(date));
         }
     };
 

@@ -14,7 +14,7 @@ import StepContainer from './StepContainer';
 
 import {CasePlace} from '../../client/cotect-backend/index';
 
-import {getPlaceDisplayType} from  '../../utils/PlaceUtils';
+import {getPlaceDisplayType} from '../../utils/PlaceUtils';
 
 import {ACTION_BUTTON, ACTION_BUTTON_LABEL, CARD_ITEM} from '../../constants/DefaultStyles';
 

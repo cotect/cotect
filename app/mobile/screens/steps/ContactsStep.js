@@ -13,8 +13,7 @@ import {
     Portal,
     Paragraph,
     IconButton,
-    Avatar,
-    Menu,
+    Avatar
 } from 'react-native-paper';
 
 import StepContainer from './StepContainer';
@@ -29,7 +28,12 @@ import {PermissionsAndroid} from 'react-native';
 
 import {CaseContact} from '../../client/cotect-backend/index';
 
-import {ACTION_BUTTON, ACTION_BUTTON_LABEL, CARD_ITEM, CALENDAR_THEME} from '../../constants/DefaultStyles';
+import {
+    ACTION_BUTTON,
+    ACTION_BUTTON_LABEL,
+    CARD_ITEM,
+    CALENDAR_THEME,
+} from '../../constants/DefaultStyles';
 
 const styles = StyleSheet.create({
     cardItem: CARD_ITEM,

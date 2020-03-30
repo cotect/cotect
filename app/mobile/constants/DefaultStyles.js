@@ -1,7 +1,7 @@
-import { DefaultTheme } from 'react-native-paper';
+import {DefaultTheme} from 'react-native-paper';
 
-export const PRIMARY_COLOR = "#6200ee"
-export const ACCENT_COLOR = "#3214be"
+export const PRIMARY_COLOR = '#6200ee';
+export const ACCENT_COLOR = '#3214be';
 export const INACTIVE_COLOR = '#818181';
 export const REPORTING_BACKGROUND = '#FDFDFD';
 export const DEFAULT_BACKGROUND = '#FFF';
@@ -10,7 +10,7 @@ export const PRIMARY_BACKGROUND_COLOR = 'rgba(98, 0, 238, 0.2)';
 export const CONTAINER = {
     //flex: 1,
     backgroundColor: '#fff',
-    height: "100%"
+    height: '100%',
 };
 
 export const ACTION_BUTTON = {
@@ -19,11 +19,11 @@ export const ACTION_BUTTON = {
     borderWidth: 1,
     marginTop: 8,
     width: 170,
-    alignSelf: "center"
+    alignSelf: 'center',
 };
 
 export const ACTION_BUTTON_LABEL = {
-    fontSize: 12
+    fontSize: 12,
 };
 
 export const CARD_ITEM = {
@@ -45,9 +45,8 @@ export const CALENDAR_THEME = {
 export const APP_THEME = {
     ...DefaultTheme,
     colors: {
-      ...DefaultTheme.colors,
-      primary: PRIMARY_COLOR,
-      accent: ACCENT_COLOR,
+        ...DefaultTheme.colors,
+        primary: PRIMARY_COLOR,
+        accent: ACCENT_COLOR,
     },
 };
-

@@ -54,24 +54,24 @@ function ReportScreen(props) {
         return true;
     });
 
-    const handleNextCallback = (caseReport) => {
+    const handleNextCallback = caseReport => {
         let newStepIndex = stepIndex;
         newStepIndex = newStepIndex + 1;
         setCaseReport(caseReport);
         setStepIndex(newStepIndex);
-    }
+    };
 
-    const handleBackCallback = (caseReport) => {
+    const handleBackCallback = caseReport => {
         if (stepIndex === 0) {
             // This is the first step, exit the report
-            exitReport()
+            exitReport();
         } else {
             let newStepIndex = stepIndex;
             newStepIndex = newStepIndex - 1;
             setCaseReport(caseReport);
             setStepIndex(newStepIndex);
         }
-    }
+    };
 
     const availableSteps = [
         <SymptomsStep

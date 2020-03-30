@@ -60,16 +60,20 @@ function ReportHandler(props) {
     };
 
     const openShare = () => {
-            Share.open({
-                //subject: "Cotect Subject",
-                title: t('sharing.title'),
-                message: t('sharing.message'),
-                url: t('sharing.url'),
-                showAppsToView: true
+        Share.open({
+            //subject: "Cotect Subject",
+            title: t('sharing.title'),
+            message: t('sharing.message'),
+            url: t('sharing.url'),
+            showAppsToView: true,
+        })
+            .then(res => {
+                console.log(res);
             })
-            .then((res) => { console.log(res) })
-            .catch((err) => { err && console.log(err); });
-    }
+            .catch(err => {
+                err && console.log(err);
+            });
+    };
 
     return (
         <Portal.Host>
@@ -86,10 +90,8 @@ function ReportHandler(props) {
                         resizeMode="contain"
                         style={styles.image}></Image>
                     <Text style={styles.cotectLogo}>cotect</Text>
-                    <Text style={styles.welcomeMessage}>
-                        {t('home.welcomeMessage')}
-                    </Text>
-                    <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 36,}}>
+                    <Text style={styles.welcomeMessage}>{t('home.welcomeMessage')}</Text>
+                    <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 36}}>
                         <Button
                             mode="outlined"
                             style={styles.actionButton}

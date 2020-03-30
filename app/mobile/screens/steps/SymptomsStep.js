@@ -6,7 +6,16 @@ import {useTranslation} from 'react-i18next';
 
 import {StyleSheet, ScrollView, View} from 'react-native';
 
-import {Button, Chip, Dialog, Portal, RadioButton, Text, TextInput, TouchableRipple} from 'react-native-paper';
+import {
+    Button,
+    Chip,
+    Dialog,
+    Portal,
+    RadioButton,
+    Text,
+    TextInput,
+    TouchableRipple,
+} from 'react-native-paper';
 
 import StepContainer from './StepContainer';
 
@@ -26,9 +35,8 @@ const styles = StyleSheet.create({
     chip: {
         marginBottom: 8,
         marginRight: 8,
-    }
+    },
 });
-
 
 const InputElement = props => {
     const [value, setValue] = useState();
@@ -78,7 +86,6 @@ const SelectionElement = props => {
         </View>
     );
 };
-
 
 export default function SymptomsStep(props) {
     const {t} = useTranslation();
@@ -147,13 +154,13 @@ export default function SymptomsStep(props) {
         },
     ];
 
-    const symptomState = {}
+    const symptomState = {};
     if (props.caseReport.symptoms) {
-        for (var symptom in props.caseReport.symptoms){
-            symptomState[symptom.name] = symptom
+        for (var symptom in props.caseReport.symptoms) {
+            symptomState[symptom.name] = symptom;
         }
     }
-    
+
     const [selectedSymptoms, setSelectedSymptoms] = useState(symptomState);
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -165,21 +172,21 @@ export default function SymptomsStep(props) {
     const _hideDialog = () => setModalVisible(false);
 
     const onSelected = (symptom, dialogSeverity) => {
-        let modifiedSelectedSymptoms = {}
+        let modifiedSelectedSymptoms = {};
         if (selectedSymptoms) {
-            modifiedSelectedSymptoms = selectedSymptoms
+            modifiedSelectedSymptoms = selectedSymptoms;
         }
         if (symptom.name in modifiedSelectedSymptoms) {
             delete modifiedSelectedSymptoms[symptom.name];
         } else {
             modifiedSelectedSymptoms[symptom.name] = {name: symptom.name, severity: dialogSeverity};
         }
-        
+
         setSelectedSymptoms(modifiedSelectedSymptoms);
-        resetSelection()
+        resetSelection();
     };
 
-    const isSymptomSelected = (symptomName) => {
+    const isSymptomSelected = symptomName => {
         if (selectedSymptoms == null || selectedSymptoms == undefined) {
             return false;
         }
@@ -193,15 +200,15 @@ export default function SymptomsStep(props) {
 
     const getStateToBeSaved = () => {
         const caseReport = {...props.caseReport};
-        caseReport.symptoms = []
+        caseReport.symptoms = [];
         if (selectedSymptoms) {
-            var symptoms = []
-            for(var key in selectedSymptoms) {
-                symptoms.push(selectedSymptoms[key])
+            var symptoms = [];
+            for (var key in selectedSymptoms) {
+                symptoms.push(selectedSymptoms[key]);
             }
-            caseReport.symptoms = symptoms
+            caseReport.symptoms = symptoms;
         }
-        
+
         return caseReport;
     };
 
@@ -217,7 +224,7 @@ export default function SymptomsStep(props) {
 
     const onDialogPress = (severity = null) => {
         if (severity == null) {
-            severity = dialogSeverity
+            severity = dialogSeverity;
         }
 
         onSelected(selectedSymptom, severity);
@@ -226,7 +233,7 @@ export default function SymptomsStep(props) {
 
     const showSymptomDialog = symptom => {
         setSelectedSymptom(symptom);
-        setDialogTitle(symptom.name + " - Severity");
+        setDialogTitle(symptom.name + ' - Severity');
         _showDialog();
     };
 
@@ -250,27 +257,30 @@ export default function SymptomsStep(props) {
             hideNextButton={props.hideNextButton}
             hideBackButton={props.hideBackButton}>
             <View style={{justifyContent: 'flex-end'}}>
-            <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.chipsContainer}>
-                {symptomsOptions.map((symptom, key) => {
-                    const isSelected = isSymptomSelected(symptom.name);
-                    return (
-                        <Chip
-                            style={[styles.chip, isSelected ? {backgroundColor: PRIMARY_BACKGROUND_COLOR}: {}]}
-                            key={key}
-                            selectedColor={isSelected ? PRIMARY_COLOR : undefined}
-                            onPress={() => {
-                                !isSelected ? showSymptomDialog(symptom) : onSelected(symptom);
-                            }} // when the symptom is already selected, deselect it on press
-                            //selected={isSelected} -> adds check mark -> not needed
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.chipsContainer}>
+                    {symptomsOptions.map((symptom, key) => {
+                        const isSelected = isSymptomSelected(symptom.name);
+                        return (
+                            <Chip
+                                style={[
+                                    styles.chip,
+                                    isSelected ? {backgroundColor: PRIMARY_BACKGROUND_COLOR} : {},
+                                ]}
+                                key={key}
+                                selectedColor={isSelected ? PRIMARY_COLOR : undefined}
+                                onPress={() => {
+                                    !isSelected ? showSymptomDialog(symptom) : onSelected(symptom);
+                                }} // when the symptom is already selected, deselect it on press
+                                //selected={isSelected} -> adds check mark -> not needed
                             >
-                            {symptom.name}
-                        </Chip>
-                    );
-                })}
-            </ScrollView>
+                                {symptom.name}
+                            </Chip>
+                        );
+                    })}
+                </ScrollView>
             </View>
             <Portal>
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
@@ -280,10 +290,11 @@ export default function SymptomsStep(props) {
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={cancelSelectionDialog}>{t('actions.cancel')}</Button>
-                        <Button onPress={() => {
-                                    onDialogPress();
-                                }}>
-                                {t('actions.add')}
+                        <Button
+                            onPress={() => {
+                                onDialogPress();
+                            }}>
+                            {t('actions.add')}
                         </Button>
                     </Dialog.Actions>
                 </Dialog>

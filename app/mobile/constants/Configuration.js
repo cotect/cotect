@@ -1,1 +1,1 @@
-export const DEFAULT_COUNTRY_CODE = "DE"
+export const DEFAULT_COUNTRY_CODE = 'DE';

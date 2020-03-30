@@ -8,9 +8,7 @@ import {StyleSheet, View} from 'react-native';
 
 import {RadioButton, Text, TouchableRipple} from 'react-native-paper';
 
-import {
-    CaseReport,
-} from '../../client/cotect-backend/index';
+import {CaseReport} from '../../client/cotect-backend/index';
 
 import StepContainer from './StepContainer';
 

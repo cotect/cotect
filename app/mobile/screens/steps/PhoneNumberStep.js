@@ -175,31 +175,38 @@ export default function PhoneNumberStep(props) {
                     <View>
                         {!isPhoneNumberEntered ? (
                             <View>
-                        <PhoneInput
-                            style={{marginLeft: 8, marginRight: 32}}
-                            ref={phoneRef}
-                            pickerButtonColor={PRIMARY_COLOR}
-                            initialCountry={getCountryCode()}
-                            autoFormat={true}
-                            autoCorrect={true}
-                            allowZeroAfterCountryCode={false}
-                            textComponent={props => <TextInput {...props} />}
-                            textStyle={{...styles.inputField, fontSize: 14, height: 64}}
-                            textProps={{label: t('report.phoneNumber.inputLabelPhoneNumber')}}
-                        />
-                        <Button
-                            mode="outlined"
-                            style={styles.actionButton}
-                            labelStyle={styles.actionButtonLabel}
-                            onPress={() => onVerifyClick()}>
-                            {t('actions.verify')}
-                        </Button>
-                        </View>
-                         ) : (
+                                <PhoneInput
+                                    style={{marginLeft: 8, marginRight: 32}}
+                                    ref={phoneRef}
+                                    pickerButtonColor={PRIMARY_COLOR}
+                                    initialCountry={getCountryCode()}
+                                    autoFormat={true}
+                                    autoCorrect={true}
+                                    allowZeroAfterCountryCode={false}
+                                    textComponent={props => <TextInput {...props} />}
+                                    textStyle={{...styles.inputField, fontSize: 14, height: 64}}
+                                    textProps={{
+                                        label: t('report.phoneNumber.inputLabelPhoneNumber'),
+                                    }}
+                                />
+                                <Button
+                                    mode="outlined"
+                                    style={styles.actionButton}
+                                    labelStyle={styles.actionButtonLabel}
+                                    onPress={() => onVerifyClick()}>
+                                    {t('actions.verify')}
+                                </Button>
+                            </View>
+                        ) : (
                             <View>
                                 <TextInput
                                     mode="outlined"
-                                    style={{...styles.inputField, marginTop: 8, marginLeft: 32, marginRight: 32}}
+                                    style={{
+                                        ...styles.inputField,
+                                        marginTop: 8,
+                                        marginLeft: 32,
+                                        marginRight: 32,
+                                    }}
                                     label={t('report.phoneNumber.inputLabelConfirmation')}
                                     value={confirmationCode}
                                     keyboardType="numeric"

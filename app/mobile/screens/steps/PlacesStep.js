@@ -6,15 +6,7 @@ import {useTranslation} from 'react-i18next';
 
 import {ScrollView, StyleSheet, View} from 'react-native';
 
-import {
-    Button,
-    Card,
-    Dialog,
-    Portal,
-    Paragraph,
-    IconButton,
-    Avatar
-} from 'react-native-paper';
+import {Button, Card, Dialog, Portal, Paragraph, IconButton, Avatar} from 'react-native-paper';
 
 import StepContainer from './StepContainer';
 
@@ -26,14 +18,19 @@ import RNGooglePlaces from 'react-native-google-places';
 
 import {CasePlace} from '../../client/cotect-backend/index';
 
-import {getPlaceDisplayType} from  '../../utils/PlaceUtils';
+import {getPlaceDisplayType} from '../../utils/PlaceUtils';
 
-import {ACTION_BUTTON, ACTION_BUTTON_LABEL, CARD_ITEM, CALENDAR_THEME} from '../../constants/DefaultStyles';
+import {
+    ACTION_BUTTON,
+    ACTION_BUTTON_LABEL,
+    CARD_ITEM,
+    CALENDAR_THEME,
+} from '../../constants/DefaultStyles';
 
 const styles = StyleSheet.create({
     cardItem: CARD_ITEM,
     actionButton: ACTION_BUTTON,
-    actionButtonLabel: ACTION_BUTTON_LABEL
+    actionButtonLabel: ACTION_BUTTON_LABEL,
 });
 
 export default function PlacesStep(props) {
@@ -84,15 +81,15 @@ export default function PlacesStep(props) {
     };
 
     let openPlacesSearchModal = () => {
-        var locationBias = undefined
+        var locationBias = undefined;
         if (props.caseReport.residence && props.caseReport.residence.place_area) {
             // if residence is set with place_area boundaries -> use it as location bias
-            locationBias = props.caseReport.residence.place_area
+            locationBias = props.caseReport.residence.place_area;
         }
-        
+
         RNGooglePlaces.openAutocompleteModal({
             useOverlay: true,
-            locationBias: locationBias
+            locationBias: locationBias,
         })
             .then(place => {
                 setDialogSelectedPlace(place);
