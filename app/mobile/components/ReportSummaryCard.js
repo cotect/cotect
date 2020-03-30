@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 export default function ReportSummaryCard(props) {
     const {t} = useTranslation();
 
-    let subtitle = 'Not Submitted';
+    let subtitle = t('report.summaryCard.notSubmitted');
 
     let symptoms = [];
     if (props.caseReport.symptoms) {

@@ -50,7 +50,8 @@
                 "ageInfo": "Age: {{age}}",
                 "genderInfo": "Gender: {{gender}}",
                 "covidTest": "Covid Test: {{covidTest}}",
-                "covidContact": "Covid Contact: {{covidContact}}"
+                "covidContact": "Covid Contact: {{covidContact}}",
+                "notSubmitted": "Not Submitted"
             },
             "age": {
                 "helpText": "We need the age to...",
