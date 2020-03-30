@@ -49,6 +49,8 @@ export default function StepContainer(props) {
                 hideNextButton={props.hideNextButton}
                 onBack={props.onBack}
                 onNext={props.onNext}
+                nextButtonLabel={props.nextButtonLabel}
+                backButtonLabel={props.backButtonLabel}
             />
             <Portal>
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>

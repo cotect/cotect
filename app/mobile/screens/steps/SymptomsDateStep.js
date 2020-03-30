@@ -33,7 +33,12 @@ export default function SymptomsDateStep(props) {
         reportDate = props.caseReport.symptoms[0].report_date;
         
         if (reportDate) {
-            existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true};
+            try {
+                // TODO: investigate why "RangeError: Invalid time value" is thrown when a symptom has an attached date
+                existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true};
+            } catch(e) {
+                console.error(e);
+            }
         }
     }
 

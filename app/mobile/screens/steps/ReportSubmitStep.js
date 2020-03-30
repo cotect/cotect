@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 export default function ReportSubmitStep(props) {
     const {t} = useTranslation();
 
-    const getStateToBeSaved = (gender = null) => {
+    const getStateToBeSaved = () => {
         const caseReport = {...props.caseReport};
         // TODO
         return caseReport;
@@ -36,7 +36,9 @@ export default function ReportSubmitStep(props) {
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}
-            hideBackButton={props.hideBackButton}>
+            hideBackButton={props.hideBackButton}
+            nextButtonLabel="Submit"
+        >
             <View style={{justifyContent: 'flex-end'}}>
                 <ScrollView
                     automaticallyAdjustContentInsets={true}
@@ -53,7 +55,9 @@ export default function ReportSubmitStep(props) {
             <Button
                 mode="outlined"
                 style={styles.actionButton}
-                labelStyle={styles.actionButtonLabel}>
+                labelStyle={styles.actionButtonLabel}
+                onPress={() => props.onNext(getStateToBeSaved())}
+            >
                     {t('report.submitReport.action')}
             </Button>
         </StepContainer>
