@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
 import {useTranslation} from 'react-i18next';
 import BackNextButton from '../../components/BackNextButton';
+
 const styles = StyleSheet.create({
     stepTitleWrapper: {
         flexDirection: 'row',
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 });
+
 export default function StepContainer(props) {
     const {t} = useTranslation();
     const [isModalVisible, setModalVisible] = useState(false);

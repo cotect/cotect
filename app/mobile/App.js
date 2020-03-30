@@ -4,11 +4,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {Provider} from 'react-redux';
-import {Provider as PaperProvider } from 'react-native-paper';
+import {Provider as PaperProvider} from 'react-native-paper';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { store, setSettingsState, setAuthToken, STORAGE_KEY_PREFIX, STORAGE_AGE_KEY, STORAGE_RESIDENCE_KEY } from "./redux/reducer";
+import {
+    store,
+    setSettingsState,
+    setAuthToken,
+    STORAGE_KEY_PREFIX,
+    STORAGE_AGE_KEY,
+    STORAGE_RESIDENCE_KEY,
+} from './redux/reducer';
 
 import {APP_THEME} from './constants/DefaultStyles';
 
@@ -30,10 +37,9 @@ const loadSavedSettings = () => {
                 let value = result[1];
 
                 if (key === STORAGE_RESIDENCE_KEY) {
-                  value = JSON.parse(value);
-                }
-                else if (key === STORAGE_AGE_KEY) {
-                  value = parseInt(value);
+                    value = JSON.parse(value);
+                } else if (key === STORAGE_AGE_KEY) {
+                    value = parseInt(value);
                 }
 
                 settingsState[key.replace(STORAGE_KEY_PREFIX, '')] = value;
@@ -71,12 +77,12 @@ export default function App(props) {
     }, []);
 
     React.useEffect(() => {
-      let user = auth().currentUser;
-      if (user) {
-        user.getIdToken().then((authToken) => {
-          store.dispatch(setAuthToken(authToken));
-        });
-      }
+        let user = auth().currentUser;
+        if (user) {
+            user.getIdToken().then(authToken => {
+                store.dispatch(setAuthToken(authToken));
+            });
+        }
     }, []);
 
     if (!isLoadingComplete && !props.skipLoadingScreen) {
@@ -86,15 +92,17 @@ export default function App(props) {
             <ErrorBoundary>
                 <Provider store={store}>
                     <PaperProvider theme={APP_THEME}>
-                    <KeyboardAvoidingView style={styles.container} behavior={Platform.Os == "ios" ? "padding" : "height"}>
-                        <NavigationContainer
-                            ref={containerRef}
-                            initialState={initialNavigationState}>
-                            <Stack.Navigator headerMode="none">
-                                <Stack.Screen name="Root" component={HomeScreen} />
-                            </Stack.Navigator>
-                        </NavigationContainer>
-                    </KeyboardAvoidingView>
+                        <KeyboardAvoidingView
+                            style={styles.container}
+                            behavior={Platform.Os == 'ios' ? 'padding' : 'height'}>
+                            <NavigationContainer
+                                ref={containerRef}
+                                initialState={initialNavigationState}>
+                                <Stack.Navigator headerMode="none">
+                                    <Stack.Screen name="Root" component={HomeScreen} />
+                                </Stack.Navigator>
+                            </NavigationContainer>
+                        </KeyboardAvoidingView>
                     </PaperProvider>
                 </Provider>
             </ErrorBoundary>
