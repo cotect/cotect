@@ -18,7 +18,7 @@ import RNGooglePlaces from 'react-native-google-places';
 
 import {CasePlace} from '../../client/cotect-backend/index';
 
-import {getPlaceDisplayType} from '../../utils/PlaceUtils';
+import {getPlaceDisplayType, getRangeDate} from '../../utils/PlaceUtils';
 
 import {
     ACTION_BUTTON,
@@ -58,39 +58,15 @@ export default function PlacesStep(props) {
         return format(new Date(), 'yyyy-MM-dd');
     };
 
-    let getRangeDate = (visitCount, earliestDate, latestDate) => {
-        if (earliestDate == null || latestDate == null) {
-            return t('report.places.noVisitsDesc');
-        }
-
-        if (isSameDay(earliestDate, latestDate)) {
-            return t('report.places.singleVisitDesc', {date: format(earliestDate, 'd.M')});
-        } else if (isSameMonth(earliestDate, latestDate)) {
-            return t('report.places.visitsDesc', {
-                visitCount: visitCount,
-                earliestDate: format(earliestDate, 'd.'),
-                latestDate: format(latestDate, 'd.M.'),
-            });
-        } else {
-            return t('report.places.visitsDesc', {
-                visitCount: visitCount,
-                earliestDate: format(earliestDate, 'd.M.'),
-                latestDate: format(latestDate, 'd.M.'),
-            });
-        }
-    };
-
     let openPlacesSearchModal = () => {
-        var locationBias = undefined;
+        var autocompleteModalOptions = {useOverlay: true}
         if (props.caseReport.residence && props.caseReport.residence.place_area) {
             // if residence is set with place_area boundaries -> use it as location bias
             locationBias = props.caseReport.residence.place_area;
+            autocompleteModalOptions = {useOverlay: true, locationBias: locationBias}
         }
 
-        RNGooglePlaces.openAutocompleteModal({
-            useOverlay: true,
-            locationBias: locationBias,
-        })
+        RNGooglePlaces.openAutocompleteModal(autocompleteModalOptions)
             .then(place => {
                 setDialogSelectedPlace(place);
                 _showDialog();
@@ -230,7 +206,7 @@ export default function PlacesStep(props) {
                                 />
                                 <Card.Content>
                                     <Paragraph>
-                                        {getRangeDate(visitCount, earliestDate, latestDate)}
+                                        {getRangeDate(visitCount, earliestDate, latestDate, t)}
                                     </Paragraph>
                                 </Card.Content>
                             </Card>

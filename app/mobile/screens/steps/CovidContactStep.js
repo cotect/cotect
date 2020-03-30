@@ -25,7 +25,7 @@ export default function CovidContactStep(props) {
         {key: 'false', value: t('basics.no')},
     ];
 
-    const [selection, setSelection] = useState(String(props.caseReport.covidContact));
+    const [selection, setSelection] = useState(props.caseReport.covidContact !== undefined && props.caseReport.covidContact !== null ? String(props.caseReport.covidContact) : undefined);
 
     const onSelect = item => {
         var tested = item === 'true';

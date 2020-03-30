@@ -27,6 +27,7 @@ import {
     CovidContactStep,
     SymptomsDateStep,
     SymptomsStep,
+    ReportSubmitStep
 } from './steps/index';
 
 const styles = StyleSheet.create({
@@ -127,6 +128,12 @@ function ReportScreen(props) {
             onNext={caseReport => handleNextCallback(caseReport)}
             onBack={caseReport => handleBackCallback(caseReport)}
         />,
+        <ReportSubmitStep
+            caseReport={caseReport}
+            onNext={caseReport => handleNextCallback(caseReport)}
+            onBack={caseReport => handleBackCallback(caseReport)}
+            hideNextButton={true}
+        />
     ];
 
     const steps = useMemo(() => {

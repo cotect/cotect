@@ -154,44 +154,72 @@ export default function SymptomsStep(props) {
         },
     ];
 
-    const symptomState = {};
-    if (props.caseReport.symptoms) {
-        for (var symptom in props.caseReport.symptoms) {
-            symptomState[symptom.name] = symptom;
-        }
-    }
-
-    const [selectedSymptoms, setSelectedSymptoms] = useState(symptomState);
+    //alert(props.caseReport.symptoms)
+    const [selectedSymptoms, setSelectedSymptoms] = useState(props.caseReport.symptoms || []);
 
     const [isModalVisible, setModalVisible] = useState(false);
-    const [selectedSymptom, setSelectedSymptom] = useState({});
+    const [dialogSymptom, setDialogSymptom] = useState({});
     const [dialogTitle, setDialogTitle] = useState();
     const [dialogSeverity, setDialogSeverity] = useState();
 
     const _showDialog = () => setModalVisible(true);
     const _hideDialog = () => setModalVisible(false);
 
-    const onSelected = (symptom, dialogSeverity) => {
-        let modifiedSelectedSymptoms = {};
+    const getSelectedSymptomByName = symptomName => {
+        if (symptomName == null) {
+            return null;
+        }
+        
+        for (let selectedSymptom of selectedSymptoms) {
+            if (selectedSymptom && selectedSymptom.name === symptomName) {
+                return selectedSymptom;
+            }
+        }
+        return null;
+    };
+
+    const unselectSymptom = symptomName => {
+        let symptom = getSelectedSymptomByName(symptomName);
+        if (symptom) {
+            let modifiedSelectedSymptoms = [];
+
+            if (selectedSymptoms) {
+                modifiedSelectedSymptoms = selectedSymptoms;
+            }
+
+            var index = modifiedSelectedSymptoms.indexOf(symptom);
+            if (index !== -1) {
+                modifiedSelectedSymptoms.splice(index, 1);
+
+                setSelectedSymptoms(modifiedSelectedSymptoms);
+                // TODO: workaround to reset view -> otherwise card is not removed
+                resetSelection();
+            }
+        }
+    };
+
+    const onSelected = (dialogSymptom, dialogSeverity) => {
+        let modifiedSelectedSymptoms = [];
+
         if (selectedSymptoms) {
             modifiedSelectedSymptoms = selectedSymptoms;
         }
-        if (symptom.name in modifiedSelectedSymptoms) {
-            delete modifiedSelectedSymptoms[symptom.name];
-        } else {
-            modifiedSelectedSymptoms[symptom.name] = {name: symptom.name, severity: dialogSeverity};
-        }
 
-        setSelectedSymptoms(modifiedSelectedSymptoms);
-        resetSelection();
+        let symptom = getSelectedSymptomByName(dialogSymptom.name);
+        if (symptom) {
+            unselectSymptom(symptom.name);
+        } else {
+            symptom = {name: dialogSymptom.name, severity: dialogSeverity}
+            modifiedSelectedSymptoms.push(symptom);
+            setSelectedSymptoms(modifiedSelectedSymptoms);
+            resetSelection();
+        }
     };
 
     const isSymptomSelected = symptomName => {
-        if (selectedSymptoms == null || selectedSymptoms == undefined) {
-            return false;
-        }
-
-        if (symptomName in selectedSymptoms) {
+        var symptom = getSelectedSymptomByName(symptomName);
+        
+        if (symptom) {
             return true;
         }
 
@@ -213,7 +241,7 @@ export default function SymptomsStep(props) {
     };
 
     const resetSelection = () => {
-        setSelectedSymptom({});
+        setDialogSymptom({});
         setDialogSeverity();
     };
 
@@ -227,20 +255,20 @@ export default function SymptomsStep(props) {
             severity = dialogSeverity;
         }
 
-        onSelected(selectedSymptom, severity);
+        onSelected(dialogSymptom, severity);
         _hideDialog();
     };
 
     const showSymptomDialog = symptom => {
-        setSelectedSymptom(symptom);
+        setDialogSymptom(symptom);
         setDialogTitle(symptom.name + ' - Severity');
         _showDialog();
     };
 
-    const renderSymptomSeverityElement = (selectedSymptom, setValue) => {
+    const renderSymptomSeverityElement = (dialogSymptom, setValue) => {
         for (let i in symptomsOptions) {
             const symptom = symptomsOptions[i];
-            if (symptom.name === selectedSymptom.name && symptom.severityElement) {
+            if (symptom.name === dialogSymptom.name && symptom.severityElement) {
                 return symptom.severityElement({setValue: setValue, onDialogPress: onDialogPress});
             }
         }
@@ -272,7 +300,7 @@ export default function SymptomsStep(props) {
                                 key={key}
                                 selectedColor={isSelected ? PRIMARY_COLOR : undefined}
                                 onPress={() => {
-                                    !isSelected ? showSymptomDialog(symptom) : onSelected(symptom);
+                                    !isSelected ? showSymptomDialog(symptom) : onSelected(symptom, null);
                                 }} // when the symptom is already selected, deselect it on press
                                 //selected={isSelected} -> adds check mark -> not needed
                             >
@@ -286,7 +314,7 @@ export default function SymptomsStep(props) {
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
                     <Dialog.Title>{dialogTitle}</Dialog.Title>
                     <Dialog.Content>
-                        {renderSymptomSeverityElement(selectedSymptom, setDialogSeverity)}
+                        {renderSymptomSeverityElement(dialogSymptom, setDialogSeverity)}
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={cancelSelectionDialog}>{t('actions.cancel')}</Button>

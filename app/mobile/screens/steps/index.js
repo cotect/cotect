@@ -8,6 +8,7 @@ import CovidTestedStep from './CovidTestedStep';
 import CovidContactStep from './CovidContactStep';
 import SymptomsDateStep from './SymptomsDateStep';
 import SymptomsStep from './SymptomsStep';
+import ReportSubmitStep from './ReportSubmitStep';
 
 export {
     AgeStep,
@@ -19,5 +20,6 @@ export {
     CovidTestedStep,
     CovidContactStep,
     SymptomsDateStep,
-    SymptomsStep
+    SymptomsStep,
+    ReportSubmitStep
 };

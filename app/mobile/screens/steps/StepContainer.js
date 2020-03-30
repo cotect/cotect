@@ -64,6 +64,7 @@ export default function StepContainer(props) {
         </View>
     );
 }
+
 StepContainer.propTypes = {
     title: PropTypes.string.isRequired,
     onNext: PropTypes.func.isRequired,

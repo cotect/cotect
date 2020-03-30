@@ -1,3 +1,5 @@
+import {format, isSameDay, isSameMonth} from 'date-fns';
+
 export let getPlaceDisplayType = (types, translation) => {
     let t = translation;
 
@@ -35,8 +37,6 @@ export let getPlaceDisplayType = (types, translation) => {
         return [t('report.places.types.night_club'), 'music-circle'];
     } else if (types.indexOf('post_office') >= 0) {
         return [t('report.places.types.post_office'), 'email-outline'];
-    } else if (types.indexOf('restaurant') >= 0) {
-        return [t('report.places.types.restaurant'), 'silverware-fork-knife'];
     } else if (types.indexOf('shopping_mall') >= 0) {
         return [t('report.places.types.shopping_mall'), 'basket'];
     } else if (types.indexOf('stadium') >= 0) {
@@ -55,6 +55,8 @@ export let getPlaceDisplayType = (types, translation) => {
         return [t('report.places.types.gym'), 'dumbbell'];
     } else if (types.indexOf('lodging') >= 0) {
         return [t('report.places.types.lodging'), 'hotel'];
+    } else if (types.indexOf('restaurant') >= 0) {
+        return [t('report.places.types.restaurant'), 'silverware-fork-knife'];
     } else if (types.indexOf('store') >= 0) {
         return [t('report.places.types.store'), 'store'];
     } else if (types.indexOf('establishment') >= 0) {
@@ -77,4 +79,29 @@ export let getPlaceDisplayType = (types, translation) => {
     // office-building, road-variant, shield-check, shield-check-outline, shield-account
     // shield-lock, shield-plus, marker-check
     return [t('report.places.types.place'), 'map-marker'];
+};
+
+
+export let getRangeDate = (visitCount, earliestDate, latestDate, translation) => {
+    let t = translation;
+
+    if (earliestDate == null || latestDate == null) {
+        return t('report.places.noVisitsDesc');
+    }
+
+    if (isSameDay(earliestDate, latestDate)) {
+        return t('report.places.singleVisitDesc', {date: format(earliestDate, 'd.M')});
+    } else if (isSameMonth(earliestDate, latestDate)) {
+        return t('report.places.visitsDesc', {
+            visitCount: visitCount,
+            earliestDate: format(earliestDate, 'd.'),
+            latestDate: format(latestDate, 'd.M.'),
+        });
+    } else {
+        return t('report.places.visitsDesc', {
+            visitCount: visitCount,
+            earliestDate: format(earliestDate, 'd.M.'),
+            latestDate: format(latestDate, 'd.M.'),
+        });
+    }
 };
