@@ -27,7 +27,7 @@ export default function CovidContactStep(props) {
         {key: 'false', value: t('basics.no')},
     ];
 
-    const [selection, setSelection] = useState(props.caseReport.covidContact !== undefined && props.caseReport.covidContact !== null ? String(props.caseReport.covidContact) : undefined);
+    const [selection, setSelection] = useState(props.caseReport.covid_contact !== undefined && props.caseReport.covid_contact !== null ? String(props.caseReport.covid_contact) : undefined);
 
     const onSelect = item => {
         var covidContact = item === 'true';
@@ -42,9 +42,9 @@ export default function CovidContactStep(props) {
         const caseReport = {...props.caseReport};
         if (status != null) {
             // set status from parameter (optional)
-            caseReport.covidContact = status;
+            caseReport.covid_contact = status;
         } else {
-            caseReport.covidContact = selection;
+            caseReport.covid_contact = selection;
         }
         return caseReport;
     };

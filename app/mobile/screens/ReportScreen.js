@@ -33,8 +33,10 @@ import {
 const styles = StyleSheet.create({
     container: CONTAINER,
     closeButton: {
-        left: 24,
-        top: 24,
+        position: 'absolute', 
+        right: 24, 
+        top: 24, 
+        bottom: 0
     },
 });
 
@@ -189,7 +191,7 @@ function ReportScreen(props) {
     return (
         // Portal.Host is used so that the dialogs appear correctly on top of the screen
         <SafeAreaView style={{height: '100%', flex: 1, backgroundColor: REPORTING_BACKGROUND}}>
-            <View style={{justifyContent: 'flex-start', flexDirection: 'column', flexGrow: 0.25}}>
+            <View style={{justifyContent: 'flex-start', flexDirection: 'column', flexGrow: 0.3}}>
                 <ProgressBar progress={(stepIndex + 1) / steps.length} />
                 <Icon
                     name="close"

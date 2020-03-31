@@ -14,6 +14,8 @@ import {CARD_ITEM, ACTION_BUTTON, ACTION_BUTTON_LABEL} from '../../constants/Def
 
 import ReportSummaryCard from '../../components/ReportSummaryCard';
 
+import InfectionRiskCard from '../../components/InfectionRiskCard';
+
 const styles = StyleSheet.create({
     actionButton: ACTION_BUTTON,
     actionButtonLabel: ACTION_BUTTON_LABEL

@@ -1,2 +1,3 @@
 export const DEFAULT_COUNTRY_CODE = 'DE';
-export const AUTO_NEXT_ENABLED = true;
+export const AUTO_NEXT_ENABLED = false;
+export const APP_NAME = "cotect"

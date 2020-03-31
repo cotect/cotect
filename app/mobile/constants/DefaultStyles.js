@@ -18,7 +18,7 @@ export const ACTION_BUTTON = {
     borderColor: PRIMARY_COLOR,
     borderWidth: 1,
     marginTop: 8,
-    width: 170,
+    minWidth: 150,
     alignSelf: 'center',
 };
 
