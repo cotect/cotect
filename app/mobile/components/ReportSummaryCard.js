@@ -107,7 +107,7 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
-                                key={"symptoms-" + index}
+                                key={'symptoms-' + index}
                                 titleStyle={styles.listElement}
                                 title={symptom.symptom_name + severityInfo}
                             />
@@ -130,7 +130,7 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
-                                key={"palces-" + index}
+                                key={'palces-' + index}
                                 titleStyle={styles.listElement}
                                 title={
                                     place.place_name +
@@ -155,7 +155,7 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
-                            key={"contacts-" + index}
+                                key={'contacts-' + index}
                                 titleStyle={styles.listElement}
                                 title={contact.phone_number + contactInfo}
                             />
@@ -165,16 +165,16 @@ export default function ReportSummaryCard(props) {
             </Card.Content>
             {props.showActions ? (
                 <Card.Actions>
-                    <Button
-                    onPress={() => props.onUpdateAction(props.caseReport)}
-                    >{t('actions.update')}</Button>
-                    <Button
-                    onPress={() => props.onDeleteAction(props.caseReport)}
-                    >{t('actions.delete')}</Button>
+                    <Button onPress={() => props.onUpdateAction(props.caseReport)}>
+                        {t('actions.update')}
+                    </Button>
+                    <Button onPress={() => props.onDeleteAction(props.caseReport)}>
+                        {t('actions.delete')}
+                    </Button>
                 </Card.Actions>
-                    ) : (
-                        false
-                    )}
+            ) : (
+                false
+            )}
         </Card>
     );
 }
@@ -183,5 +183,5 @@ ReportSummaryCard.propTypes = {
     style: PropTypes.object,
     showActions: PropTypes.bool,
     onDeleteAction: PropTypes.func,
-    onUpdateAction: PropTypes.func
+    onUpdateAction: PropTypes.func,
 };
