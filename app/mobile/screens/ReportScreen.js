@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {COTECT_BACKEND_URL} from 'react-native-dotenv';
 
+import {OFFLINE_MODE_ENABLED} from '../constants/Configuration';
 import {CONTAINER, REPORTING_BACKGROUND} from '../constants/DefaultStyles';
 import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
@@ -27,16 +28,16 @@ import {
     CovidContactStep,
     SymptomsDateStep,
     SymptomsStep,
-    ReportSubmitStep
+    ReportSubmitStep,
 } from './steps/index';
 
 const styles = StyleSheet.create({
     container: CONTAINER,
     closeButton: {
-        position: 'absolute', 
-        right: 24, 
-        top: 24, 
-        bottom: 0
+        position: 'absolute',
+        right: 24,
+        top: 24,
+        bottom: 0,
     },
 });
 
@@ -135,7 +136,7 @@ function ReportScreen(props) {
             onNext={caseReport => submitReport(caseReport)}
             onBack={caseReport => handleBackCallback(caseReport)}
             hideNextButton={true}
-        />
+        />,
     ];
 
     const steps = useMemo(() => {
@@ -144,39 +145,44 @@ function ReportScreen(props) {
         });
     });
 
-    const submitReport = (caseReport) => {
+    const submitReport = caseReport => {
         // TODO refactor!
         props.setCaseReport(caseReport);
 
-        // show a dialog with more information about the submitted report
-        setModalTitle(t('report.submit.title'));
-        setModalText(t('report.submit.text')); // replace text upon answer of the server
-        setModalButtonText(t('report.submit.primaryAction'));
-        setModalVisible(true);
+        if (OFFLINE_MODE_ENABLED){
+            // just exit if offline mode is enabled.
+            props.onExit();
+        } else {
+            // show a dialog with more information about the submitted report
+            setModalTitle(t('report.submit.title'));
+            setModalText(t('report.submit.text')); // replace text upon answer of the server
+            setModalButtonText(t('report.submit.primaryAction'));
+            setModalVisible(true);
 
-        // simulate call to backend
-        // setTimeout(() => {
-        //     setModalText(t('report.submit.successText'));
-        //     setModalButtonText(t('report.submit.exitAction'));
-        //     // TODO: button text should not be "Submit" here
-        //     setOnModalClick(() => () => props.onSubmit());
-        // }, 1000);
+            // simulate call to backend
+            // setTimeout(() => {
+            //     setModalText(t('report.submit.successText'));
+            //     setModalButtonText(t('report.submit.exitAction'));
+            //     // TODO: button text should not be "Submit" here
+            //     setOnModalClick(() => () => props.onSubmit());
+            // }, 1000);
 
-        const cotectApiClient = new CotectApiClient();
-        // cotectApiClient.authentications['APIKeyHeader'].apiKey = props.authToken;
-        cotectApiClient.authentications['HTTPBearer'].accessToken = props.authToken;
-        //cotectApiClient.authentications['APIKeyQuery'].apiKey = props.authToken;
-        cotectApiClient.basePath = COTECT_BACKEND_URL;
-        new ReportsApi(cotectApiClient).updateReport(caseReport, (error, data, response) => {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Sending report was successful!');
-                setModalText(t('report.submit.successText'));
-                setModalButtonText(t('report.submit.exitAction'));
-                setOnModalClick(() => () => props.onSubmit());
-            }
-        });
+            const cotectApiClient = new CotectApiClient();
+            // cotectApiClient.authentications['APIKeyHeader'].apiKey = props.authToken;
+            cotectApiClient.authentications['HTTPBearer'].accessToken = props.authToken;
+            //cotectApiClient.authentications['APIKeyQuery'].apiKey = props.authToken;
+            cotectApiClient.basePath = COTECT_BACKEND_URL;
+            new ReportsApi(cotectApiClient).updateReport(caseReport, (error, data, response) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Sending report was successful!');
+                    setModalText(t('report.submit.successText'));
+                    setModalButtonText(t('report.submit.exitAction'));
+                    setOnModalClick(() => () => props.onSubmit());
+                }
+            });
+        }
     };
 
     const exitReport = () => {
