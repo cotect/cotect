@@ -91,63 +91,63 @@ export default function SymptomsStep(props) {
     const {t} = useTranslation();
 
     const symptomsOptions = [
-        {name: 'Fever', severityElement: props => <InputElement label="Temperature" {...props} />},
+        {symptom_name: 'Fever', severityElement: props => <InputElement label="Temperature" {...props} />},
         {
-            name: 'Headache',
+            symptom_name: 'Headache',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Cough',
+            symptom_name: 'Cough',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Runny Nose',
+            symptom_name: 'Runny Nose',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Tiredness',
+            symptom_name: 'Tiredness',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Diarrhea',
+            symptom_name: 'Diarrhea',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Shortness of Breath',
+            symptom_name: 'Shortness of Breath',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Chills or Night Sweats',
+            symptom_name: 'Chills or Night Sweats',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Aches and Pains',
+            symptom_name: 'Aches and Pains',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Loss of smell',
+            symptom_name: 'Loss of smell',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
         },
         {
-            name: 'Pain in throat',
+            symptom_name: 'Pain in throat',
             severityElement: props => (
                 <SelectionElement selections={['mild', 'moderate', 'severe']} {...props} />
             ),
@@ -171,7 +171,7 @@ export default function SymptomsStep(props) {
         }
         
         for (let selectedSymptom of selectedSymptoms) {
-            if (selectedSymptom && selectedSymptom.name === symptomName) {
+            if (selectedSymptom && selectedSymptom.symptom_name === symptomName) {
                 return selectedSymptom;
             }
         }
@@ -205,11 +205,11 @@ export default function SymptomsStep(props) {
             modifiedSelectedSymptoms = selectedSymptoms;
         }
 
-        let symptom = getSelectedSymptomByName(dialogSymptom.name);
+        let symptom = getSelectedSymptomByName(dialogSymptom.symptom_name);
         if (symptom) {
-            unselectSymptom(symptom.name);
+            unselectSymptom(symptom.symptom_name);
         } else {
-            symptom = {name: dialogSymptom.name, severity: dialogSeverity}
+            symptom = {symptom_name: dialogSymptom.symptom_name, severity: dialogSeverity}
             modifiedSelectedSymptoms.push(symptom);
             setSelectedSymptoms(modifiedSelectedSymptoms);
             resetSelection();
@@ -261,14 +261,14 @@ export default function SymptomsStep(props) {
 
     const showSymptomDialog = symptom => {
         setDialogSymptom(symptom);
-        setDialogTitle(symptom.name + ' - Severity');
+        setDialogTitle(symptom.symptom_name + ' - Severity');
         _showDialog();
     };
 
     const renderSymptomSeverityElement = (dialogSymptom, setValue) => {
         for (let i in symptomsOptions) {
             const symptom = symptomsOptions[i];
-            if (symptom.name === dialogSymptom.name && symptom.severityElement) {
+            if (symptom.symptom_name === dialogSymptom.symptom_name && symptom.severityElement) {
                 return symptom.severityElement({setValue: setValue, onDialogPress: onDialogPress});
             }
         }
@@ -290,7 +290,7 @@ export default function SymptomsStep(props) {
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.chipsContainer}>
                     {symptomsOptions.map((symptom, key) => {
-                        const isSelected = isSymptomSelected(symptom.name);
+                        const isSelected = isSymptomSelected(symptom.symptom_name);
                         return (
                             <Chip
                                 style={[
@@ -304,7 +304,7 @@ export default function SymptomsStep(props) {
                                 }} // when the symptom is already selected, deselect it on press
                                 //selected={isSelected} -> adds check mark -> not needed
                             >
-                                {symptom.name}
+                                {symptom.symptom_name}
                             </Chip>
                         );
                     })}

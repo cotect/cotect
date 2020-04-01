@@ -27,25 +27,23 @@ export default function CovidContactStep(props) {
         {key: 'false', value: t('basics.no')},
     ];
 
-    const [selection, setSelection] = useState(props.caseReport.covidContact !== undefined && props.caseReport.covidContact !== null ? String(props.caseReport.covidContact) : undefined);
+    const [selection, setSelection] = useState(props.caseReport.covid_contact !== undefined && props.caseReport.covid_contact !== null ? String(props.caseReport.covid_contact) : undefined);
 
     const onSelect = item => {
-        var covidContact = item === 'true';
-        setSelection(covidContact);
+        setSelection(item);
         if (AUTO_NEXT_ENABLED) {
             // onNext is triggers faster then the state change?
-            props.onNext(getStateToBeSaved(covidContact));
+            props.onNext(getStateToBeSaved(item === 'true'));
         }
     };
 
     const getStateToBeSaved = (status = null) => {
         const caseReport = {...props.caseReport};
-        if (status != null) {
-            // set status from parameter (optional)
-            caseReport.covidContact = status;
-        } else {
-            caseReport.covidContact = selection;
+
+        if (status == null) {
+            status = selection == 'true';
         }
+        caseReport.covid_contact = status;
         return caseReport;
     };
 

@@ -24,11 +24,13 @@
             "ok": "Ok",
             "cancel": "Cancel",
             "askLater": "Ask Me Later",
-            "skip": "Skip"
+            "skip": "Skip",
+            "update": "Update"
         },
         "basics": {
             "yes": "Yes",
-            "no": "No"
+            "no": "No",
+            "today": "Today"
         },
         "sharing": {
             "message": "I just used Cotect App to track my health. Help to fight Corona as well!",
@@ -38,7 +40,15 @@
         },
         "home": {
             "welcomeMessage": "Great that you want to help us trace Corona!\n\nLet's start with some questions.",
-            "firstReportAction": "Let's start"
+            "firstReportAction": "Let's start",
+            "updateReportAction": "Update Report"
+        },
+        "assesments": {
+            "infectionRisk": {
+                "title": "Infection Risk",
+                "updateLabel": "Last updated {{date}}",
+                "noAssesmentDesc": "No alerts. There is currently not enough data to show a meaningful assessment for your report. We will notify you as soon as there is an update."
+            }
         },
         "report": {
             "summaryCard": {
@@ -51,7 +61,7 @@
                 "genderInfo": "Gender: {{gender}}",
                 "covidTest": "Covid Test: {{covidTest}}",
                 "covidContact": "Covid Contact: {{covidContact}}",
-                "notSubmitted": "Not Submitted"
+                "notSubmitted": "Not Submitted",
             },
             "age": {
                 "helpText": "We need the age to...",

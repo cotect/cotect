@@ -24,23 +24,20 @@ export default function SymptomsDateStep(props) {
     let reportDate = undefined;
     let existingMarkedDate = {};
 
-    if (props.ignoreStep) {
-        props.ignoreStep({...props.caseReport});
-    }
-
     if (!props.caseReport.symptoms || props.caseReport.symptoms.length < 1) {
         // ignore step
-        props.onNext(props.caseReport);
-
+        if (props.ignoreStep) {
+            props.ignoreStep({...props.caseReport});
+        }
     } else {
         // TODO: Initialize Dates - just use the date of the first symptom
         reportDate = props.caseReport.symptoms[0].report_date;
-        
+
         if (reportDate) {
             try {
                 // TODO: investigate why "RangeError: Invalid time value" is thrown when a symptom has an attached date
                 existingMarkedDate[format(reportDate, 'yyyy-MM-dd')] = {selected: true};
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
             }
         }
@@ -116,5 +113,5 @@ SymptomsDateStep.propTypes = {
     onBack: PropTypes.func.isRequired,
     hideBackButton: PropTypes.bool,
     hideNextButton: PropTypes.bool,
-    ignoreStep: PropTypes.func
+    ignoreStep: PropTypes.func,
 };

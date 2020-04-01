@@ -40,7 +40,7 @@ export default function CovidTestedStep(props) {
         },
     ];
 
-    const [selection, setSelection] = useState(props.caseReport.covidTest);
+    const [selection, setSelection] = useState(props.caseReport.covid_test);
 
     const onSelect = item => {
         setSelection(item);
@@ -55,9 +55,9 @@ export default function CovidTestedStep(props) {
         const caseReport = {...props.caseReport};
         if (status) {
             // set test status from parameter (optional)
-            caseReport.covidTest = status;
+            caseReport.covid_test = status;
         } else {
-            caseReport.covidTest = selection;
+            caseReport.covid_test = selection;
         }
         return caseReport;
     };

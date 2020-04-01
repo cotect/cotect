@@ -81,12 +81,25 @@ export let getPlaceDisplayType = (types, translation) => {
     return [t('report.places.types.place'), 'map-marker'];
 };
 
+export function isValidDate(d) {
+    return d instanceof Date && !isNaN(d);
+}
 
 export let getRangeDate = (visitCount, earliestDate, latestDate, translation) => {
     let t = translation;
     try {
-        if (earliestDate == null || latestDate == null) {
+        if (!earliestDate || !latestDate) {
             return t('report.places.noVisitsDesc');
+        }
+
+        if (!isValidDate(earliestDate) ||  !isValidDate(latestDate)){
+            //alert(JSON.stringify(earliestDate));
+            //alert(JSON.stringify(latestDate));
+            return "Invalid Date";
+        }
+
+        if (!visitCount) {
+            visitCount = 1;
         }
 
         if (isSameDay(earliestDate, latestDate)) {

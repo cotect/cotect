@@ -43,7 +43,7 @@ export default function ReportSummaryCard(props) {
     }
 
     return (
-        <Card style={styles.cardItem}>
+        <Card style={{...styles.cardItem, ...props.style}}>
             <Card.Title
                 title={t('report.summaryCard.reportTitle')}
                 subtitle={subtitle}
@@ -72,22 +72,22 @@ export default function ReportSummaryCard(props) {
                     ) : (
                         false
                     )}
-                    {props.caseReport.covidContact !== undefined &&
-                    props.caseReport.covidContact !== null ? (
+                    {props.caseReport.covid_contact !== undefined &&
+                    props.caseReport.covid_contact !== null ? (
                         <List.Item
                             titleStyle={styles.listElement}
                             title={t('report.summaryCard.covidContact', {
-                                covidContact: props.caseReport.covidContact,
+                                covidContact: props.caseReport.covid_contact,
                             })}
                         />
                     ) : (
                         false
                     )}
-                    {props.caseReport.covidTest ? (
+                    {props.caseReport.covid_test ? (
                         <List.Item
                             titleStyle={styles.listElement}
                             title={t('report.summaryCard.covidTest', {
-                                covidTest: props.caseReport.covidTest,
+                                covidTest: props.caseReport.covid_test,
                             })}
                         />
                     ) : (
@@ -107,8 +107,9 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
+                                key={'symptoms-' + index}
                                 titleStyle={styles.listElement}
-                                title={symptom.name + severityInfo}
+                                title={symptom.symptom_name + severityInfo}
                             />
                         );
                     })}
@@ -129,6 +130,7 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
+                                key={'places-' + index}
                                 titleStyle={styles.listElement}
                                 title={
                                     place.place_name +
@@ -153,6 +155,7 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
+                                key={'contacts-' + index}
                                 titleStyle={styles.listElement}
                                 title={contact.phone_number + contactInfo}
                             />
@@ -160,9 +163,25 @@ export default function ReportSummaryCard(props) {
                     })}
                 </List.Accordion>
             </Card.Content>
+            {props.showActions ? (
+                <Card.Actions>
+                    <Button onPress={() => props.onUpdateAction(props.caseReport)}>
+                        {t('actions.update')}
+                    </Button>
+                    <Button onPress={() => props.onDeleteAction(props.caseReport)}>
+                        {t('actions.delete')}
+                    </Button>
+                </Card.Actions>
+            ) : (
+                false
+            )}
         </Card>
     );
 }
 ReportSummaryCard.propTypes = {
     caseReport: PropTypes.object.isRequired,
+    style: PropTypes.object,
+    showActions: PropTypes.bool,
+    onDeleteAction: PropTypes.func,
+    onUpdateAction: PropTypes.func,
 };

@@ -13,7 +13,7 @@ import {
     setSettingsState,
     setAuthToken,
     STORAGE_KEY_PREFIX,
-    STORAGE_CASE_REPORT_KEY
+    STORAGE_CASE_REPORT_KEY,
 } from './redux/reducer';
 
 import {APP_THEME} from './constants/DefaultStyles';
@@ -21,6 +21,8 @@ import {APP_THEME} from './constants/DefaultStyles';
 import ErrorBoundary from './components/ErrorBoundary';
 import HomeScreen from './screens/HomeScreen';
 import useLinking from './navigation/useLinking';
+
+import {CaseReport} from './client/cotect-backend/index';
 
 import auth from '@react-native-firebase/auth';
 
@@ -37,8 +39,8 @@ const loadSavedSettings = async () => {
 
                 if (key === STORAGE_CASE_REPORT_KEY) {
                     value = JSON.parse(value);
+                    value = CaseReport.constructFromObject(value);
                 }
-
                 settingsState[key.replace(STORAGE_KEY_PREFIX, '')] = value;
             });
             store.dispatch(setSettingsState(settingsState));
