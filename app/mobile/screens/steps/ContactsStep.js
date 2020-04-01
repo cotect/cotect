@@ -231,7 +231,7 @@ export default function ContactsStep(props) {
     return (
         <StepContainer
             title={t('report.contacts.title')}
-            helpText={t('report.help.defaultText')}
+            helpText={undefined}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}

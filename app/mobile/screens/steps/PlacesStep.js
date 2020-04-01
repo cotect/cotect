@@ -170,7 +170,7 @@ export default function PlacesStep(props) {
     return (
         <StepContainer
             title={t('report.places.title')}
-            helpText={t('report.help.defaultText')}
+            helpText={undefined}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}

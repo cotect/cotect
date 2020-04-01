@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, View} from 'react-native';
 import {Button, Dialog, Paragraph, Portal, Text} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTranslation} from 'react-i18next';
 import BackNextButton from '../../components/BackNextButton';
 
@@ -32,7 +33,7 @@ export default function StepContainer(props) {
     const [isModalVisible, setModalVisible] = useState(false);
     const _showDialog = () => setModalVisible(true);
     const _hideDialog = () => setModalVisible(false);
-    const helpText = props.helpText || t('report.help.defaultText');
+    // const helpText = props.helpText || t('report.help.defaultText');
 
     //  <Icon name="help-circle-outline" size={17} borderWidth={2} padding={5} onPress={_showDialog}/>
     //
@@ -41,6 +42,15 @@ export default function StepContainer(props) {
             <View style={{flex: 1, justifyContent: 'flex-end'}}>
                 <View style={styles.stepTitleWrapper}>
                     <Text style={styles.stepTitle}>{props.title}</Text>
+                    {props.helpText &&
+                        <Icon
+                            name="help-circle-outline"
+                            size={25}
+                            borderWidth={2}
+                            padding={5}
+                            onPress={_showDialog}
+                        />
+                    }
                 </View>
                 {props.children}
             </View>
@@ -56,7 +66,7 @@ export default function StepContainer(props) {
                 <Dialog visible={isModalVisible} onDismiss={_hideDialog}>
                     <Dialog.Title>{t('report.help.title')}</Dialog.Title>
                     <Dialog.Content>
-                        <Paragraph>{helpText}</Paragraph>
+                        <Paragraph>{props.helpText}</Paragraph>
                     </Dialog.Content>
                     <Dialog.Actions>
                         <Button onPress={_hideDialog}>{t('report.help.primaryAction')}</Button>
@@ -74,5 +84,6 @@ StepContainer.propTypes = {
     children: PropTypes.node.isRequired,
     helpText: PropTypes.string,
     hideBackButton: PropTypes.bool,
-    hideNextButton: PropTypes.bool
+    hideNextButton: PropTypes.bool,
+    helpText: PropTypes.string
 };

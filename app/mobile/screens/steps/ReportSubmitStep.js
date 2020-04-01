@@ -18,7 +18,7 @@ import InfectionRiskCard from '../../components/InfectionRiskCard';
 
 const styles = StyleSheet.create({
     actionButton: ACTION_BUTTON,
-    actionButtonLabel: ACTION_BUTTON_LABEL
+    actionButtonLabel: ACTION_BUTTON_LABEL,
 });
 
 export default function ReportSubmitStep(props) {
@@ -34,13 +34,12 @@ export default function ReportSubmitStep(props) {
     return (
         <StepContainer
             title={t('report.submitReport.title')}
-            helpText={t('report.help.defaultText')}
+            helpText={undefined}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}
             hideBackButton={props.hideBackButton}
-            nextButtonLabel="Submit"
-        >
+            nextButtonLabel="Submit">
             <View style={{justifyContent: 'flex-end'}}>
                 <ScrollView
                     automaticallyAdjustContentInsets={true}
@@ -49,18 +48,15 @@ export default function ReportSubmitStep(props) {
                     }}
                     ref={scrollViewRef}
                     onLayout={e => scrollViewRef.current.scrollToEnd({animated: true})}>
-                <ReportSummaryCard
-                    caseReport={props.caseReport}
-                />
-            </ScrollView>
+                    <ReportSummaryCard caseReport={props.caseReport} />
+                </ScrollView>
             </View>
             <Button
                 mode="outlined"
                 style={styles.actionButton}
                 labelStyle={styles.actionButtonLabel}
-                onPress={() => props.onNext(getStateToBeSaved())}
-            >
-                    {t('report.submitReport.action')}
+                onPress={() => props.onNext(getStateToBeSaved())}>
+                {t('report.submitReport.action')}
             </Button>
         </StepContainer>
     );

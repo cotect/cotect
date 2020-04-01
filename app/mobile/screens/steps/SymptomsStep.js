@@ -279,7 +279,7 @@ export default function SymptomsStep(props) {
     return (
         <StepContainer
             title={t('report.symptoms.title')}
-            helpText={t('report.help.defaultText')}
+            helpText={undefined}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}

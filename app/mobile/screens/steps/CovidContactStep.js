@@ -50,7 +50,7 @@ export default function CovidContactStep(props) {
     return (
         <StepContainer
             title={t('report.covidContact.title')}
-            helpText={t('report.help.defaultText')}
+            helpText={undefined}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}
