@@ -12,11 +12,20 @@ import {mapStateToProps, mapDispatchToProps} from '../redux/reducer';
 
 const styles = StyleSheet.create({});
 
+export function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+
 function HomeScreen(props) {
     const {t} = useTranslation();
     const [isReportStarted, setReportStarted] = useState(false);
     const [caseReport, setCaseReport] = useState(props.caseReport);
-
+    
     const reportSubmitted = () => {
         setReportStarted(false);
         props.increaseNumberOfReports();
@@ -36,7 +45,7 @@ function HomeScreen(props) {
                 />
             ) : (
                 <View style={{flex: 1}}>
-                    {caseReport ? (
+                    {!isEmpty(caseReport) ? (
                         <AssesmentScreen onUpdateReport={() => setReportStarted(true)} caseReport={props.caseReport} />
                     ) : (
                         <NewUserScreen onFinish={() => setReportStarted(true)} />
