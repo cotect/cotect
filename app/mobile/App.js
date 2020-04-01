@@ -26,9 +26,9 @@ import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 
-const loadSavedSettings = () => {
+const loadSavedSettings = async () => {
     // TODO: Instead of doing it manually here, have a look at 'redux-persist' (https://itnext.io/react-native-why-you-should-be-using-redux-persist-8ad1d68fa48b)
-    AsyncStorage.getAllKeys((err, keys) => {
+    await AsyncStorage.getAllKeys((err, keys) => {
         AsyncStorage.multiGet(keys, (err, stores) => {
             let settingsState = {};
             stores.map((result, i, store) => {
