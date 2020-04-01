@@ -130,7 +130,7 @@ export default function ReportSummaryCard(props) {
 
                         return (
                             <List.Item
-                                key={'palces-' + index}
+                                key={'places-' + index}
                                 titleStyle={styles.listElement}
                                 title={
                                     place.place_name +
