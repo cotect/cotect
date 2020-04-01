@@ -41,10 +41,15 @@ const styles = StyleSheet.create({
     },
 });
 
+const LAST_ACTIONS = {
+    next: "next",
+    back: "back"
+}
+
 function ReportScreen(props) {
     const {t} = useTranslation();
     const [stepIndex, setStepIndex] = useState(0);
-
+    const [lastAction, setLastAction] = useState();
     const [caseReport, setCaseReport] = useState(props.caseReport);
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -65,6 +70,7 @@ function ReportScreen(props) {
         newStepIndex = newStepIndex + 1;
         setCaseReport(caseReport);
         setStepIndex(newStepIndex);
+        setLastAction(LAST_ACTIONS.next);
     };
 
     const handleBackCallback = caseReport => {
@@ -76,8 +82,17 @@ function ReportScreen(props) {
             newStepIndex = newStepIndex - 1;
             setCaseReport(caseReport);
             setStepIndex(newStepIndex);
+            setLastAction(LAST_ACTIONS.back);
         }
     };
+
+    const handleIgnoreStep = caseReport => {
+        if (lastAction === LAST_ACTIONS.next) {
+            handleNextCallback(caseReport);
+        } else if (lastAction === LAST_ACTIONS.back) {
+            handleBackCallback(caseReport);
+        }
+    }
 
     const availableSteps = [
         <SymptomsStep
@@ -90,6 +105,7 @@ function ReportScreen(props) {
             caseReport={caseReport}
             onNext={caseReport => handleNextCallback(caseReport)}
             onBack={caseReport => handleBackCallback(caseReport)}
+            ignoreStep={caseReport => handleIgnoreStep(caseReport)}
         />,
         <CovidTestedStep
             caseReport={caseReport}

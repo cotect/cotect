@@ -24,6 +24,10 @@ export default function SymptomsDateStep(props) {
     let reportDate = undefined;
     let existingMarkedDate = {};
 
+    if (props.ignoreStep) {
+        props.ignoreStep({...props.caseReport});
+    }
+
     if (!props.caseReport.symptoms || props.caseReport.symptoms.length < 1) {
         // ignore step
         props.onNext(props.caseReport);
@@ -112,4 +116,5 @@ SymptomsDateStep.propTypes = {
     onBack: PropTypes.func.isRequired,
     hideBackButton: PropTypes.bool,
     hideNextButton: PropTypes.bool,
+    ignoreStep: PropTypes.func
 };
