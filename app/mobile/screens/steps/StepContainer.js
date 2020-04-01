@@ -84,6 +84,5 @@ StepContainer.propTypes = {
     children: PropTypes.node.isRequired,
     helpText: PropTypes.string,
     hideBackButton: PropTypes.bool,
-    hideNextButton: PropTypes.bool,
-    helpText: PropTypes.string
+    hideNextButton: PropTypes.bool
 };

@@ -150,7 +150,8 @@
                 "inputLabelConfirmation": "Confirmation Code",
                 "invalidConfirmation": "Confirmation code not valid",
                 "verificationFailed": "Phone number verification failed.",
-                "invalidNumber": "This phone number is not valid."
+                "invalidNumber": "This phone number is not valid.",
+                "helpText": "Fake data on Corona would be a huge problem - so we ask you to verify your report via your phone number.\nWe will not store it in plain text on our servers.\nOf course, this step is optional if you don't feel comfortable with it!"
             },
             "residence": {
                 "title": "What is your current residence?",
