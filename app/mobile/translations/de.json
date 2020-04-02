@@ -72,6 +72,7 @@
                 "covidTest": "Covid-Test: {{covidTest}}",
                 "covidContact": "Covid-Kontakt: {{covidContact}}",
                 "notSubmitted": "Nicht übermittelt",
+                "residenceInfo": "Wohnort: {{residence}}"
             },
             "age": {
                 "helpText": "Wir brauchen das Alter um...",
@@ -81,7 +82,7 @@
             },
             "contacts": {
                 "amountTitle": "Mit wie vielen Personen hattest du Kontakt?",
-                "title": "Mit wem hattest du in den letzten Tagen Kontakt?",
+                "title": "Mit wem hattest du in den letzten 14 Tagen Kontakt?",
                 "noDatesDesc": "Es wurden keine Daten ausgewählt.",
                 "datesDesc": "{{visitCount}} Mal im Kontakt im Zeitraum {{earliestDate}} - {{latestDate}}",
                 "singleDateDesc": "Im Kontakt am {{date}}.",
@@ -111,7 +112,7 @@
                 "action": "Bericht einreichen"
             },
             "places": {
-                "title": "Welche Orte hast du in den letzten Tagen besucht?",
+                "title": "Welche Orte hast du in den letzten 14 Tagen besucht?",
                 "addPlace": "Ort hinzufügen",
                 "titleDates": "Wähle die Tage aus, an denen du hier warst",
                 "dialogTitle": "Wann hast du diesen Ort besucht?",
