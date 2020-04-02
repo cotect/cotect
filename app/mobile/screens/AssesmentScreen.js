@@ -16,6 +16,7 @@ import {
 
 import InfectionRiskCard from '../components/InfectionRiskCard';
 import ReportSummaryCard from '../components/ReportSummaryCard';
+import HelpInformationCard from '../components/HelpInformationCard';
 
 const styles = StyleSheet.create({
     container: {
@@ -83,6 +84,10 @@ export default function AssesmentScreen(props) {
                     <InfectionRiskCard 
                     style={{marginRight: 14, marginLeft: 14}}
                     />
+                    <HelpInformationCard 
+                    style={{marginRight: 14, marginLeft: 14}}
+                    />
+
                     <ScrollView
                         contentContainerStyle={{
                             alignItems: 'center',

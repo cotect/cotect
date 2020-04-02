@@ -1,6 +1,6 @@
 import React, {useState, useMemo} from 'react';
 
-import {StyleSheet, View, SafeAreaView, BackHandler} from 'react-native';
+import {StyleSheet, View, SafeAreaView, Image, BackHandler} from 'react-native';
 
 import {connect} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -39,6 +39,13 @@ const styles = StyleSheet.create({
         top: 24,
         bottom: 0,
     },
+    image: {
+        width: 140,
+        height: 60,
+        marginTop: 4,
+        alignSelf: 'center',
+        justifyContent: 'flex-start',
+    }
 });
 
 const LAST_ACTIONS = {
@@ -146,6 +153,7 @@ function ReportScreen(props) {
             caseReport={caseReport}
             onNext={caseReport => handleNextCallback(caseReport)}
             onBack={caseReport => handleBackCallback(caseReport)}
+            helpText="Fake data on Corona would be a huge problem - so we ask you to verify your report via your phone number.\nWe will not store it in plain text on our servers.\nOf course, this step is optional if you don't feel comfortable with it!"
         />,
         <ReportSubmitStep
             caseReport={caseReport}
@@ -215,6 +223,10 @@ function ReportScreen(props) {
         <SafeAreaView style={{height: '100%', flex: 1, backgroundColor: REPORTING_BACKGROUND}}>
             <View style={{justifyContent: 'flex-start', flexDirection: 'column', flexGrow: 0.3}}>
                 <ProgressBar progress={(stepIndex + 1) / steps.length} />
+                        <Image
+                            source={require('../assets/images/cotect-banner.png')}
+                            resizeMode="contain"
+                            style={styles.image}></Image>
                 <Icon
                     name="close"
                     size={25}

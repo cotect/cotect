@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     image: {
         width: 180,
         height: 180,
-        marginTop: 57,
+        marginTop: 150,
+        alignItems: 'center',
         alignSelf: 'center',
     },
     cotectLogo: {
@@ -57,7 +58,7 @@ export default function NewUserScreen(props) {
             <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 36}}>
                 <Button
                     mode="outlined"
-                    style={styles.actionButton}
+                    style={{...styles.actionButton, marginBottom: 24}}
                     labelStyle={styles.actionButtonLabel}
                     onPress={() => props.onFinish()}>
                     {t('home.firstReportAction')}

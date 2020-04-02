@@ -27,6 +27,11 @@ export default function ReportSummaryCard(props) {
 
     let subtitle = t('report.summaryCard.notSubmitted');
 
+    if (props.showActions) {
+        // TODO change
+        subtitle = "Last updated today";
+    }
+
     let symptoms = [];
     if (props.caseReport.symptoms) {
         symptoms = props.caseReport.symptoms;
@@ -67,6 +72,16 @@ export default function ReportSummaryCard(props) {
                             titleStyle={styles.listElement}
                             title={t('report.summaryCard.genderInfo', {
                                 gender: props.caseReport.gender,
+                            })}
+                        />
+                    ) : (
+                        false
+                    )}
+                    {props.caseReport.residence && props.caseReport.residence.place_name ? (
+                        <List.Item
+                            titleStyle={styles.listElement}
+                            title={t('report.summaryCard.residenceInfo', {
+                                residence: props.caseReport.residence.place_name,
                             })}
                         />
                     ) : (

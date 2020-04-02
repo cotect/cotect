@@ -1,11 +1,22 @@
 import {DefaultTheme} from 'react-native-paper';
 
-export const PRIMARY_COLOR = '#6200ee';
-export const ACCENT_COLOR = '#3214be';
+//export const PRIMARY_COLOR = '#6200ee'; // #006f7a  / #6200ee
+//export const ACCENT_COLOR = PRIMARY_COLOR;  // #3214be
+//export const PRIMARY_BACKGROUND_COLOR = 'rgba(98, 0, 238, 0.2)'; //rgba(98, 0, 238, 0.2)
+
+//export const PRIMARY_COLOR = '#006f7a';
+//export const ACCENT_COLOR = PRIMARY_COLOR;
+//export const PRIMARY_BACKGROUND_COLOR = 'rgba(0, 111, 122, 0.2)';
+
+export const PRIMARY_COLOR = '#107F8A';
+export const ACCENT_COLOR = PRIMARY_COLOR;
+export const PRIMARY_BACKGROUND_COLOR = 'rgba(16, 127, 138, 0.2)';
+
 export const INACTIVE_COLOR = '#818181';
 export const REPORTING_BACKGROUND = '#FDFDFD';
 export const DEFAULT_BACKGROUND = '#FFF';
-export const PRIMARY_BACKGROUND_COLOR = 'rgba(98, 0, 238, 0.2)';
+
+
 
 export const CONTAINER = {
     //flex: 1,
@@ -39,7 +50,7 @@ export const CALENDAR_THEME = {
     arrowColor: PRIMARY_COLOR,
     todayTextColor: PRIMARY_COLOR,
     selectedDayBackgroundColor: PRIMARY_COLOR,
-    calendarBackground: REPORTING_BACKGROUND,
+    calendarBackground: DEFAULT_BACKGROUND,
 };
 
 export const APP_THEME = {

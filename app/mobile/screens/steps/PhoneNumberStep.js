@@ -7,7 +7,7 @@ import auth from '@react-native-firebase/auth';
 import {useTranslation} from 'react-i18next';
 
 import {StyleSheet, View} from 'react-native';
-import {Button, Snackbar, Text, TextInput} from 'react-native-paper';
+import {Button, Snackbar, Text, TextInput, Caption} from 'react-native-paper';
 
 import PhoneInput from 'react-native-phone-input';
 
@@ -171,6 +171,8 @@ export default function PhoneNumberStep(props) {
             hideNextButton={props.hideNextButton}
             hideBackButton={props.hideBackButton}>
             <View>
+                
+                <Caption style={{fontSize: 13, marginTop: -10, marginBottom: 10}}>{t("report.phoneNumber.helpText")}</Caption>
                 {!isVerified ? (
                     <View>
                         {!isPhoneNumberEntered ? (
@@ -191,7 +193,7 @@ export default function PhoneNumberStep(props) {
                                 />
                                 <Button
                                     mode="outlined"
-                                    style={styles.actionButton}
+                                    style={{...styles.actionButton, marginTop: 24}}
                                     labelStyle={styles.actionButtonLabel}
                                     onPress={() => onVerifyClick()}>
                                     {t('actions.verify')}

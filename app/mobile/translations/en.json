@@ -161,7 +161,8 @@
                 "inputLabelConfirmation": "Confirmation Code",
                 "invalidConfirmation": "Confirmation code not valid",
                 "verificationFailed": "Phone number verification failed.",
-                "invalidNumber": "This phone number is not valid."
+                "invalidNumber": "This phone number is not valid.",
+                "helpText": "Your phone number is optional, although if you provide it, we can mark the report as being verified, which increases the trust in the data. Your phone number will not be stored on our backend."
             },
             "residence": {
                 "title": "What is your current residence?",

@@ -23,12 +23,18 @@ const styles = StyleSheet.create({
 
 export default function ReportSubmitStep(props) {
     const {t} = useTranslation();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const getStateToBeSaved = () => {
         const caseReport = {...props.caseReport};
         // TODO
         return caseReport;
     };
+
+    const submitReport = () => {
+        setIsSubmitting(true)
+        setTimeout(() => {props.onNext(getStateToBeSaved())}, 2000)
+    }
 
     const scrollViewRef = React.createRef();
     return (
@@ -56,9 +62,11 @@ export default function ReportSubmitStep(props) {
             </View>
             <Button
                 mode="outlined"
+                disabled={isSubmitting}
+                loading={isSubmitting}
                 style={styles.actionButton}
                 labelStyle={styles.actionButtonLabel}
-                onPress={() => props.onNext(getStateToBeSaved())}
+                onPress={() => submitReport()}
             >
                     {t('report.submitReport.action')}
             </Button>
