@@ -39,8 +39,8 @@
             "inviteAction": "Invite Friends"
         },
         "home": {
-            "welcomeMessage": "Great that you want to help us trace Corona!\n\nLet's start with some questions.",
-            "firstReportAction": "Let's start",
+            "welcomeMessage": "We will first ask you some questions to assess your health status and infection risk.",
+            "firstReportAction": "Let's go",
             "updateReportAction": "Update Report"
         },
         "assesments": {
@@ -49,6 +49,16 @@
                 "updateLabel": "Last updated {{date}}",
                 "noAssesmentDesc": "No alerts. There is currently not enough data to show a meaningful assessment for your report. We will notify you as soon as there is an update."
             }
+        },
+        "intro": {
+            "landingText": "Swipe right to help us fight Corona.",
+            "reportingTitle": "Report",
+            "reportingText": "Report symptoms, visited places, and contacts. The more you report, the better we can help everyone.",
+            "assessmentTitle": "Risk Assessment",
+            "assessmentText": "Corona outbreak at your fitness studio? We analyze all reports and warn you about infection risks.",
+            "privacyTitle": "Data Privacy",
+            "privacyText": "We store your report securely and follow GDPR. We do not store identifiable information. You can delete your data at any time."
+
         },
         "report": {
             "summaryCard": {
@@ -62,6 +72,7 @@
                 "covidTest": "Covid Test: {{covidTest}}",
                 "covidContact": "Covid Contact: {{covidContact}}",
                 "notSubmitted": "Not Submitted",
+                "residenceInfo": "Residence: {{residence}}"
             },
             "age": {
                 "helpText": "We need the age to...",
@@ -71,7 +82,7 @@
             },
             "contacts": {
                 "amountTitle": "With how many persons did you have contact?",
-                "title": "Who did you had contact with during the last days?",
+                "title": "Who did you had contact with during the last 14 days?",
                 "noDatesDesc": "No dates were selected.",
                 "datesDesc": "In contact {{visitCount}} times between {{earliestDate}} - {{latestDate}}",
                 "singleDateDesc": "In contact on {{date}}.",
@@ -101,7 +112,7 @@
                 "action": "Submit Report"
             },
             "places": {
-                "title": "Which places did you visit over the last days?",
+                "title": "Which places did you visit over the last 14 days?",
                 "addPlace": "Add Place",
                 "titleDates": "Select the dates on which you have been here",
                 "dialogTitle": "When have you visited this place?",
