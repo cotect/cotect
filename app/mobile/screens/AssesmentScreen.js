@@ -77,9 +77,9 @@ export default function AssesmentScreen(props) {
                     </View>
                     <ReportSummaryCard 
                     style={{marginRight: 14, marginLeft: 14}}
-                    showActions={true} 
+                    showActions={true}
                     onUpdateAction={() => props.onUpdateReport()}
-                    //onDeleteAction={}
+                    onDeleteAction={() => alert("Backend connection is deactivated.")}
                     caseReport={props.caseReport} />
                     <InfectionRiskCard 
                     style={{marginRight: 14, marginLeft: 14}}
