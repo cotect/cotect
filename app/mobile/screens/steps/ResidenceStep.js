@@ -43,6 +43,18 @@ export default function ResidenceStep(props) {
         })
             .then(place => {
                 let casePlace = new CasePlace(place.placeID);
+                try {
+                    for (let component of place.addressComponents) {
+                        for (let type of component.types) {
+                            if (type === "country") {
+                                casePlace.region = component.shortName
+                            }
+                        }
+                    }
+                } catch (err) {
+                    // send error to log file
+                }
+                
                 casePlace.latitude = place.location.latitude;
                 casePlace.longitude = place.location.longitude;
                 casePlace.place_name = place.address;
@@ -87,15 +99,14 @@ export default function ResidenceStep(props) {
                     />
                 </Card>
             ) : (
-                false
-            )}
-            <Button
+                <Button
                 mode="outlined"
                 style={styles.actionButton}
                 labelStyle={styles.actionButtonLabel}
                 onPress={() => openPlacesSearchModal()}>
                 {t('report.residence.pickPlace')}
             </Button>
+            )}
         </StepContainer>
     );
 }
