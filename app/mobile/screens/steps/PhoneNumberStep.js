@@ -165,7 +165,7 @@ export default function PhoneNumberStep(props) {
     return (
         <StepContainer
             title={t('report.phoneNumber.title')}
-            helpText={t('report.help.defaultText')}
+            helpText={t('report.phoneNumber.helpText')}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}

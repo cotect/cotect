@@ -43,7 +43,7 @@ export default function AgeStep(props) {
     return (
         <StepContainer
             title={t('report.age.title')}
-            helpText={t('report.age.helpText')}
+            helpText={undefined}
             onNext={() => props.onNext(getStateToBeSaved())}
             onBack={() => props.onBack(getStateToBeSaved())}
             hideNextButton={props.hideNextButton}
