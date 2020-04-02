@@ -18,7 +18,7 @@
             "confirm": "Bestätigen",
             "verify": "Verifizieren",
             "delete": "Löschen",
-            "next": "Nächster Schritt",
+            "next": "Weiter",
             "back": "Zurück",
             "dismiss": "Verwerfen",
             "ok": "Ok",
@@ -156,7 +156,7 @@
             "residence": {
                 "title": "Wo wohnst du gerade?",
                 "locationLabel": "Ort",
-                "pickPlace": "Ort festlegen"
+                "pickPlace": "Ort auswählen"
             },
             "submit": {
                 "primaryAction": "Abschicken",
@@ -179,7 +179,7 @@
                 "title": "Hattest du Kontakt mit jemandem, der positiv auf Covid-19 getestet wurde?"
             },
             "covidTest": {
-                "title": "Wurdest du auf Covid-19 getestet?",
+                "title": "Wurdest du schon auf Covid-19 getestet?",
                 "notTested": "Noch nicht getestet",
                 "testedNegative": "Negativ getestet",
                 "testedPositive": "Positiv getestet",
