@@ -1,0 +1,190 @@
+{
+    "translation": {
+        "error": {
+            "primaryAction": "Reload the app",
+            "text": "Irgendetwas ist schiefgegangen. Unsere Entwickler sind dran und arbeiten wahrscheinlich schon an einer Lösung.",
+            "title": "Oh nein."
+        },
+        "navigation": {
+            "homeTitle": "Home",
+            "reportTabLabel": "Bericht",
+            "reportTitle": "Bericht",
+            "settingsTabLabel": "Einstellungen",
+            "settingsTitle": "Einstellungen"
+        },
+        "actions": {
+            "add": "Hinzufügen",
+            "exit": "Verlassen",
+            "confirm": "Bestätigen",
+            "verify": "Verifizieren",
+            "delete": "Löschen",
+            "next": "Nächster Schritt",
+            "back": "Zurück",
+            "dismiss": "Verwerfen",
+            "ok": "Ok",
+            "cancel": "Abbrechen",
+            "askLater": "Frage später nochmal nach",
+            "skip": "Überspringen",
+            "update": "Aktualisieren"
+        },
+        "basics": {
+            "yes": "Ja",
+            "no": "Nein",
+            "today": "Heute"
+        },
+        "sharing": {
+            "message": "Ich habe gerade die Cotect App benutzt, um meinen Gesundheitszustand zu dokumentieren. Hilf auch mit, Corona zu bekämpfen!",
+            "title": "Cotect Bericht",
+            "url": "https://share.cotect.app/get",
+            "inviteAction": "Freunde einladen"
+        },
+        "home": {
+            "welcomeMessage": "Super, dass du uns helfen willst, Corona zu verfolgen!\n\nFangen wir mit einigen Fragen an.",
+            "firstReportAction": "Let's start",
+            "updateReportAction": "Update Report"
+        },
+        "assesments": {
+            "infectionRisk": {
+                "title": "Infection Risk",
+                "updateLabel": "Last updated {{date}}",
+                "noAssesmentDesc": "No alerts. There is currently not enough data to show a meaningful assessment for your report. We will notify you as soon as there is an update."
+            }
+        },
+        "report": {
+            "summaryCard": {
+                "reportTitle": "My Report",
+                "basicInfoSection": "My Information",
+                "symptomsSection": "{{count}} Symptoms",
+                "placesSection": "{{count}} Places",
+                "contactsSection": "{{count}} Contacts",
+                "ageInfo": "Age: {{age}}",
+                "genderInfo": "Gender: {{gender}}",
+                "covidTest": "Covid Test: {{covidTest}}",
+                "covidContact": "Covid Contact: {{covidContact}}",
+                "notSubmitted": "Not Submitted",
+            },
+            "age": {
+                "helpText": "We need the age to...",
+                "title": "How old are you?",
+                "inputLabel": "Age",
+                "validationText": "Age must be a number between 0 and 130."
+            },
+            "contacts": {
+                "amountTitle": "With how many persons did you have contact?",
+                "title": "Who did you had contact with during the last days?",
+                "noDatesDesc": "No dates were selected.",
+                "datesDesc": "In contact {{visitCount}} times between {{earliestDate}} - {{latestDate}}",
+                "singleDateDesc": "In contact on {{date}}.",
+                "dialogTitle": "When have you been in contact?",
+                "addContact": "Add contact",
+                "permissionTitle": "Contact Permission",
+                "permissionMessage": "To add contacts, cotect needs to access your contact list. Information about your contacts will never be uploaded or stored on our servers."
+            },
+            "exit": {
+                "primaryAction": "Exit",
+                "text": "Do you really want to exit the report? It will not be saved.",
+                "title": "Exit Report"
+            },
+            "gender": {
+                "title": "What is your gender?",
+                "male": "Male",
+                "female": "Female",
+                "other": "Other"
+            },
+            "help": {
+                "defaultText": "Lorem ipsum",
+                "primaryAction": "Got it!",
+                "title": "Help"
+            },
+            "submitReport": {
+                "title": "Please check your information before you submit your report:",
+                "action": "Submit Report"
+            },
+            "places": {
+                "title": "Which places did you visit over the last days?",
+                "addPlace": "Add Place",
+                "titleDates": "Select the dates on which you have been here",
+                "dialogTitle": "When have you visited this place?",
+                "visitsDesc": "Visited {{visitCount}} times between {{earliestDate}} - {{latestDate}}",
+                "singleVisitDesc": "Visited on {{date}}.",
+                "noVisitsDesc": "No dates were selected.",
+                "types": {
+                    "airport": "Airport",
+                    "trainStation": "Train Station",
+                    "bank": "Bank",
+                    "museum": "Museum",
+                    "atm": "ATM",
+                    "bakery": "Bakery",
+                    "bus_station": "Bus station",
+                    "gas_station": "Gas station",
+                    "church": "Church",
+                    "grocery_or_supermarket": "Supermarket",
+                    "library": "Library",
+                    "movie_theater": "Cinema",
+                    "night_club": "Night club",
+                    "post_office": "Post office",
+                    "restaurant": "Restaurant",
+                    "shopping_mall": "Shopping Mall",
+                    "stadium": "Stadium",
+                    "school": "School",
+                    "cafe": "Café",
+                    "doctor": "Doctor",
+                    "hospital": "Hospital",
+                    "park": "Park",
+                    "pharmacy": "Pharmacy",
+                    "gym": "Gym",
+                    "lodging": "Lodging",
+                    "store": "Store",
+                    "establishment": "Establishment",
+                    "postal_code": "Postal Code",
+                    "street_address": "Street Address",
+                    "country": "Country",
+                    "locality": "City",
+                    "place": "Place"
+                }
+            },
+            "phoneNumber": {
+                "title": "Please verify your report via your phone number:",
+                "numberVerified": "Phone Number is verified.",
+                "inputLabelPhoneNumber": "Phone Number",
+                "inputLabelConfirmation": "Confirmation Code",
+                "invalidConfirmation": "Confirmation code not valid",
+                "verificationFailed": "Phone number verification failed.",
+                "invalidNumber": "This phone number is not valid.",
+                "helpText": "Fake data on Corona would be a huge problem - so we ask you to verify your report via your phone number.\nWe will not store it in plain text on our servers.\nOf course, this step is optional if you don't feel comfortable with it!"
+            },
+            "residence": {
+                "title": "What is your current residence?",
+                "locationLabel": "Location",
+                "pickPlace": "Pick Location"
+            },
+            "submit": {
+                "primaryAction": "Submit",
+                "exitAction": "Exit",
+                "successText": "We submitted the report! Thanks for your help fighting CoVid!",
+                "text": "We are submitting the report…",
+                "title": "Report Submission"
+            },
+            "symptoms": {
+                "title": "Do you have any symptoms?",
+                "severity": "What is the severity?"
+            },
+            "symptomsDate": {
+                "title": "When did the symptoms first appear?"
+            },
+            "temperature": {
+                "title": "What is your temperature?"
+            },
+            "covidContact": {
+                "title": "Did you had contact with a confirmed covid-19 case?"
+            },
+            "covidTest": {
+                "title": "Have you been tested for covid-19?",
+                "notTested": "Not tested yet",
+                "testedNegative": "Tested negative",
+                "testedPositive": "Tested positive",
+                "testedPending": "Test is pending"
+            }
+        }
+    }
+}
