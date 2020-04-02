@@ -4,15 +4,13 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {NativeModules} from 'react-native';
 import {Platform} from 'react-native';
 
-// TODO de
-import {en} from './translations';
+import {en, de} from './translations';
 
 function localeToLanguage(locale) {
     return locale.replace('_', '-');
 }
 
-i18n.use(initReactI18next)
-    .use({
+i18n.use({
         type: 'languageDetector',
         async: true,
         init: () => {},
@@ -39,14 +37,15 @@ i18n.use(initReactI18next)
                     detectedLanguage = localeToLanguage(androidLocale);
                 }
             }
-
+            
             callback(detectedLanguage);
         },
         cacheUserLanguage: () => {},
     })
+    .use(initReactI18next)
     .init({
         resources: {
-            //de,
+            de,
             en,
         },
         fallbackLng: 'en',
