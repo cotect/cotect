@@ -147,16 +147,25 @@ export default function PhoneNumberStep(props) {
 
     const getCountryCode = () => {
         var countryCode = null;
+
         try {
-            countryCode = RNLocalize.getCountry();
+            countryCode = props.caseReport.residence.region;
         } catch {
-            countryCode = DEFAULT_COUNTRY_CODE;
+            // do nothiing
         }
 
-        if (countryCode == null) {
-            countryCode = DEFAULT_COUNTRY_CODE;
-        }
+        if (!countryCode) {
+            try {
+                countryCode = RNLocalize.getCountry();
+            } catch {
+                countryCode = DEFAULT_COUNTRY_CODE;
+            }
 
+            if (countryCode == null) {
+                countryCode = DEFAULT_COUNTRY_CODE;
+            }
+        }
+        
         return countryCode.toLowerCase();
     };
 
@@ -171,8 +180,9 @@ export default function PhoneNumberStep(props) {
             hideNextButton={props.hideNextButton}
             hideBackButton={props.hideBackButton}>
             <View>
-                
-                <Caption style={{fontSize: 13, marginTop: -10, marginBottom: 10}}>{t("report.phoneNumber.helpText")}</Caption>
+                <Caption style={{fontSize: 13, marginTop: -10, marginBottom: 10}}>
+                    {t('report.phoneNumber.helpText')}
+                </Caption>
                 {!isVerified ? (
                     <View>
                         {!isPhoneNumberEntered ? (
