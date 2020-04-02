@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
-        backgroundColor: DEFAULT_BACKGROUND,
+        backgroundColor: DEFAULT_BACKGROUND
     },
     slide: {
         flex: 1,
@@ -23,9 +23,10 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200,
+        marginTop: -70,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 150,
+        alignSelf: 'center'
     },
     buttonCircle: {
         width: 40,
@@ -39,6 +40,8 @@ const styles = StyleSheet.create({
         width: 140,
         height: 60,
         marginTop: 4,
+        //position: 'absolute',
+        //top: 0,
         alignSelf: 'center',
     },
 });
@@ -112,7 +115,7 @@ export default function AppIntroScreen(props) {
                         resizeMode="contain"
                         style={styles.logo}></Image>
                 ) : (
-                    <View style={{height: 70}}></View>
+                    <View style={{height: 60}}></View>
                 )}
                 <View
                     style={{
@@ -121,7 +124,9 @@ export default function AppIntroScreen(props) {
                         marginRight: 50,
                         marginLeft: 50,
                         backgroundColor: DEFAULT_BACKGROUND,
+                        justifyContent: 'center',
                     }}>
+                        
                     <Image style={styles.image} source={item.image} />
                     <Headline style={{fontSize: 32}}>{item.title}</Headline>
                     <Paragraph style={{fontSize: 17, marginTop: 15, textAlign: 'center'}}>

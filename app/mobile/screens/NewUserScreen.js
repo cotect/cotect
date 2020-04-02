@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     image: {
         width: 180,
         height: 180,
-        marginTop: 150,
         alignItems: 'center',
         alignSelf: 'center',
     },
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'roboto-regular',
         textAlign: 'center',
-        marginTop: 60,
+        marginTop: 50,
         marginRight: 45,
         marginLeft: 45,
         alignSelf: 'center',
@@ -49,13 +48,16 @@ export default function NewUserScreen(props) {
 
     return (
         <View style={styles.container}>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
             <Image
                 source={require('../assets/images/cotect-logo.png')}
                 resizeMode="contain"
                 style={styles.image}></Image>
             <Text style={styles.cotectLogo}>{APP_NAME}</Text>
             <Text style={styles.welcomeMessage}>{t('home.welcomeMessage')}</Text>
-            <View style={{flex: 1, justifyContent: 'flex-end', marginBottom: 36}}>
+            </View>
+            
+            <View style={{justifyContent: 'flex-end', marginBottom: 36}}>
                 <Button
                     mode="outlined"
                     style={{...styles.actionButton, marginBottom: 24}}
