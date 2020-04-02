@@ -72,7 +72,7 @@ export default function PlacesStep(props) {
         var autocompleteModalOptions = {useOverlay: true}
         if (props.caseReport.residence && props.caseReport.residence.place_area) {
             // if residence is set with place_area boundaries -> use it as location bias
-            locationBias = props.caseReport.residence.place_area;
+            let locationBias = props.caseReport.residence.place_area;
             autocompleteModalOptions = {useOverlay: true, locationBias: locationBias}
         }
 
