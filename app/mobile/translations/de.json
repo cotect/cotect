@@ -39,7 +39,7 @@
             "inviteAction": "Freunde einladen"
         },
         "home": {
-            "welcomeMessage": "Super, dass du uns helfen willst, Corona zu verfolgen!\n\nFangen wir mit einigen Fragen an.",
+            "welcomeMessage": "Wir werden dir zuerst eine Fragen stellen, um deinen Gesundheitszustand und dein Infektionsrisiko einzuschätzen.",
             "firstReportAction": "Lass uns anfangen",
             "updateReportAction": "Bericht aktualisieren"
         },
@@ -49,6 +49,16 @@
                 "updateLabel": "Zuletzt aktualisiert am {{date}}",
                 "noAssesmentDesc": "Keine Warnmeldungen. Es gibt noch nicht ausreichend Daten für eine aussagekräftige Bewertung deines Berichts. Wir benachrichtigen dich, sobald sich das ändert."
             }
+        },
+        "intro": {
+            "landingText": "Wische nach rechts, um mit uns Corona zu bekämpfen.",
+            "reportingTitle": "Bericht",
+            "reportingText": "Gib deine Symptome sowie besuchte Orte und Kontakte an. Je mehr du einträgst, desto besser können wir allen helfen.",
+            "assessmentTitle": "Risikoabschätzung",
+            "assessmentText": "Gibt es eine Häufung von Coronafällen in deinem Fitnessstudio? Wir analysieren alle Berichte und warnen dich vor Infektionsrisiken.",
+            "privacyTitle": "Datenschutz",
+            "privacyText": "Wir speichern deinen Bericht sicher und halten uns an die Datenschutz-Grundverordnung (GDPR). Wir speichern keine Informationen, anhand derer man Nutzer identifizieren könnte. Du kannst deine Daten jederzeit löschen."
+
         },
         "report": {
             "summaryCard": {
