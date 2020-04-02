@@ -26,14 +26,14 @@ export default function CovidContactStep(props) {
         {key: 'true', value: t('basics.yes')},
         {key: 'false', value: t('basics.no')},
     ];
-
+    
     const [selection, setSelection] = useState(props.caseReport.covid_contact !== undefined && props.caseReport.covid_contact !== null ? String(props.caseReport.covid_contact) : undefined);
 
     const onSelect = item => {
         setSelection(item);
         if (AUTO_NEXT_ENABLED) {
             // onNext is triggers faster then the state change?
-            props.onNext(getStateToBeSaved(item === 'true'));
+            props.onNext(getStateToBeSaved(item));
         }
     };
 
@@ -41,8 +41,17 @@ export default function CovidContactStep(props) {
         const caseReport = {...props.caseReport};
 
         if (status == null) {
-            status = selection == 'true';
+            status = selection;
         }
+
+        if (status === 'true') {
+            caseReport.covid_contact = true; 
+        }
+
+        if (status === 'false') {
+            caseReport.covid_contact = false; 
+        }
+
         caseReport.covid_contact = status;
         return caseReport;
     };
