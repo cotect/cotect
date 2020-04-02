@@ -10,7 +10,7 @@ import {RadioButton, Text, TouchableRipple} from 'react-native-paper';
 
 import StepContainer from './StepContainer';
 
-import {AUTO_NEXT_ENABLED} from '../../constants/Configuration';
+import {AUTO_NEXT_ENABLED, AUTO_NEXT_TIMEOUT} from '../../constants/Configuration';
 
 const styles = StyleSheet.create({
     radioButtonItem: {
@@ -26,14 +26,16 @@ export default function CovidContactStep(props) {
         {key: 'true', value: t('basics.yes')},
         {key: 'false', value: t('basics.no')},
     ];
-    
+
     const [selection, setSelection] = useState(props.caseReport.covid_contact !== undefined && props.caseReport.covid_contact !== null ? String(props.caseReport.covid_contact) : undefined);
 
     const onSelect = item => {
         setSelection(item);
         if (AUTO_NEXT_ENABLED) {
-            // onNext is triggers faster then the state change?
-            props.onNext(getStateToBeSaved(item));
+            setTimeout(() => {
+                 // onNext is triggers faster then the state change?
+                props.onNext(getStateToBeSaved(item));
+            }, AUTO_NEXT_TIMEOUT);
         }
     };
 

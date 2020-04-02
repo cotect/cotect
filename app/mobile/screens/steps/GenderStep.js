@@ -12,7 +12,7 @@ import {CaseReport} from '../../client/cotect-backend/index';
 
 import StepContainer from './StepContainer';
 
-import {AUTO_NEXT_ENABLED} from '../../constants/Configuration';
+import {AUTO_NEXT_ENABLED, AUTO_NEXT_TIMEOUT} from '../../constants/Configuration';
 
 const styles = StyleSheet.create({
     radioButtonItem: {
@@ -34,8 +34,10 @@ export default function GenderStep(props) {
     const onSelect = item => {
         setSelection(item);
         if (AUTO_NEXT_ENABLED) {
-            // onNext is triggered faster then the state change?
-            props.onNext(getStateToBeSaved(item));
+            setTimeout(() => {
+                // onNext is triggered faster then the state change?
+                props.onNext(getStateToBeSaved(item));
+           }, AUTO_NEXT_TIMEOUT);
         }
     };
 

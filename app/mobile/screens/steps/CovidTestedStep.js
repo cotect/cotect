@@ -10,7 +10,7 @@ import {RadioButton, Text, TouchableRipple} from 'react-native-paper';
 
 import {CaseReport} from '../../client/cotect-backend/index';
 
-import {AUTO_NEXT_ENABLED} from '../../constants/Configuration';
+import {AUTO_NEXT_ENABLED, AUTO_NEXT_TIMEOUT} from '../../constants/Configuration';
 
 import StepContainer from './StepContainer';
 
@@ -46,8 +46,10 @@ export default function CovidTestedStep(props) {
         setSelection(item);
 
         if (AUTO_NEXT_ENABLED) {
-            // onNext is triggered faster then the state change?
-            props.onNext(getStateToBeSaved(item));
+            setTimeout(() => {
+                // onNext is triggered faster then the state change?
+                props.onNext(getStateToBeSaved(item));
+           }, AUTO_NEXT_TIMEOUT);
         }
     };
 

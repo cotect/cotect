@@ -14,7 +14,7 @@ import {format, subDays, parseISO} from 'date-fns';
 
 import {CALENDAR_THEME} from '../../constants/DefaultStyles';
 
-import {AUTO_NEXT_ENABLED} from '../../constants/Configuration';
+import {AUTO_NEXT_ENABLED, AUTO_NEXT_TIMEOUT} from '../../constants/Configuration';
 
 const styles = StyleSheet.create({});
 
@@ -80,8 +80,11 @@ export default function SymptomsDateStep(props) {
             setSelectedDate(date);
             setMarkedDate(newMarkedDate);
             if (AUTO_NEXT_ENABLED) {
-                // jump to next step
-                props.onNext(getStateToBeSaved(date));
+                setTimeout(() => {
+                    // jump to next step
+                    props.onNext(getStateToBeSaved(date));
+               }, AUTO_NEXT_TIMEOUT);
+               
             }
         }
     };
