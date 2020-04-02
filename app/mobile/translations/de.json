@@ -151,7 +151,7 @@
                 "invalidConfirmation": "Ungültiger Bestätigungscode",
                 "verificationFailed": "Die Verifizierung der Handynummer ist fehlgeschlagen. ",
                 "invalidNumber": "Diese Nummer ist ungültig.",
-                "helpText": "Spam und falsche Angaben zu Corona sind ein riesiges Problem - deswegen bitten wir dich, deinen Bericht über deine Handynummer zu verifizieren.\nWir werden deine Nummer nicht unverschlüsselt auf unseren Servern speichern.\nNatürlich kannst du diesen Schritt auch überspringen, wenn dir das nicht geheuer ist."
+                "helpText": "Du musst deine Handynummer nicht angeben. Aber wenn du sie angibst, können wir deinen Bericht als verifiziert markieren und so das Vertrauen in die Qualität unserer Daten verbessern. Deine Nummer wird von uns dabei nicht gespeichert."
             },
             "residence": {
                 "title": "Wo wohnst du gerade?",
