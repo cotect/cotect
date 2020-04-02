@@ -1,0 +1,190 @@
+{
+    "translation": {
+        "error": {
+            "primaryAction": "Bitte starte die App neu",
+            "text": "Irgendetwas ist schiefgegangen. Unsere Entwickler sind dran und arbeiten wahrscheinlich schon an einer Lösung.",
+            "title": "Oh nein."
+        },
+        "navigation": {
+            "homeTitle": "Startseite",
+            "reportTabLabel": "Bericht",
+            "reportTitle": "Bericht",
+            "settingsTabLabel": "Einstellungen",
+            "settingsTitle": "Einstellungen"
+        },
+        "actions": {
+            "add": "Hinzufügen",
+            "exit": "Verlassen",
+            "confirm": "Bestätigen",
+            "verify": "Verifizieren",
+            "delete": "Löschen",
+            "next": "Nächster Schritt",
+            "back": "Zurück",
+            "dismiss": "Verwerfen",
+            "ok": "Ok",
+            "cancel": "Abbrechen",
+            "askLater": "Frage später nochmal nach",
+            "skip": "Überspringen",
+            "update": "Aktualisieren"
+        },
+        "basics": {
+            "yes": "Ja",
+            "no": "Nein",
+            "today": "Heute"
+        },
+        "sharing": {
+            "message": "Ich habe gerade die Cotect App benutzt, um meinen Gesundheitszustand zu dokumentieren. Hilf auch mit, Corona zu bekämpfen!",
+            "title": "Cotect Bericht",
+            "url": "https://share.cotect.app/get",
+            "inviteAction": "Freunde einladen"
+        },
+        "home": {
+            "welcomeMessage": "Super, dass du uns helfen willst, Corona zu verfolgen!\n\nFangen wir mit einigen Fragen an.",
+            "firstReportAction": "Lass uns anfangen",
+            "updateReportAction": "Bericht aktualisieren"
+        },
+        "assesments": {
+            "infectionRisk": {
+                "title": "Infektionsrisiko",
+                "updateLabel": "Zuletzt aktualisiert am {{date}}",
+                "noAssesmentDesc": "Keine Warnmeldungen. Es gibt noch nicht ausreichend Daten für eine aussagekräftige Bewertung deines Berichts. Wir benachrichtigen dich, sobald sich das ändert."
+            }
+        },
+        "report": {
+            "summaryCard": {
+                "reportTitle": "Mein Bericht",
+                "basicInfoSection": "Meine Infos",
+                "symptomsSection": "{{count}} Symptome",
+                "placesSection": "{{count}} Orte",
+                "contactsSection": "{{count}} Kontakte",
+                "ageInfo": "Alter: {{age}}",
+                "genderInfo": "Geschlecht: {{gender}}",
+                "covidTest": "Covid-Test: {{covidTest}}",
+                "covidContact": "Covid-Kontakt: {{covidContact}}",
+                "notSubmitted": "Nicht übermittelt",
+            },
+            "age": {
+                "helpText": "Wir brauchen das Alter um...",
+                "title": "Wie alt bist du?",
+                "inputLabel": "Alter",
+                "validationText": "Alter muss eine Zahl zwischen 0 und 130 sein."
+            },
+            "contacts": {
+                "amountTitle": "Mit wie vielen Personen hattest du Kontakt?",
+                "title": "Mit wem hattest du in den letzten Tagen Kontakt?",
+                "noDatesDesc": "Es wurden keine Daten ausgewählt.",
+                "datesDesc": "{{visitCount}} Mal im Kontakt im Zeitraum {{earliestDate}} - {{latestDate}}",
+                "singleDateDesc": "Im Kontakt am {{date}}.",
+                "dialogTitle": "Wann hattet ihr Kontakt?",
+                "addContact": "Kontakt hinzufügen",
+                "permissionTitle": "Berechtigung, Adressbuch abzufragen",
+                "permissionMessage": "Um Kontakte hinzuzufügen, muss Cotect auf dein Adressbuch zugreifen. Informationen zu deinen Kontakten werden wir nie auf unsere Server hochladen oder dort speichern."
+            },
+            "exit": {
+                "primaryAction": "Abbrechen",
+                "text": "Möchtest du wirklich den Bericht verlassen? Er wird nicht gespeichert.",
+                "title": "Bericht abbrechen"
+            },
+            "gender": {
+                "title": "Was ist dein Geschlect?",
+                "male": "Männlich",
+                "female": "Weiblich",
+                "other": "Divers"
+            },
+            "help": {
+                "defaultText": "Lorem ipsum",
+                "primaryAction": "Verstanden!",
+                "title": "Hilfe"
+            },
+            "submitReport": {
+                "title": "Bitte überprüfe deine Angaben, bevor du den Bericht einreichst:",
+                "action": "Bericht einreichen"
+            },
+            "places": {
+                "title": "Welche Orte hast du in den letzten Tagen besucht?",
+                "addPlace": "Ort hinzufügen",
+                "titleDates": "Wähle die Tage aus, an denen du hier warst",
+                "dialogTitle": "Wann hast du diesen Ort besucht?",
+                "visitsDesc": "{{visitCount}} Mal besucht im Zeitraum {{earliestDate}} - {{latestDate}}",
+                "singleVisitDesc": "Am {{date}} besucht.",
+                "noVisitsDesc": "Es wurden keine Daten ausgewählt.",
+                "types": {
+                    "airport": "Flughafen",
+                    "trainStation": "Bahnhof",
+                    "bank": "Bank",
+                    "museum": "Museum",
+                    "atm": "Geldautomat",
+                    "bakery": "Bäckerei",
+                    "bus_station": "Bushaltestelle",
+                    "gas_station": "Tankstelle",
+                    "church": "Kirche",
+                    "grocery_or_supermarket": "Supermarkt",
+                    "library": "Bibliothek",
+                    "movie_theater": "Kino",
+                    "night_club": "Nachtklub",
+                    "post_office": "Postfiliale",
+                    "restaurant": "Restaurant",
+                    "shopping_mall": "Einkaufszentrum",
+                    "stadium": "Stadion",
+                    "school": "Schule",
+                    "cafe": "Café",
+                    "doctor": "Arztpraxis",
+                    "hospital": "Krankenhaus",
+                    "park": "Park",
+                    "pharmacy": "Apotheke",
+                    "gym": "Fitnessstudio",
+                    "lodging": "Unterkunft",
+                    "store": "Geschäft",
+                    "establishment": "Einrichtung",
+                    "postal_code": "Postleitzahl",
+                    "street_address": "Straße",
+                    "country": "Land",
+                    "locality": "Stadt",
+                    "place": "Ort"
+                }
+            },
+            "phoneNumber": {
+                "title": "Bitte verifiziere deinen Bericht mit deiner Handynummer:",
+                "numberVerified": "Deine Handynummer wurde verifiziert.",
+                "inputLabelPhoneNumber": "Handynummer",
+                "inputLabelConfirmation": "Bestätigungscode",
+                "invalidConfirmation": "Ungültiger Bestätigungscode",
+                "verificationFailed": "Die Verifizierung der Handynummer ist fehlgeschlagen. ",
+                "invalidNumber": "Diese Nummer ist ungültig.",
+                "helpText": "Spam und falsche Angaben zu Corona sind ein riesiges Problem - deswegen bitten wir dich, deinen Bericht über deine Handynummer zu verifizieren.\nWir werden deine Nummer nicht unverschlüsselt auf unseren Servern speichern.\nNatürlich kannst du diesen Schritt auch überspringen, wenn dir das nicht geheuer ist."
+            },
+            "residence": {
+                "title": "Wo wohnst du gerade?",
+                "locationLabel": "Ort",
+                "pickPlace": "Ort festlegen"
+            },
+            "submit": {
+                "primaryAction": "Abschicken",
+                "exitAction": "Verlassen",
+                "successText": "Wir haben deinen Bericht erhalten! Danke für deine Hilfe im Kampf gegen Corona!",
+                "text": "Wir übermitteln deinen Bericht...",
+                "title": "Bericht abschicken"
+            },
+            "symptoms": {
+                "title": "Hast du irgendwelche Symptome?",
+                "severity": "Wie stark ist das Symptom?"
+            },
+            "symptomsDate": {
+                "title": "Wann haben die Symptome begonnen?"
+            },
+            "temperature": {
+                "title": "Wie hoch ist deine Körpertemperatur?"
+            },
+            "covidContact": {
+                "title": "Hattest du Kontakt mit jemandem, der positiv auf Covid-19 getestet wurde?"
+            },
+            "covidTest": {
+                "title": "Wurdest du auf Covid-19 getestet?",
+                "notTested": "Noch nicht getestet",
+                "testedNegative": "Negativ getestet",
+                "testedPositive": "Positiv getestet",
+                "testedPending": "Testergebnis steht noch aus"
+            }
+        }
+    }
+}
