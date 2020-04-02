@@ -27,6 +27,7 @@ export default function BackNextButton(props) {
                 <View></View>
             ) : (
                 <Button
+                    contentStyle={{height: 50}}
                     style={styles.backButton}
                     // disabled={!isBackButtonEnabled}
                     onPress={() => props.onBack()}>
@@ -37,6 +38,7 @@ export default function BackNextButton(props) {
                 <View></View>
             ) : (
                 <Button
+                    contentStyle={{height: 50}}
                     style={styles.nextButton}
                     // disabled={!isNextButtonEnabled}
                     onPress={() => props.onNext()}>

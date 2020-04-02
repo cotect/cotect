@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         width: '90%',
         flex: 1,
         justifyContent: 'flex-end',
-        marginBottom: 16,
+        marginBottom: 8,
         alignSelf: 'center',
     },
 });
