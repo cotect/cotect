@@ -8,6 +8,8 @@ import {StyleSheet, View, ScrollView, Linking} from 'react-native';
 
 import {Checkbox, List, Avatar, Button, Card, Title, Paragraph, Text} from 'react-native-paper';
 
+import {COTECT_PRIVACY_POLICY_URL} from 'react-native-dotenv';
+
 import StepContainer from './StepContainer';
 
 import {CARD_ITEM, ACTION_BUTTON, ACTION_BUTTON_LABEL} from '../../constants/DefaultStyles';
@@ -72,8 +74,8 @@ export default function ReportSubmitStep(props) {
                     onPress={() => setConsentGiven(!isConsentGiven)}
                 />
                 <Text>
-                    <Trans i18nKey="report.submitReport.consent">
-                        By submitting the report, you accept that your provided information are sent to the Cotect servers for further processing. You can read more in our <Text style={{color: 'blue'}} onPress={() => Linking.openURL('http://google.com')}>privacy policy</Text>.
+                    <Trans t={t} i18nKey="report.submit.consent">
+                        By submitting the report, you accept that your provided information are sent to the Cotect servers for further processing. You can read more in our <Text style={{color: 'blue'}} onPress={() => Linking.openURL(COTECT_PRIVACY_POLICY_URL)}>privacy policy</Text>.
                     </Trans>
                 </Text>
             </View>

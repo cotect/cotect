@@ -77,13 +77,17 @@ If you have the tool already installed, skip the respective step.
     sudo xcode-select --switch /Applications/Xcode.app
    ```
 
-1. Add configuration files. The respective services have to exist if you want to have Cotect running. Get in touch with the administrator of an existing project using this code to get the information or set up the services for a fresh project.
+2. Add configuration files. The respective services have to exist if you want to have Cotect running. Get in touch with the administrator of an existing project to get the information or set up the services for a fresh project.
    1. Add `.env` file to `app/mobile`:
         ```bash
         COTECT_BACKEND_URL=https://...
+        COTECT_PRIVACY_POLICY_URL=https://...
         ```
 
-        > This is the URL where the Cotect backend can be reached. You find the code for it also in this repository.
+        > `COTECT_BACKEND_URL` is the URL where the Cotect backend can be reached. You find the code for it also in this repository.\
+        `COTECT_PRIVACY_POLICY_URL` should point to your hosted GDPR-compliant privacy policy.
+        
+        > We use the library [react-native-dotenv](https://github.com/zetachang/react-native-dotenv) to interpolate those variables within the code.
 
     1. Add Firebase configuration. We use the services *Phone Authentication* and *Crashlytics* from Firebase. You can configure a Firebase project [here](https://console.firebase.google.com/).
         1. Android: Download the `google-service.json` and add it to `android/app`
@@ -103,15 +107,15 @@ If you have the tool already installed, skip the respective step.
             </plist>
             ```
             1. [only once] In Xcode, right click on the project > click on "Add file..." > select `GooglePlaces-Info.plist (make sure "Copy files if needed" is selected)` (make sure "Copy files if needed" is selected)
-1. Run iOS version (make sure Xcode is installed; there you can also install an emulator): `npx react-native run-ios`
-1. Run Android version: `npx react-native run-android`
+3. Run iOS version (make sure XCode is installed; there you can also install an emulator): `npx react-native run-ios`
+4. Run Android version (make sure Android Studio is installed; there you can also install an emulator): `npx react-native run-android`
 
 ### Build a Release Version
 
 > Important: Don't use the debug certificates / keys you find in this repo for releasing your app. Rather, generate release keys and build the app with them!
 
 1. Android: `cd android && ./gradlew app:assembleRelease`
-1. iOS: Use XCode, select the right provisioning profile, and then build the app with. Follow standard iOS release practices from there (e.g. creating an .ipa file manually or an archive from XCode)
+1. iOS: Use XCode, select the right provisioning profile, and then build the app with it. Follow standard iOS release practices from there (e.g. creating an .ipa file manually or an archive from XCode)
 
 ### Add new Fonts
 
