@@ -174,7 +174,8 @@
                 "exitAction": "Exit",
                 "successText": "We submitted the report! Thanks for your help fighting CoVid!",
                 "text": "We are submitting the report…",
-                "title": "Report Submission"
+                "title": "Report Submission",
+                "consent": "By submitting the report, you accept that your provided information are sent to the Cotect servers for further processing. You can read more in our <1>privacy policy</1>."
             },
             "symptoms": {
                 "title": "Do you have any symptoms?",
