@@ -25,7 +25,7 @@
   <a href="#contribution">Contribution</a>
 </p>
 
-<img style="width: 100%" src="./docs/images/cotect-mockups.png"/>
+<img style="width: 100%" src="./docs/images/cotect-screenshots.png"/>
 
 ## Highlights
 
@@ -69,7 +69,7 @@ We are committed to keep the cotect project fully open-source and non-profit wit
 
 ## Try It Out
 
-_Coming soon..._
+Download the APK (for Android) [here](https://github.com/cotect/cotect/releases/download/0.1/cotect-beta-v1.apk).
 
 <br>
 
