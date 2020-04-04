@@ -174,7 +174,8 @@
                 "exitAction": "Verlassen",
                 "successText": "Wir haben deinen Bericht erhalten! Danke für deine Hilfe im Kampf gegen Corona!",
                 "text": "Wir übermitteln deinen Bericht...",
-                "title": "Bericht abschicken"
+                "title": "Bericht abschicken",
+                "consent": "Durch das Abschicken des Reports akzeptiere ich, dass die angegebenen Informationen an die Server geschickt werden. Mehr Informationen beinhaltet die <1>Datenschutzerklärung</1>"
             },
             "symptoms": {
                 "title": "Hast du irgendwelche Symptome?",

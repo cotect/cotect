@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 
 import PropTypes from 'prop-types';
 
-import {useTranslation} from 'react-i18next';
+import {useTranslation, Trans} from 'react-i18next';
 
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, Linking} from 'react-native';
 
-import {List, Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
+import {Checkbox, List, Avatar, Button, Card, Title, Paragraph, Text} from 'react-native-paper';
+
+import {COTECT_PRIVACY_POLICY_URL} from 'react-native-dotenv';
 
 import StepContainer from './StepContainer';
 
@@ -19,11 +21,18 @@ import InfectionRiskCard from '../../components/InfectionRiskCard';
 const styles = StyleSheet.create({
     actionButton: ACTION_BUTTON,
     actionButtonLabel: ACTION_BUTTON_LABEL,
+    consentContainer: {
+        flexDirection: "row",
+        marginTop: 8,
+        marginBottom: 8,
+        width: "90%"
+    }
 });
 
 export default function ReportSubmitStep(props) {
     const {t} = useTranslation();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isConsentGiven, setConsentGiven] = useState(false);
 
     const getStateToBeSaved = () => {
         const caseReport = {...props.caseReport};
@@ -59,9 +68,21 @@ export default function ReportSubmitStep(props) {
                     <ReportSummaryCard caseReport={props.caseReport} />
                 </ScrollView>
             </View>
+            <View style={styles.consentContainer}>
+                <Checkbox.Android
+                    status={isConsentGiven ? 'checked' : 'unchecked'}
+                    onPress={() => setConsentGiven(!isConsentGiven)}
+                />
+                <Text>
+                    <Trans t={t} i18nKey="report.submit.consent">
+                        By submitting the report, you accept that your provided information are sent to the Cotect servers for further processing. You can read more in our <Text style={{color: 'blue'}} onPress={() => Linking.openURL(COTECT_PRIVACY_POLICY_URL)}>privacy policy</Text>.
+                    </Trans>
+                </Text>
+            </View>
+
             <Button
                 mode="outlined"
-                disabled={isSubmitting}
+                disabled={!isConsentGiven || isSubmitting}
                 loading={isSubmitting}
                 style={styles.actionButton}
                 labelStyle={styles.actionButtonLabel}
