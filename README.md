@@ -69,7 +69,7 @@ We are committed to keep the cotect project fully open-source and non-profit wit
 
 ## Try It Out
 
-Download the APK (for Android) [here](https://github.com/cotect/cotect/releases/download/0.1/cotect-beta-v1.apk).
+Download the APK [here](https://github.com/cotect/cotect/releases/download/0.1/cotect-beta-v1.apk) (for Android) .
 
 <br>
 
