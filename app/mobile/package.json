@@ -47,7 +47,7 @@
         "react-native-localize": "^1.3.4",
         "react-native-paper": "^3.6.0",
         "react-native-phone-input": "0.2.2",
-        "react-native-reanimated": "~1.4.0",
+        "react-native-reanimated": "~2.10.0",
         "react-native-safe-area-context": "0.6.0",
         "react-native-screens": "2.0.0-alpha.12",
         "react-native-select-contact": "^1.3.0",
